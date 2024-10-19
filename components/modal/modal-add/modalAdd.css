@@ -31,6 +31,8 @@
 .none{
   display: none;
 }
+
+
 .billform:nth-child(2) {
   input {
     width: 504px;
