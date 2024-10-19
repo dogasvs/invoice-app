@@ -1,7 +1,24 @@
-import React from 'react';
+'use client'
+import { useState } from 'react';
 import './invoice-detail.css';
+import EditModal from '@/components/modal/modal-edit';
 
 const InvoiceDetail = () => {
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+    const [paymentTerms, setPaymentTerms] = useState('Net 30 Days');
+
+    const openModal = () => {
+        setIsEditModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsEditModalOpen(false);
+    };
+
+    const handlePaymentChange = (newTerm) => {
+        setPaymentTerms(newTerm);
+    };
+
     return (
         <div className="container">
             <div className="wrapper">
@@ -15,8 +32,7 @@ const InvoiceDetail = () => {
                         <span className="statusPending">Pending</span>
                     </div>
                     <div className="actionButtons">
-                        <button className="editButton">Edit</button>
-                        <button className="deleteButton">Delete</button>
+                        <button className="editButton" onClick={openModal}>Edit</button>                        <button className="deleteButton">Delete</button>
                         <button className="markPaidButton">Mark as Paid</button>
                     </div>
                 </div>
@@ -86,7 +102,12 @@ const InvoiceDetail = () => {
                         </div>
                     </div>
                 </div>
-            </div>
+                <EditModal
+                    isOpen={isEditModalOpen}
+                    closeModal={closeModal}
+                    paymentTerms={paymentTerms}
+                    handlePaymentChange={handlePaymentChange}
+                />            </div>
         </div>
     );
 };
