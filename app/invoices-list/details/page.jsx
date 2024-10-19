@@ -32,7 +32,7 @@ const InvoiceDetail = () => {
                         <span className="statusPending">Pending</span>
                     </div>
                     <div className="actionButtons">
-                        <button className="editButton" onClick={openModal}>Edit</button>                        <button className="deleteButton">Delete</button>
+                        <button className="editButton" onClick={openModal}>Edit</button>   <button className="deleteButton">Delete</button>
                         <button className="markPaidButton">Mark as Paid</button>
                     </div>
                 </div>
