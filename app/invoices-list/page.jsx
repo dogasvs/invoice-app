@@ -1,9 +1,13 @@
+import "./invoicesList.css";
+
 export default function InvoicesList() {
   return (
     <>
       <div className="invoices-list">
         <div className="invoices-id">
-          <h3>#RT3080</h3>
+          <h3>
+            <span>#</span>RT3080
+          </h3>
         </div>
         <div className="invoices-date">
           <h3>Due 19 Aug 2021</h3>
