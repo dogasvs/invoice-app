@@ -3,6 +3,7 @@ import { useState } from 'react';
 import './invoice-detail.css';
 import EditModal from '@/components/modal/modal-edit';
 import DeleteModal from '@/components/modal/modal-delete';
+import Link from 'next/link';
 
 const InvoiceDetail = () => {
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -28,17 +29,19 @@ const InvoiceDetail = () => {
         setIsDeleteModalOpen(false);
     };
 
-  const handleDelete = () => {
-    console.log('Invoice deleted');
-    closeDeleteModal();
-  };
+    const handleDelete = () => {
+        console.log('Invoice deleted');
+        closeDeleteModal();
+    };
 
 
     return (
         <div className="container">
             <div className="wrapper">
                 <div className="goBack">
-                    <button className="goBackButton">Go back</button>
+                    <Link href="/" className="goBackButton">
+                        Go back
+                    </Link>
                 </div>
 
                 <div className="invoiceDetails">
