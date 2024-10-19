@@ -160,7 +160,6 @@ export default function InvoicesList() {
         </div>
         <div className="invoices-detail">...</div>
       </div>
-    </>
     </div>
   );
 }
