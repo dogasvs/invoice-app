@@ -2,11 +2,12 @@ import DarkModeSvg from "@/svgs/dark-mode-svg";
 import Image from "next/image";
 import "./sidenav.css"
 import Logo from "@/svgs/logo";
+import Link from "next/link";
 
 export default function Sidenav() {
   return (
     <div className="sidenav">
-      <Logo />
+       <Link href={"/"}> <Logo /></Link> 
       <div className="sidenavItem">
         <DarkModeSvg />
         <hr />
