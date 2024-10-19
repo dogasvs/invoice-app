@@ -1,8 +1,9 @@
+import DetayaGitSvg from "@/svgs/detaya-git";
 import "./invoicesList.css";
 
 export default function InvoicesList() {
   return (
-    <>
+    <div className="invoices-list-container">
       <div className="invoices-list">
         <div className="invoices-id">
           <h3>
@@ -20,11 +21,13 @@ export default function InvoicesList() {
         </div>
         <div className="invoices-status">
           <h3>
-            <span></span> Paid
+            <span className="doc"></span> Paid
           </h3>
         </div>
-        <div className="invoices-detail">...</div>
+        <div className="invoices-detail">
+          <DetayaGitSvg />
+        </div>
       </div>
-    </>
+    </div>
   );
 }
