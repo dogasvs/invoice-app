@@ -36,9 +36,7 @@ h3 {
   margin-bottom: 20px;
 }
 
-.form-group {
-  margin-bottom: 20px;
-}
+
 
 .form-group label {
   display: block;
@@ -57,13 +55,22 @@ h3 {
 
 .form-row {
   display: flex;
+  justify-content: space-between;
   gap: 20px;
+  .form-group {
+    margin-bottom: 20px;
+    width: 240px;
+  }
 }
 
 /* Custom Select Container */
 .custom-select {
   position: relative;
   width: 100%;
+
+  input {
+   
+  }
 }
 
 .selected-option {
