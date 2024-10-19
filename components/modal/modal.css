@@ -9,7 +9,8 @@
     display: flex;
     justify-content: flex-start; 
     align-items: center;
-    z-index: 1000;
+    z-index: 900;
+    margin-left: 100px;
   }
   
   /* Modal container */
