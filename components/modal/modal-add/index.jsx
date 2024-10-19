@@ -3,10 +3,9 @@
 import { useState } from "react";
 import "../modal.css";
 
-export default function ModalAdd() {
+export default function ModalAdd({ isModalOpen, closeModal }) {
   const [addNewInput, setAddNewInput] = useState([]);
   const [paymentTerms, setPaymentTerms] = useState("Net 30 Days");
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleNewAddItem = () => {
     setAddNewInput([
@@ -24,15 +23,8 @@ export default function ModalAdd() {
     setPaymentTerms(newTerm);
   };
 
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
-
   return (
     <div>
-      <button onClick={openModal} className="open-modal-btn">
-        Add New Invoice
-      </button>
-
       {isModalOpen && (
         <div className="modal-overlay">
           <div className="modal-container">
@@ -171,9 +163,9 @@ export default function ModalAdd() {
 
               <div className="modal-buttons">
                 <button
+                  onClick={closeModal}
                   type="button"
                   className="cancel-btn"
-                  onClick={closeModal}
                 >
                   Cancel
                 </button>
