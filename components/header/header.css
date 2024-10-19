@@ -17,6 +17,12 @@
   gap: 10px;
 }
 
+.invoicesAdd {
+  display: flex;
+  align-items: center;
+  
+}
+
 .invoicesAddBtn {
   background-color: #7C5DFA;
   padding: 18px 17px 18px 46px;

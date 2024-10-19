@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import ModalAdd from "../modal/modal-add";
+import ArtiSvg from "@/svgs/add-invoices";
+import "@/components/header/header.css";
 
 export default function NewInvoicesBtn() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -15,9 +17,11 @@ export default function NewInvoicesBtn() {
   };
 
   return (
-    <>
-      <button onClick={openModal}>New İnvoices</button>
+    <div className="invoicesAdd">
+      <button className="invoicesAddBtn " onClick={openModal}>
+        <ArtiSvg /> New İnvoices
+      </button>
       <ModalAdd isModalOpen={isModalOpen} closeModal={closeModal} />
-    </>
+    </div>
   );
 }

@@ -1,4 +1,3 @@
-import ArtiSvg from "@/svgs/add-invoices";
 import FilterIcon from "@/svgs/filter-icon";
 import NewInvoicesBtn from "../newInvoicesBtn";
 
@@ -14,9 +13,8 @@ export default function Header() {
           <p>Duruma göre filtrele</p>
           <FilterIcon />
         </div>
-        <div className="invoicesAdd">
+        <div className="">
           <NewInvoicesBtn />
-          <ArtiSvg />
         </div>
       </div>
     </div>
