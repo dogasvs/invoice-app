@@ -4,12 +4,12 @@ import Image from "next/image";
 export default function Sidenav() {
   return (
     <div className="sidenav">
-      <Image src={"/img/logo.png"} />
+      <Image width={100} height={100} src={"/img/logo.png"} />
       <div className="sidenavItem">
         <DarkModeSvg />
         <hr />
-        <Image src={"/img/user.png"} />
+        <Image width={100} height={100} src={"/img/user.png"} />
       </div>
     </div>
-  )
+  );
 }
