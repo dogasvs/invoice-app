@@ -1,0 +1,33 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.invoicesProcess {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.invoicesFilter {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.invoicesAddBtn {
+  background-color: #7C5DFA;
+  padding: 18px 17px;
+  font-size: 15px;
+  line-height: 15px;
+  letter-spacing: -0.25px;
+  color: #FFFFFF;
+  border: transparent;
+  border-radius: 100px;
+  font-weight: bold;
+}
+
+.artisvgContainer {
+  background-color: #FFFFFF;
+}
