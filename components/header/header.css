@@ -1,24 +1,25 @@
 .header {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   justify-content: space-between;
+  margin-block: 77px;
 }
 
 .invoicesProcess {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   gap: 40px;
 }
 
 .invoicesFilter {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   gap: 10px;
 }
 
 .invoicesAddBtn {
   background-color: #7C5DFA;
-  padding: 18px 17px;
+  padding: 18px 17px 18px 46px;
   font-size: 15px;
   line-height: 15px;
   letter-spacing: -0.25px;
@@ -29,5 +30,11 @@
 }
 
 .artisvgContainer {
-  background-color: #FFFFFF;
+  position: relative;
+  bottom: 36px;
+  left: 17px;
+  background: white;
+  width: 19px;
+  padding: 4px;
+  border-radius: 100px;
 }
