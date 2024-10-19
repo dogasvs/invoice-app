@@ -4,8 +4,12 @@
   gap: 200px;
 }
 
+.content {
+  width: 1000px;
+  margin-block: 80px
+}
+
 .invoices-list {
-  max-width: 730px;
   margin: 0 auto;
   display: flex;
   align-items: center;
@@ -13,6 +17,8 @@
   padding: 30px 32px 32px 32px;
   box-shadow: 0px 10px 10px -10px #48549F1A;
   border-radius: 8px;
+  background-color: #FFFFFF;
+  margin-bottom: 16px;
 }
 
 .invoices-id {
