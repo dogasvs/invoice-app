@@ -2,10 +2,12 @@
 import { useState } from 'react';
 import './invoice-detail.css';
 import EditModal from '@/components/modal/modal-edit';
+import DeleteModal from '@/components/modal/modal-delete';
 
 const InvoiceDetail = () => {
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [paymentTerms, setPaymentTerms] = useState('Net 30 Days');
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
     const openModal = () => {
         setIsEditModalOpen(true);
@@ -18,6 +20,19 @@ const InvoiceDetail = () => {
     const handlePaymentChange = (newTerm) => {
         setPaymentTerms(newTerm);
     };
+    const openDeleteModal = () => {
+        setIsDeleteModalOpen(true);
+    };
+
+    const closeDeleteModal = () => {
+        setIsDeleteModalOpen(false);
+    };
+
+  const handleDelete = () => {
+    console.log('Invoice deleted');
+    closeDeleteModal();
+  };
+
 
     return (
         <div className="container">
@@ -32,7 +47,8 @@ const InvoiceDetail = () => {
                         <span className="statusPending">Pending</span>
                     </div>
                     <div className="actionButtons">
-                        <button className="editButton" onClick={openModal}>Edit</button>                        <button className="deleteButton">Delete</button>
+                        <button className="editButton" onClick={openModal}>Edit</button>
+                        <button className="deleteButton" onClick={openDeleteModal}>Delete</button>
                         <button className="markPaidButton">Mark as Paid</button>
                     </div>
                 </div>
@@ -107,7 +123,13 @@ const InvoiceDetail = () => {
                     closeModal={closeModal}
                     paymentTerms={paymentTerms}
                     handlePaymentChange={handlePaymentChange}
-                />            </div>
+                />
+                <DeleteModal
+                    isOpen={isDeleteModalOpen}
+                    closeModal={closeDeleteModal}
+                    onDelete={handleDelete}
+                />
+            </div>
         </div>
     );
 };
