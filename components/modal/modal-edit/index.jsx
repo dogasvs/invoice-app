@@ -81,8 +81,11 @@ const EditModal = ({ isOpen, closeModal, paymentTerms, handlePaymentChange }) =>
                 </div>
                 <ul className="options">
                   <li onClick={() => handlePaymentChange('Net 1 Day')}>Net 1 Day</li>
+                  <hr />
                   <li onClick={() => handlePaymentChange('Net 7 Days')}>Net 7 Days</li>
+                  <hr />
                   <li onClick={() => handlePaymentChange('Net 14 Days')}>Net 14 Days</li>
+                  <hr />
                   <li onClick={() => handlePaymentChange('Net 30 Days')}>Net 30 Days</li>
                 </ul>
               </div>

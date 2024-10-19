@@ -25,7 +25,7 @@
 
 .invoicesAddBtn {
   background-color: #7C5DFA;
-  padding: 18px 17px 18px 46px;
+  padding: 18px 17px 18px 17px;
   font-size: 15px;
   line-height: 15px;
   letter-spacing: -0.25px;
@@ -33,6 +33,9 @@
   border: transparent;
   border-radius: 100px;
   font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .artisvgContainer {

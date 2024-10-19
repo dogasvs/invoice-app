@@ -10,7 +10,6 @@
 }
 
 .invoices-list {
-  margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -60,10 +59,9 @@
 }
 
 .invoices-status {
-  width: 104px;
   border-radius: 6px;
   opacity: 0.06px;
-  padding: 14px 30px 11px 30px;
+  padding: 14px 30px;
   background-color: #F3FDFA;
   color: #33D69F;
 
@@ -74,6 +72,7 @@
     border-radius: 100%;
     background-color: #33D69F;
   }
+
   h3 {
     display: flex;
     align-items: center;
@@ -83,5 +82,6 @@
     line-height: 15px;
     letter-spacing: -0.25px;
     text-align: left;
+    margin: 0;
   }
 }
