@@ -1,11 +1,12 @@
 import DarkModeSvg from "@/svgs/dark-mode-svg";
 import Image from "next/image";
 import "./sidenav.css"
+import Logo from "@/svgs/logo";
 
 export default function Sidenav() {
   return (
     <div className="sidenav">
-      <Image alt="logo image" priority width={103} height={103} src={"/img/logo.png"} />
+      <Logo />
       <div className="sidenavItem">
         <DarkModeSvg />
         <hr />
