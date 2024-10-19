@@ -21,7 +21,7 @@ export default function InvoicesList() {
         </div>
         <div className="invoices-status">
           <h3>
-            <span className="doc"></span> Paid
+            <span className="doc"></span> Paralı
           </h3>
         </div>
         <div className="invoices-detail">
@@ -45,7 +45,7 @@ export default function InvoicesList() {
         </div>
         <div className="invoices-status">
           <h3>
-            <span></span> Paid
+            <span></span> Paralı
           </h3>
         </div>
         <div className="invoices-detail">...</div>
@@ -67,7 +67,7 @@ export default function InvoicesList() {
         </div>
         <div className="invoices-status">
           <h3>
-            <span></span> Paid
+            <span></span> Paralı
           </h3>
         </div>
         <div className="invoices-detail">...</div>
@@ -89,7 +89,7 @@ export default function InvoicesList() {
         </div>
         <div className="invoices-status">
           <h3>
-            <span></span> Paid
+            <span></span> Paralı
           </h3>
         </div>
         <div className="invoices-detail">...</div>
@@ -111,7 +111,7 @@ export default function InvoicesList() {
         </div>
         <div className="invoices-status">
           <h3>
-            <span></span> Paid
+            <span></span> Paralı
           </h3>
         </div>
         <div className="invoices-detail">...</div>
@@ -133,7 +133,7 @@ export default function InvoicesList() {
         </div>
         <div className="invoices-status">
           <h3>
-            <span></span> Paid
+            <span></span> Paralı
           </h3>
         </div>
         <div className="invoices-detail">...</div>
@@ -155,7 +155,7 @@ export default function InvoicesList() {
         </div>
         <div className="invoices-status">
           <h3>
-            <span></span> Paid
+            <span></span> Paralı
           </h3>
         </div>
         <div className="invoices-detail">...</div>

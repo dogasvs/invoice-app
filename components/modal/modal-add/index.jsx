@@ -28,26 +28,26 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
       {isModalOpen && (
         <div className="modal-overlay">
           <div className="modal-container">
-            <h2>New Invoice</h2>
+            <h2>Yeni Fatura</h2>
             <form>
               <div className="billFrom">
-                <h3>Bill From</h3>
+                <h3>Fatura Kaynağı</h3>
                 <div className="form-group">
-                  <label>Street Address</label>
+                  <label>Açık adres</label>
                   <input type="text" defaultValue="19 Union Terrace" />
                 </div>
 
                 <div className="form-row">
                   <div className="form-group">
-                    <label>City</label>
+                    <label>Şehir</label>
                     <input type="text" defaultValue="London" />
                   </div>
                   <div className="form-group">
-                    <label>Post Code</label>
+                    <label>Posta Kodu</label>
                     <input type="text" defaultValue="E1 3EZ" />
                   </div>
                   <div className="form-group">
-                    <label>Country</label>
+                    <label>Ülke</label>
                     <input type="text" defaultValue="United Kingdom" />
                   </div>
                 </div>
@@ -55,33 +55,33 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
 
               {/* Bill To Section */}
               <div className="billTo">
-                <h3>Bill To</h3>
+                <h3>fatura edilecek</h3>
                 <div className="form-group">
-                  <label>Client's Name</label>
+                  <label>Müşterinin Adı</label>
                   <input type="text" defaultValue="Alex Grim" />
                 </div>
 
                 <div className="form-group">
-                  <label>Client's Email</label>
+                  <label>Müşterinin E-postası</label>
                   <input type="email" defaultValue="alexgrim@mail.com" />
                 </div>
 
                 <div className="form-group">
-                  <label>Street Address</label>
+                  <label>Açık adres</label>
                   <input type="text" defaultValue="84 Church Way" />
                 </div>
 
                 <div className="form-row">
                   <div className="form-group">
-                    <label>City</label>
+                    <label>Şehir</label>
                     <input type="text" defaultValue="Bradford" />
                   </div>
                   <div className="form-group">
-                    <label>Post Code</label>
+                    <label>Posta Kodu</label>
                     <input type="text" defaultValue="BD1 9PB" />
                   </div>
                   <div className="form-group">
-                    <label>Country</label>
+                    <label>Ülke</label>
                     <input type="text" defaultValue="United Kingdom" />
                   </div>
                 </div>
@@ -91,42 +91,42 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
               <div className="invoiceDateSection">
                 <div className="form-row">
                   <div className="form-group">
-                    <label>Invoice Date</label>
+                    <label>Fatura Tarihi</label>
                     <input type="date" defaultValue="2021-08-21" />
                   </div>
                   <div className="form-group">
-                    <label>Payment Terms</label>
+                    <label>Ödeme Koşulları</label>
                     <div className="custom-select">
                       <div className="selected-option">
                         {paymentTerms}
                         <span className="arrow">⌄</span>
                       </div>
                       <ul className="options">
-                        <li onClick={() => handlePaymentChange("Net 1 Day")}>
-                          Net 1 Day
+                        <li onClick={() => handlePaymentChange("Net 1 Gün")}>
+                          Net 1 Gün
                         </li>
-                        <li onClick={() => handlePaymentChange("Net 7 Days")}>
-                          Net 7 Days
+                        <li onClick={() => handlePaymentChange("Net 7 Gün")}>
+                          Net 7 Gün
                         </li>
-                        <li onClick={() => handlePaymentChange("Net 14 Days")}>
-                          Net 14 Days
+                        <li onClick={() => handlePaymentChange("Net 14 Gün")}>
+                          Net 14 Gün
                         </li>
-                        <li onClick={() => handlePaymentChange("Net 30 Days")}>
-                          Net 30 Days
+                        <li onClick={() => handlePaymentChange("Net 30 Gün")}>
+                          Net 30 Gün
                         </li>
                       </ul>
                     </div>
                   </div>
                 </div>
                 <div className="form-group">
-                  <label>Project Description</label>
+                  <label>Proje Açıklaması</label>
                   <input type="text" defaultValue="Graphic Design" />
                 </div>
               </div>
 
               {/* Item List Section */}
               <div className="itemListSection">
-                <h3>Item List</h3>
+                <h3>Öğe Listesi</h3>
                 <div className="item">
                   <input type="text" defaultValue="Banner Design" />
                   <input type="number" defaultValue="1" />
@@ -140,7 +140,7 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
                   <span>400.00</span>
                 </div>
                 <button type="button" onClick={handleNewAddItem}>
-                  + Add New Item
+                  + Yeni Ekle
                 </button>
                 {addNewInput.map((input, index) => (
                   <div key={index} className="item">
@@ -167,10 +167,10 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
                   type="button"
                   className="cancel-btn"
                 >
-                  Cancel
+                  İptal et
                 </button>
                 <button type="submit" className="save-btn">
-                  Save Changes
+                  Değişiklikleri Kaydet
                 </button>
               </div>
             </form>

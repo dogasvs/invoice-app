@@ -19,7 +19,7 @@ export default function NewInvoicesBtn() {
   return (
     <div className="invoicesAdd">
       <button className="invoicesAddBtn " onClick={openModal}>
-        <ArtiSvg /> New İnvoices
+        <ArtiSvg /> Yeni Faturalar
       </button>
       <ModalAdd isModalOpen={isModalOpen} closeModal={closeModal} />
     </div>

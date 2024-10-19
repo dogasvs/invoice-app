@@ -5,7 +5,7 @@ export default function Header() {
   return (
     <div className="header">
       <div className="headerTitle">
-        <h1>Invoices</h1>
+        <h1>Faturalar</h1>
         <p>Toplam 7 fatura bulunmaktadır</p>
       </div>
       <div className="invoicesProcess">
