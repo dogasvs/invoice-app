@@ -1,6 +1,6 @@
 import ArtiSvg from "@/svgs/add-invoices";
 import FilterIcon from "@/svgs/filter-icon";
-import "./header.css"
+import NewInvoicesBtn from "../newInvoicesBtn";
 
 export default function Header() {
   return (
@@ -15,14 +15,10 @@ export default function Header() {
           <FilterIcon />
         </div>
         <div className="invoicesAdd">
-          <button className="invoicesAddBtn">New İnvoices</button>
-          <div className="artisvgContainer">
-             <ArtiSvg />
-          </div>
+          <NewInvoicesBtn />
+          <ArtiSvg />
         </div>
       </div>
-
-
     </div>
-  )
+  );
 }
