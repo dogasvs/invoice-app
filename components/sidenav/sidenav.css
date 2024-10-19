@@ -1,0 +1,25 @@
+.sidenav {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #373B53;
+  border-start-end-radius: 22px;
+  height: 100dvh;
+  position: sticky;
+  top: 0;
+  left: 0;
+}
+
+.sidenavItem {
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sidenavItem hr {
+  width: 103px;
+  margin-block: 30px;
+  border: 1px solid #494E6E;
+}

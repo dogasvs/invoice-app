@@ -5,11 +5,11 @@ import "./sidenav.css"
 export default function Sidenav() {
   return (
     <div className="sidenav">
-      <Image width={100} height={100} src={"/img/logo.png"} />
+      <Image alt="logo image" priority width={103} height={103} src={"/img/logo.png"} />
       <div className="sidenavItem">
         <DarkModeSvg />
         <hr />
-        <Image width={100} height={100} src={"/img/user.png"} />
+        <Image alt="user image" priority width={40} height={40} src={"/img/user.png"} />
       </div>
     </div>
   );
