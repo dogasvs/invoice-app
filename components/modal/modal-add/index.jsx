@@ -139,7 +139,11 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
                   <input type="number" defaultValue="200.00" />
                   <span>400.00</span>
                 </div>
-                <button type="button" onClick={handleNewAddItem}>
+                <button
+                  className="addInput"
+                  type="button"
+                  onClick={handleNewAddItem}
+                >
                   + Yeni Ekle
                 </button>
                 {addNewInput.map((input, index) => (
