@@ -17,6 +17,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  img, svg {
+    cursor: pointer;
+  }
 }
 
 .sidenavItem hr {
