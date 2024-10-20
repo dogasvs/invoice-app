@@ -1,5 +1,6 @@
 import FilterIcon from "@/svgs/filter-icon";
 import NewInvoicesBtn from "../newInvoicesBtn";
+import FilteredDropdown from "../filteredDropdown";
 
 export default function Header() {
   return (
@@ -10,7 +11,7 @@ export default function Header() {
       </div>
       <div className="invoicesProcess">
         <div className="invoicesFilter">
-          <p>Duruma göre filtrele</p>
+          <FilteredDropdown />
           <FilterIcon />
         </div>
         <div className="">

@@ -20,16 +20,15 @@
 .invoicesAdd {
   display: flex;
   align-items: center;
-  
 }
 
 .invoicesAddBtn {
-  background-color: #7C5DFA;
+  background-color: #7c5dfa;
   padding: 18px 17px 18px 17px;
   font-size: 15px;
   line-height: 15px;
   letter-spacing: -0.25px;
-  color: #FFFFFF;
+  color: #ffffff;
   border: transparent;
   border-radius: 100px;
   font-weight: bold;
@@ -46,4 +45,66 @@
   width: 19px;
   padding: 4px;
   border-radius: 100px;
+}
+
+.dropbtn {
+  background: none;
+  color: #0c0e16;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  width: 192px;
+  display: none;
+  position: absolute;
+  background-color: #FFFFFF;
+  padding: 24px;
+  box-shadow: 0px 10px 20px 0px #48549F40;
+
+  z-index: 1;
+
+  input {
+    border: solid #7C5DFA;
+  }
+  label {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    margin-bottom: 15px;
+
+    p {
+      color: #0c0e16;
+      font-size: 15px;
+      font-weight: 700;
+      line-height: 15px;
+      letter-spacing: -0.25px;
+      text-align: left;
+    }
+  }
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.cb3 {
+  accent-color: #7C5DFA;
 }
