@@ -5,14 +5,14 @@ import "../modal.css";
 
 export default function ModalAdd({ isModalOpen, closeModal }) {
   const [addNewInput, setAddNewInput] = useState([]);
-  const [paymentTerms, setPaymentTerms] = useState("Net 30 Days");
+  const [paymentTerms, setPaymentTerms] = useState("Net 30 Gün");
 
   const handleNewAddItem = () => {
     setAddNewInput([
       ...addNewInput,
       {
         id: crypto.randomUUID(),
-        itemName: { inputType: "text", placeholder: "Add new Item" },
+        itemName: { inputType: "text", placeholder: "Yeni Öğe Ekle" },
         quantity: { inputType: "number", placeholder: "0" },
         price: { inputType: "text", placeholder: "0.00" },
         total: { inputType: "text", placeholder: "400.00" },
