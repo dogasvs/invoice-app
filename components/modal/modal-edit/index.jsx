@@ -1,7 +1,29 @@
-import '../modal.css';
+import { useState } from "react";
+import "../modal.css";
 
-const EditModal = ({ isOpen, closeModal, paymentTerms, handlePaymentChange }) => {
+const EditModal = ({
+  isOpen,
+  closeModal,
+  paymentTerms,
+  handlePaymentChange,
+}) => {
   if (!isOpen) return null;
+  const [addNewInput, setAddNewInput] = useState([]);
+  const handleNewAddItem = () => {
+    setAddNewInput([
+      ...addNewInput,
+      {
+        id: crypto.randomUUID(),
+        itemName: { inputType: "text", placeholder: "Add new Item" },
+        quantity: { inputType: "number", placeholder: "0" },
+        price: { inputType: "text", placeholder: "0.00" },
+        total: { inputType: "text", placeholder: "400.00" },
+      },
+    ]);
+  };
+  function itemDelete(sil) {
+    setAddNewInput(addNewInput.filter((x) => x.id !== sil));
+  }
 
   return (
     <div className="modal-overlay">
@@ -96,9 +118,9 @@ const EditModal = ({ isOpen, closeModal, paymentTerms, handlePaymentChange }) =>
             <div className="form-group">
               <label>Payment Terms</label>
               <div className="custom-select">
-                <div className="selected-option">{paymentTerms}
-                <span className="arrow">⌄</span>
-
+                <div className="selected-option">
+                  {paymentTerms}
+                  <span className="arrow">⌄</span>
                 </div>
                 <ul className="options">
                   <li onClick={() => handlePaymentChange("Net 1 Day")}>
@@ -132,7 +154,7 @@ const EditModal = ({ isOpen, closeModal, paymentTerms, handlePaymentChange }) =>
 
         {/* Item List Section */}
         <div className="itemListSection">
-          <h3>Item List</h3>
+          <h3>Öğe Listesi</h3>
           <div className="item">
             <input type="text" defaultValue="Banner Design" />
             <input type="number" defaultValue="1" />
@@ -145,18 +167,44 @@ const EditModal = ({ isOpen, closeModal, paymentTerms, handlePaymentChange }) =>
             <input type="number" defaultValue="200.00" />
             <span>400.00</span>
           </div>
-          <button className="add-item-btn">+ Add New Item</button>
+          <button className="addInput" type="button" onClick={handleNewAddItem}>
+            + Yeni Ekle
+          </button>
+          {addNewInput.map((input, index) => (
+            <div key={index} className="item">
+              <input
+                type={input.itemName.inputType}
+                placeholder={input.itemName.placeholder}
+              />
+              <input
+                type={input.quantity.inputType}
+                placeholder={input.quantity.placeholder}
+              />
+              <input
+                type={input.price.inputType}
+                placeholder={input.price.placeholder}
+              />
+              <span>{input.total.placeholder}</span>
+
+              <button type="button" onClick={() => itemDelete(input.id)}>
+                sil
+              </button>
+            </div>
+          ))}
         </div>
 
 
         <div className="modal-buttons">
-          <button type="button" className="cancel-btn" onClick={closeModal}>Cancel</button>
-          <button type="submit" className="save-btn">Save Changes</button>
+          <button type="button" className="cancel-btn" onClick={closeModal}>
+            Cancel
+          </button>
+          <button type="submit" className="save-btn">
+            Save Changes
+          </button>
         </div>
       </div>
     </div>
   );
 };
 
-  
 export default EditModal;
