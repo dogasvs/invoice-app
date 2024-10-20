@@ -11,6 +11,7 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
     setAddNewInput([
       ...addNewInput,
       {
+        id: crypto.randomUUID(),
         itemName: { inputType: "text", placeholder: "Add new Item" },
         quantity: { inputType: "number", placeholder: "0" },
         price: { inputType: "text", placeholder: "0.00" },
@@ -18,6 +19,9 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
       },
     ]);
   };
+  function itemDelete(sil) {
+    setAddNewInput(addNewInput.filter((x) => x.id !== sil));
+  }
 
   const handlePaymentChange = (newTerm) => {
     setPaymentTerms(newTerm);
@@ -161,6 +165,10 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
                       placeholder={input.price.placeholder}
                     />
                     <span>{input.total.placeholder}</span>
+
+                    <button type="button" onClick={() => itemDelete(input.id)}>
+                      sil
+                    </button>
                   </div>
                 ))}
               </div>
