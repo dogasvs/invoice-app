@@ -19,3 +19,9 @@ export async function deleteInvoiceData(invoiceId) {
     const url = `${API_BASE_URL}/invoices/${invoiceId}`;
     return await advancedFetch(url, 'DELETE');
 }
+
+// Fatura öğesi eklemek için API çağrısı
+export async function addInvoiceData(newItem) {
+    const url = `${API_BASE_URL}/invoices/add-item`;
+    return await advancedFetch(url, 'POST', newItem);
+}
