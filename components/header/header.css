@@ -5,6 +5,22 @@
   margin-block: 60px;
 }
 
+.headerInforespo {
+  display: none;
+}
+
+.headerTitleInfo {
+  display: block;
+}
+
+.invoicesFilterRespo {
+  display: none;
+}
+
+.invoicesFilterInfo {
+  display: block;
+}
+
 .invoicesProcess {
   display: flex;
   align-items: baseline;
@@ -38,6 +54,14 @@
   gap: 10px;
 }
 
+.invoicesAddBtnDesktop {
+  display: block;
+}
+
+.invoicesAddBtnMobil {
+  display: none;
+}
+
 .artisvgContainer {
   position: relative;
   bottom: 36px;
@@ -46,4 +70,52 @@
   width: 19px;
   padding: 4px;
   border-radius: 100px;
+}
+
+@media (max-width: 768px) {
+  .header {
+    margin-block: 60px;
+  }
+}
+
+@media (max-width: 375px) {
+  .header {
+    margin-block: 30px;
+  }
+
+  .header h1 {
+    font-size: 24px;
+    line-height: 22.08px;
+    letter-spacing: -0.75px;
+    font-weight: 700;
+  }
+
+  .headerInforespo {
+    display: block;
+  }
+
+  .headerTitleInfo {
+    display: none;
+  }
+
+  .invoicesFilterRespo {
+    display: block;
+  }
+  
+  .invoicesFilterInfo {
+    display: none;
+  }
+
+  .invoicesAddBtn {
+    padding: 11px 15px 11px 14px;
+  }
+
+  .invoicesAddBtnDesktop {
+    display: none;
+  }
+  
+  .invoicesAddBtnMobil {
+    display: block;
+  }
+  
 }

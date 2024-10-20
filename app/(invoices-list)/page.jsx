@@ -149,7 +149,7 @@ export default function InvoicesList() {
           </h3>
         </div>
         <div className="invoices-detail">
-        <DetayaGitSvg />
+          <DetayaGitSvg />
         </div>
       </div>
       <div className="invoices-list">
