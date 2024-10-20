@@ -5,7 +5,7 @@ import EditModal from "@/components/modal/modal-edit";
 import DeleteModal from "@/components/modal/modal-delete";
 import Link from "next/link";
 
-const InvoiceDetail = () => {
+export default function InvoiceDetail() {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [paymentTerms, setPaymentTerms] = useState("Net 30 Days");
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -140,4 +140,3 @@ const InvoiceDetail = () => {
   );
 };
 
-export default InvoiceDetail;

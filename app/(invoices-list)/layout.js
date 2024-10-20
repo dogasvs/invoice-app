@@ -8,7 +8,6 @@ export default function InvoicesLayout({ children }) {
     <div className="invoicesListLayout">
       <Sidenav />
       <div className="content">
-        <Header />
         {children}
       </div>
     </div>
