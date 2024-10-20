@@ -24,7 +24,7 @@
   font-weight: bold;
   cursor: pointer;
   display: flex;
-  align-items: center;
+  align-items: baseline;
   text-decoration: none; 
 }
 
@@ -92,16 +92,28 @@
   padding: 18px 23px;
 }
 
+.editButton:hover {
+  background-color: #DFE3FA;
+}
+
 .deleteButton {
   padding: 11px 31px;
   background-color: #EC5757;
   color: #FFFFFF;
 }
 
+.deleteButton:hover {
+  background-color: #FF9797;
+}
+
 .markPaidButton {
   background-color: #7C5DFA;
   color: #fff;
   padding: 18px 23px;
+}
+
+.markPaidButton:hover {
+  background-color: #9277FF;
 }
 
 /* Invoice Bilgileri */
