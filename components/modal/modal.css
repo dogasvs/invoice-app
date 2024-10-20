@@ -13,6 +13,11 @@
   margin-left: 100px;
 }
 
+/* scroll rengi */
+.modal-container::-webkit-scrollbar-thumb {
+  background: #DFE3FA; 
+}
+
 /* Modal container */
 .modal-container {
   background-color: #ffffff;
@@ -20,7 +25,7 @@
   height: 100%;
   padding: 58px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  overflow-y: auto;
+  overflow-y: scroll;
 }
 
 h2,
