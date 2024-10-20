@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import "../modal.css";
+import Trash from "@/svgs/trash";
 
 export default function ModalAdd({ isModalOpen, closeModal }) {
   const [addNewInput, setAddNewInput] = useState([]);
@@ -147,8 +148,8 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
                     />
                     <span>{input.total.placeholder}</span>
 
-                    <button type="button" onClick={() => itemDelete(input.id)}>
-                      sil
+                    <button className="trash" type="button" onClick={() => itemDelete(input.id)}>
+                      <Trash />
                     </button>
                   </div>
                 ))}

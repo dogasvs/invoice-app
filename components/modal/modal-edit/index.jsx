@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import "../modal.css";
 import handleNewAddItem from "../modal-add/index.jsx";
 import handleSaveChanges from "../modal-edit/index.jsx";
+import Trash from "@/svgs/trash";
 
 const EditModal = ({
   isOpen,
@@ -220,7 +221,7 @@ const EditModal = ({
                 onChange={(e) => handleItemChange(item.id, 'price', parseFloat(e.target.value))}
               />
               <span>{(item.quantity * item.price).toFixed(2)}</span>
-              <button type="button" onClick={() => handleItemDelete(item.id)}>Sil</button>
+              <button className="trash" type="button" onClick={() => handleItemDelete(item.id)}> <Trash /> </button>
             </div>
           ))}
           <button className="addInput" type="button" onClick={handleNewAddItem}>
