@@ -18,13 +18,19 @@ export default function InvoiceDetailsContent({ invoiceData }) {
 
     const handleDelete = async () => {
         try {
-            await deleteInvoiceData(invoiceData.id);
-            console.log("Fatura silindi.");
-            closeDeleteModal();
+          console.log(`Fatura ${invoiceData.id} siliniyor...`);
+          const response = await deleteInvoiceData(invoiceData.id);
+      
+          console.log("API Yanıtı:", response);
+      
+          closeDeleteModal();
+      
+          console.log("Fatura başarıyla silindi.");
         } catch (error) {
-            console.error("Fatura silinirken bir hata oluştu:", error);
+          console.error("Fatura silinirken bir hata oluştu:", error);
         }
-    };
+      };
+      
 
     const handleSaveChanges = (updatedData) => {
         setInvoiceData(updatedData);
