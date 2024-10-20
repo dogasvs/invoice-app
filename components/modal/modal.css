@@ -144,6 +144,10 @@ h3 {
   border-radius: 100px;
 }
 
+.addInput:hover {
+  background-color: #DFE3FA;
+}
+
 .item {
   display: flex;
   justify-content: space-between;
@@ -200,4 +204,11 @@ h3 {
   cursor: pointer;
   padding: 18px 23px;
   margin-left: 10px;
+}
+
+.trash {
+  border: transparent;
+  background-color: transparent;
+  cursor: pointer;
+  padding: 0;
 }
