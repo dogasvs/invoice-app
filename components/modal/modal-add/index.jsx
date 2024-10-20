@@ -44,7 +44,12 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
       ...formData,
       items: [
         ...formData.items,
-        { name: newItem.itemName, quantity: newItem.quantity, price: newItem.price, total },
+        {
+          name: newItem.itemName,
+          quantity: newItem.quantity,
+          price: newItem.price,
+          total,
+        },
       ],
     });
 
@@ -92,7 +97,8 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
                   <input
                     type="text"
                     name="streetAddress"
-                    value={formData.streetAddress}
+                    defaultValue="istanbul"
+                    // value={formData.streetAddress}
                     onChange={handleChange}
                     placeholder="19 Union Terrace"
                   />
@@ -249,28 +255,45 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
                       type="text"
                       value={item.name}
                       placeholder="Item Name"
-                      onChange={(e) => handleItemChange(index, 'name', e.target.value)}
+                      onChange={(e) =>
+                        handleItemChange(index, "name", e.target.value)
+                      }
                     />
                     <input
                       type="number"
                       value={item.quantity}
                       placeholder="Quantity"
-                      onChange={(e) => handleItemChange(index, 'quantity', parseInt(e.target.value))}
+                      onChange={(e) =>
+                        handleItemChange(
+                          index,
+                          "quantity",
+                          parseInt(e.target.value)
+                        )
+                      }
                     />
                     <input
                       type="number"
                       value={item.price}
                       placeholder="Price"
-                      onChange={(e) => handleItemChange(index, 'price', parseFloat(e.target.value))}
+                      onChange={(e) =>
+                        handleItemChange(
+                          index,
+                          "price",
+                          parseFloat(e.target.value)
+                        )
+                      }
                     />
                     <span>{(item.quantity * item.price).toFixed(2)}</span>
 
-                    <button className="trash" type="button" onClick={() => handleDeleteItem(index)}>
+                    <button
+                      className="trash"
+                      type="button"
+                      onClick={() => handleDeleteItem(index)}
+                    >
                       <Trash />
                     </button>
                   </div>
                 ))}
-
 
                 {/* Yeni öğe ekleme formu */}
                 <div className="item">
@@ -278,30 +301,52 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
                     type="text"
                     name="itemName"
                     value={newItem.itemName}
-                    onChange={(e) => setNewItem({ ...newItem, itemName: e.target.value })}
+                    onChange={(e) =>
+                      setNewItem({ ...newItem, itemName: e.target.value })
+                    }
                     placeholder="Öğe Adı"
                   />
                   <input
                     type="number"
                     name="quantity"
                     value={newItem.quantity}
-                    onChange={(e) => setNewItem({ ...newItem, quantity: parseInt(e.target.value) })}
+                    onChange={(e) =>
+                      setNewItem({
+                        ...newItem,
+                        quantity: parseInt(e.target.value),
+                      })
+                    }
                     placeholder="Adet"
                   />
                   <input
                     type="number"
                     name="price"
                     value={newItem.price}
-                    onChange={(e) => setNewItem({ ...newItem, price: parseFloat(e.target.value) })}
+                    onChange={(e) =>
+                      setNewItem({
+                        ...newItem,
+                        price: parseFloat(e.target.value),
+                      })
+                    }
                     placeholder="Fiyat"
                   />
-                  <button type="button" onClick={handleAddNewItem}>+ Yeni Ekle</button>
+                  <button type="button" onClick={handleAddNewItem}>
+                    + Yeni Ekle
+                  </button>
                 </div>
               </div>
 
               <div className="modal-buttons">
-                <button onClick={closeModal} type="button" className="cancel-btn">İptal</button>
-                <button type="submit" className="save-btn">Faturayı Kaydet</button>
+                <button
+                  onClick={closeModal}
+                  type="button"
+                  className="cancel-btn"
+                >
+                  İptal
+                </button>
+                <button type="submit" className="save-btn">
+                  Faturayı Kaydet
+                </button>
               </div>
             </form>
           </div>
