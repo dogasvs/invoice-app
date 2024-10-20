@@ -1,4 +1,5 @@
 export const advancedFetch = async (url, method = 'GET', data = null) => {
+  
     try {
       const response = await fetch(url, {
         method,
