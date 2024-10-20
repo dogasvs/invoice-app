@@ -20,18 +20,14 @@ export default function InvoiceDetailsContent({ invoiceData }) {
         try {
           console.log(`Fatura ${invoiceData.id} siliniyor...`);
           const response = await deleteInvoiceData(invoiceData.id);
-      
           console.log("API Yanıtı:", response);
-      
           closeDeleteModal();
-      
           console.log("Fatura başarıyla silindi.");
         } catch (error) {
           console.error("Fatura silinirken bir hata oluştu:", error);
         }
       };
       
-
     const handleSaveChanges = (updatedData) => {
         setInvoiceData(updatedData);
         closeModal();
@@ -119,6 +115,7 @@ export default function InvoiceDetailsContent({ invoiceData }) {
                 handlePaymentChange={handlePaymentChange}
                 onSave={handleSaveChanges}
                 invoiceData={invoiceData}
+                invoiceId={invoiceData.id}
             />
             <DeleteModal
                 isOpen={isDeleteModalOpen}
