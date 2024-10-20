@@ -131,25 +131,6 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
               {/* Item List Section */}
               <div className="itemListSection">
                 <h3>Öğe Listesi</h3>
-                <div className="item">
-                  <input type="text" defaultValue="Banner Design" />
-                  <input type="number" defaultValue="1" />
-                  <input type="number" defaultValue="156.00" />
-                  <span>156.00</span>
-                </div>
-                <div className="item">
-                  <input type="text" defaultValue="Email Design" />
-                  <input type="number" defaultValue="2" />
-                  <input type="number" defaultValue="200.00" />
-                  <span>400.00</span>
-                </div>
-                <button
-                  className="addInput"
-                  type="button"
-                  onClick={handleNewAddItem}
-                >
-                  + Yeni Ekle
-                </button>
                 {addNewInput.map((input, index) => (
                   <div key={index} className="item">
                     <input
@@ -172,6 +153,14 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
                   </div>
                 ))}
               </div>
+
+              <button
+                className="addInput"
+                type="button"
+                onClick={handleNewAddItem}
+              >
+                + Yeni Ekle
+              </button>
 
               <div className="modal-buttons">
                 <button
