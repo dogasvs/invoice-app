@@ -4,14 +4,20 @@ import "./empty.css";
 
 export default function EmptyPage() {
   return (
-    <div className="emptyPage">
+    <>
       <Header />
-      <EmptyPageSvg />
-      <h1>Burada hiçbir şey yok</h1>
-      <p>
-        simgesine tıklayarak yeni bir fatura oluşturun. Yeni Fatura düğmesi ve
-        başlayın
-      </p>
-    </div>
+      <div className="emptyPageContainer">
+        <div className="svg">
+          <EmptyPageSvg />
+        </div>
+        <div className="emptyPageText">
+          <h1>Burada hiçbir şey yok</h1>
+          <p>
+            simgesine tıklayarak yeni bir fatura oluşturun.
+            <span>Yeni Fatura</span> düğmesi ve başlayın
+          </p>
+        </div>
+      </div>
+    </>
   );
 }

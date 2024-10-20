@@ -36,16 +36,15 @@
 .invoicesAdd {
   display: flex;
   align-items: center;
-  
 }
 
 .invoicesAddBtn {
-  background-color: #7C5DFA;
+  background-color: #7c5dfa;
   padding: 18px 17px 18px 17px;
   font-size: 15px;
   line-height: 15px;
   letter-spacing: -0.25px;
-  color: #FFFFFF;
+  color: #ffffff;
   border: transparent;
   border-radius: 100px;
   font-weight: bold;

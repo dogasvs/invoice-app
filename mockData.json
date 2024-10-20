@@ -1,0 +1,170 @@
+[
+    {
+      "id": 1,
+      "invoiceNumber": "INV-2024-001",
+      "projectDescription": "Website Development",
+      "invoiceDate": "2024-10-19T11:38:53.740Z",
+      "paymentTerm": 30,
+      "status": 1,
+      "items": [
+        {
+          "id": 1,
+          "name": "Design Services",
+          "quantity": 2,
+          "price": 500,
+          "totalPrice": 1000
+        },
+        {
+          "id": 2,
+          "name": "Development Services",
+          "quantity": 5,
+          "price": 800,
+          "totalPrice": 4000
+        }
+      ],
+      "userId": 101,
+      "billFrom": {
+        "id": 1,
+        "streetAddress": "123 Main Street",
+        "city": "New York",
+        "postCode": "10001",
+        "country": "USA"
+      },
+      "clientId": 202,
+      "billTo": {
+        "id": 1,
+        "name": "John Doe",
+        "email": "johndoe@example.com",
+        "address": "456 Oak Avenue",
+        "city": "Los Angeles",
+        "postCode": "90001",
+        "country": "USA"
+      }
+    },
+    {
+      "id": 2,
+      "invoiceNumber": "INV-2024-002",
+      "projectDescription": "Mobile App Development",
+      "invoiceDate": "2024-10-18T09:25:13.740Z",
+      "paymentTerm": 45,
+      "status": 2,
+      "items": [
+        {
+          "id": 3,
+          "name": "App Design",
+          "quantity": 1,
+          "price": 1200,
+          "totalPrice": 1200
+        },
+        {
+          "id": 4,
+          "name": "Backend Development",
+          "quantity": 10,
+          "price": 900,
+          "totalPrice": 9000
+        }
+      ],
+      "userId": 102,
+      "billFrom": {
+        "id": 2,
+        "streetAddress": "456 Tech Road",
+        "city": "San Francisco",
+        "postCode": "94103",
+        "country": "USA"
+      },
+      "clientId": 203,
+      "billTo": {
+        "id": 2,
+        "name": "Jane Smith",
+        "email": "janesmith@example.com",
+        "address": "789 Pine Lane",
+        "city": "Chicago",
+        "postCode": "60601",
+        "country": "USA"
+      }
+    },
+    {
+      "id": 3,
+      "invoiceNumber": "INV-2024-003",
+      "projectDescription": "E-commerce Platform",
+      "invoiceDate": "2024-10-17T15:10:33.740Z",
+      "paymentTerm": 60,
+      "status": 0,
+      "items": [
+        {
+          "id": 5,
+          "name": "Platform Setup",
+          "quantity": 1,
+          "price": 1500,
+          "totalPrice": 1500
+        },
+        {
+          "id": 6,
+          "name": "Custom Features Development",
+          "quantity": 8,
+          "price": 1000,
+          "totalPrice": 8000
+        }
+      ],
+      "userId": 103,
+      "billFrom": {
+        "id": 3,
+        "streetAddress": "789 Commerce Blvd",
+        "city": "Miami",
+        "postCode": "33101",
+        "country": "USA"
+      },
+      "clientId": 204,
+      "billTo": {
+        "id": 3,
+        "name": "David Johnson",
+        "email": "davidj@example.com",
+        "address": "123 Market St",
+        "city": "Houston",
+        "postCode": "77001",
+        "country": "USA"
+      }
+    },
+    {
+      "id": 4,
+      "invoiceNumber": "INV-2024-004",
+      "projectDescription": "SEO Optimization",
+      "invoiceDate": "2024-10-16T08:15:03.740Z",
+      "paymentTerm": 15,
+      "status": 3,
+      "items": [
+        {
+          "id": 7,
+          "name": "SEO Audit",
+          "quantity": 1,
+          "price": 600,
+          "totalPrice": 600
+        },
+        {
+          "id": 8,
+          "name": "Keyword Optimization",
+          "quantity": 3,
+          "price": 200,
+          "totalPrice": 600
+        }
+      ],
+      "userId": 104,
+      "billFrom": {
+        "id": 4,
+        "streetAddress": "456 Marketing Way",
+        "city": "Boston",
+        "postCode": "02108",
+        "country": "USA"
+      },
+      "clientId": 205,
+      "billTo": {
+        "id": 4,
+        "name": "Emily Davis",
+        "email": "emilyd@example.com",
+        "address": "789 Beacon St",
+        "city": "Denver",
+        "postCode": "80203",
+        "country": "USA"
+      }
+    }
+  ]
