@@ -7,10 +7,13 @@ export default function Header() {
     <div className="header">
       <div className="headerTitle">
         <h1>Faturalar</h1>
-        <p>Toplam 7 fatura bulunmaktadır</p>
+        <p className="headerTitleInfo">Toplam 7 fatura bulunmaktadır</p>
+        <p className="headerInforespo"> 7 fatura </p>
       </div>
       <div className="invoicesProcess">
         <div className="invoicesFilter">
+          <p className="invoicesFilterInfo">Duruma göre filtrele</p>
+          <p className="invoicesFilterRespo">Filtre</p>
           <FilteredDropdown />
           <FilterIcon />
         </div>

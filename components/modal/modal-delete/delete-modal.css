@@ -52,11 +52,7 @@
     cursor: pointer;
     transition: background-color 0.3s ease;
   }
-  
-  .cancel-btn:hover {
-    background-color: #dfe3fa;
-  }
-  
+
   /* Delete button */
   .delete-btn {
     background-color: #ec5757;
