@@ -1,6 +1,5 @@
 import { advancedFetch } from "@/utils/fetch";
 
-
 const API_BASE_URL = 'https://dummyjson.com';
 
 // Fatura verilerini çekmek için 

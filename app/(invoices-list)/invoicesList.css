@@ -6,7 +6,10 @@
 
 .content {
   width: 1000px;
-  margin-block: 80px
+}
+
+.invoices-list-container {
+  margin-bottom: 77px;
 }
 
 .invoices-list {

@@ -2,7 +2,7 @@
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  margin-bottom: 60px;
+  margin-block: 60px;
 }
 
 .invoicesProcess {
