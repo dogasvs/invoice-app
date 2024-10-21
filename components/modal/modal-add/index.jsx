@@ -7,21 +7,26 @@ import { addInvoiceData } from "@/app/actions/serverActions";
 
 export default function ModalAdd({ isModalOpen, closeModal }) {
   const [formData, setFormData] = useState({
-    streetAddress: "",
-    city: "",
-    postCode: "",
-    country: "",
-    clientName: "",
-    clientEmail: "",
-    clientStreetAddress: "",
-    clientCity: "",
-    clientPostCode: "",
-    clientCountry: "",
-    invoiceDate: "",
+    billFrom: {
+      streetAddress: "",
+      city: "",
+      postCode: "",
+      country: "",
+    },
+    billTo: {
+      name: "",
+      email: "",
+      address: "",
+      city: "",
+      postCode: "",
+      country: "",
+    },
     projectDescription: "",
-    paymentTerms: "Net 30 Days",
+    invoiceDate: "",
+    paymentTerm: "Net 30 Days",
     items: [],
   });
+
 
   const [newItem, setNewItem] = useState({
     itemName: "",
@@ -32,7 +37,6 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
   const [errorMessage, setErrorMessage] = useState(null);
 
   const handleAddNewItem = () => {
-    // Eklenmek istenen öğeyi kontrol et
     if (!newItem.itemName || newItem.quantity <= 0 || newItem.price <= 0) {
       setErrorMessage("Geçerli bir öğe ekleyin.");
       return;
@@ -78,8 +82,34 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
   };
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+
+    if (name.startsWith("billFrom.")) {
+      const field = name.split(".")[1];
+      setFormData({
+        ...formData,
+        billFrom: {
+          ...formData.billFrom,
+          [field]: value,
+        },
+      });
+    } else if (name.startsWith("billTo.")) {
+      const field = name.split(".")[1];
+      setFormData({
+        ...formData,
+        billTo: {
+          ...formData.billTo,
+          [field]: value,
+        },
+      });
+    } else {
+      setFormData({
+        ...formData,
+        [name]: value,
+      });
+    }
   };
+
 
   return (
     <div>
@@ -96,9 +126,8 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
                   <label>Açık Adres</label>
                   <input
                     type="text"
-                    name="streetAddress"
-                    defaultValue="istanbul"
-                    // value={formData.streetAddress}
+                    name="billFrom.streetAddress"
+                    value={formData.billFrom.streetAddress}
                     onChange={handleChange}
                     placeholder="19 Union Terrace"
                   />
@@ -109,8 +138,8 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
                     <label>Şehir</label>
                     <input
                       type="text"
-                      name="city"
-                      value={formData.city}
+                      name="billFrom.city"
+                      value={formData.billFrom.city}
                       onChange={handleChange}
                       placeholder="London"
                     />
@@ -119,8 +148,8 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
                     <label>Posta Kodu</label>
                     <input
                       type="text"
-                      name="postCode"
-                      value={formData.postCode}
+                      name="billFrom.postCode"
+                      value={formData.billFrom.postCode}
                       onChange={handleChange}
                       placeholder="E1 3EZ"
                     />
@@ -129,8 +158,8 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
                     <label>Ülke</label>
                     <input
                       type="text"
-                      name="country"
-                      value={formData.country}
+                      name="billFrom.country"
+                      value={formData.billFrom.country}
                       onChange={handleChange}
                       placeholder="United Kingdom"
                     />
@@ -145,8 +174,8 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
                   <label>Müşterinin Adı</label>
                   <input
                     type="text"
-                    name="clientName"
-                    value={formData.clientName}
+                    name="billTo.name"
+                    value={formData.billTo.name}
                     onChange={handleChange}
                     placeholder="Alex Grim"
                   />
@@ -156,8 +185,8 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
                   <label>Müşterinin E-postası</label>
                   <input
                     type="email"
-                    name="clientEmail"
-                    value={formData.clientEmail}
+                    name="billTo.email"
+                    value={formData.billTo.email}
                     onChange={handleChange}
                     placeholder="alexgrim@mail.com"
                   />
@@ -167,8 +196,8 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
                   <label>Açık Adres</label>
                   <input
                     type="text"
-                    name="clientStreetAddress"
-                    value={formData.clientStreetAddress}
+                    name="billTo.address"
+                    value={formData.billTo.address}
                     onChange={handleChange}
                     placeholder="84 Church Way"
                   />
@@ -179,8 +208,8 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
                     <label>Şehir</label>
                     <input
                       type="text"
-                      name="clientCity"
-                      value={formData.clientCity}
+                      name="billTo.city"
+                      value={formData.billTo.city}
                       onChange={handleChange}
                       placeholder="Bradford"
                     />
@@ -189,8 +218,8 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
                     <label>Posta Kodu</label>
                     <input
                       type="text"
-                      name="clientPostCode"
-                      value={formData.clientPostCode}
+                      name="billTo.postCode"
+                      value={formData.billTo.postCode}
                       onChange={handleChange}
                       placeholder="BD1 9PB"
                     />
@@ -199,14 +228,15 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
                     <label>Ülke</label>
                     <input
                       type="text"
-                      name="clientCountry"
-                      value={formData.clientCountry}
+                      name="billTo.country"
+                      value={formData.billTo.country}
                       onChange={handleChange}
                       placeholder="United Kingdom"
                     />
                   </div>
                 </div>
               </div>
+
 
               {/* Fatura Tarihi ve Ödeme Koşulları */}
               <div className="invoiceDateSection">
@@ -223,14 +253,14 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
                   <div className="form-group">
                     <label>Ödeme Koşulları</label>
                     <select
-                      name="paymentTerms"
-                      value={formData.paymentTerms}
+                      name="paymentTerm"
+                      value={formData.paymentTerm}
                       onChange={handleChange}
                     >
-                      <option value="Net 1 Gün">Net 1 Gün</option>
-                      <option value="Net 7 Gün">Net 7 Gün</option>
-                      <option value="Net 14 Gün">Net 14 Gün</option>
-                      <option value="Net 30 Gün">Net 30 Gün</option>
+                      <option value={1}>Net 1 Gün</option>
+                      <option value={7}>Net 7 Gün</option>
+                      <option value={14}>Net 14 Gün</option>
+                      <option value={30}>Net 30 Gün</option>
                     </select>
                   </div>
                 </div>

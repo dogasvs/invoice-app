@@ -29,6 +29,17 @@ export async function addInvoiceData(newItem) {
 
 import mockData from "../../mockData.json";
 
+// Tüm faturaları getiren fonksiyon
+export async function getInvoicesData() {
+    return new Promise((resolve, reject) => {
+        if (mockData.length > 0) {
+            resolve(mockData);
+        } else {
+            reject("Faturalar bulunamadı");
+        }
+    });
+}
+
 export async function getInvoiceData(invoiceId) {
     // invoiceId'yi sayıya çeviriyoruz, çünkü item.id number türünde
     const id = Number(invoiceId);
@@ -77,12 +88,21 @@ export async function deleteInvoiceData(invoiceId) {
 }
 
 // Yeni fatura öğesi eklemek için mock fonksiyon
-export async function addInvoiceData(newItem) {
-    return new Promise((resolve) => {
-        // Yeni fatura item'ini mock veriye ekle
-        const newInvoiceId = mockData.length + 1;
-        const newInvoice = { id: newInvoiceId, ...newItem };
-        mockData.push(newInvoice);
-        resolve(newInvoice);
+export async function addInvoiceData(newInvoice) {
+    return new Promise((resolve, reject) => {
+        if (newInvoice) {
+            const newInvoiceId = mockData.length > 0 ? mockData[mockData.length - 1].id + 1 : 1;
+            const invoice = { 
+                id: newInvoiceId, 
+                invoiceNumber: `INV-2024-${String(newInvoiceId).padStart(3, '0')}`, // Otomatik fatura numarası
+                status: 0, 
+                ...newInvoice 
+            };
+            mockData.push(invoice);
+            resolve(invoice);
+        } else {
+            reject("Yeni fatura verisi eksik");
+        }
     });
 }
+

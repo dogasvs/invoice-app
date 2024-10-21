@@ -1,8 +1,9 @@
+"use client";
+
 import { useState, useEffect } from "react";
 import "../modal.css";
-import handleNewAddItem from "../modal-add/index.jsx";
-import handleSaveChanges from "../modal-edit/index.jsx";
-import { updateInvoiceData } from "@/app/actions/serverActions"; 
+import { handleAddNewItem, handleSaveInvoice } from "../modal-add/index.jsx";
+import { updateInvoiceData } from "@/app/actions/serverActions";
 import Trash from "@/svgs/trash";
 
 const EditModal = ({
@@ -12,319 +13,415 @@ const EditModal = ({
   invoiceData,
 }) => {
   const [formData, setFormData] = useState({
-    streetAddress: "",
-    city: "",
-    postCode: "",
-    country: "",
-    clientName: "",
-    clientEmail: "",
-    clientStreetAddress: "",
-    clientCity: "",
-    clientPostCode: "",
-    clientCountry: "",
+    billFrom: {
+      streetAddress: "",
+      city: "",
+      postCode: "",
+      country: "",
+    },
+    billTo: {
+      name: "",
+      email: "",
+      address: "",
+      city: "",
+      postCode: "",
+      country: "",
+    },
     invoiceDate: "",
     projectDescription: "",
-    paymentTerms: "Net 30 Days",
+    paymentTerm: 30,
+    status: 0,
     items: [],
   });
 
   const [newItem, setNewItem] = useState({
-    itemName: "",
+    name: "",
     quantity: 1,
     price: 0,
   });
+
+  const [showPaymentOptions, setShowPaymentOptions] = useState(false);
 
   const [showNewItemForm, setShowNewItemForm] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
 
   useEffect(() => {
     if (invoiceData) {
-      setFormData({ ...invoiceData, items: invoiceData.items || [] });
+      setFormData({
+        billFrom: invoiceData.billFrom || {
+          streetAddress: "",
+          city: "",
+          postCode: "",
+          country: "",
+        },
+        billTo: invoiceData.billTo || {
+          name: "",
+          email: "",
+          address: "",
+          city: "",
+          postCode: "",
+          country: "",
+        },
+        invoiceDate: invoiceData.invoiceDate ? invoiceData.invoiceDate.split('T')[0] : "",
+        projectDescription: invoiceData.projectDescription || "",
+        paymentTerm: invoiceData.paymentTerm || 30,
+        status: invoiceData.status || 0,
+        items: invoiceData.items || [],
+      });
     }
   }, [invoiceData]);
 
-  const handleAddNewItem = () => {
-    if (!newItem.itemName || newItem.quantity <= 0 || newItem.price <= 0) {
-      setErrorMessage("Geçerli bir öğe ekleyin.");
-      return;
-    }
-
-    const total = newItem.quantity * newItem.price;
-    setFormData({
-      ...formData,
-      items: [
-        ...formData.items,
-        { name: newItem.itemName, quantity: newItem.quantity, price: newItem.price, total },
-      ],
-    });
-
-    setNewItem({ itemName: "", quantity: 1, price: 0 });
-    setErrorMessage(null);
+  const onSaveChanges = (e) => {
+    handleSaveInvoice(e, invoiceId, formData, updateInvoiceData, closeModal, setErrorMessage, onSaveChanges);
   };
 
-  const handleDeleteItem = (index) => {
-    const updatedItems = formData.items.filter((_, i) => i !== index);
-    setFormData({ ...formData, items: updatedItems });
-  };
-
-  const handleSaveChanges = async (e) => {
-    e.preventDefault();
-
-    try {
-      await updateInvoiceData(invoiceId, formData);
-      closeModal();
-    } catch (error) {
-      console.error("Fatura güncellenirken hata:", error);
-      setErrorMessage("Fatura güncellenirken bir hata oluştu.");
-    }
+  const onAddNewItem = () => {
+    handleAddNewItem(newItem, formData, setFormData, setNewItem, setErrorMessage, setShowNewItemForm);
   };
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+
+    if (name.startsWith("billFrom.")) {
+      const field = name.split(".")[1];
+      setFormData({
+        ...formData,
+        billFrom: {
+          ...formData.billFrom,
+          [field]: value,
+        },
+      });
+    } else if (name.startsWith("billTo.")) {
+      const field = name.split(".")[1];
+      setFormData({
+        ...formData,
+        billTo: {
+          ...formData.billTo,
+          [field]: value,
+        },
+      });
+    } else if (name === "paymentTerm") {
+      setFormData({
+        ...formData,
+        paymentTerm: Number(value),
+      });
+    } else {
+      setFormData({
+        ...formData,
+        [name]: value,
+      });
+    }
   };
 
-  const handleItemChange = (id, field, value) => {
-    const updatedItems = formData.items.map((item, index) =>
-      index === id ? { ...item, [field]: value } : item
+  const handleItemChangeInternal = (index, field, value) => {
+    const updatedItems = formData.items.map((item, i) =>
+      i === index
+        ? {
+          ...item,
+          [field]: value,
+          totalPrice:
+            field === "price" || field === "quantity"
+              ? (field === "price" ? value : item.price) * (field === "quantity" ? value : item.quantity)
+              : item.totalPrice,
+        }
+        : item
     );
     setFormData({ ...formData, items: updatedItems });
+  };
+
+  const getPaymentTermText = (term) => {
+    switch (term) {
+      case 1:
+        return "Net 1 Day";
+      case 7:
+        return "Net 7 Days";
+      case 14:
+        return "Net 14 Days";
+      case 30:
+        return "Net 30 Days";
+      default:
+        return "";
+    }
   };
 
   return isOpen ? (
     <div className="modal-overlay">
       <div className="modal-container">
-        <h2>Edit #{invoiceId}</h2>
+        <h2>#{invoiceId}</h2>
         {errorMessage && <p className="error-message">{errorMessage}</p>}
 
-        {/* Fatura Kaynağı */}
-        <div className="billFrom">
-          <h3>Bill From</h3>
-          <div className="form-group">
-            <label>Street Address</label>
-            <input
-              type="text"
-              name="streetAddress"
-              value={formData.streetAddress}
-              onChange={handleChange}
-            />
-          </div>
-
-          <div className="form-row">
+        <form onSubmit={onSaveChanges}>
+          {/* Bill From Section */}
+          <div className="billFrom">
+            <h3>Bill From</h3>
             <div className="form-group">
-              <label>City</label>
+              <label>Street Address</label>
               <input
                 type="text"
-                name="city"
-                value={formData.city}
+                name="billFrom.streetAddress"
+                value={formData.billFrom.streetAddress}
                 onChange={handleChange}
+                placeholder="19 Union Terrace"
+                required
               />
             </div>
-            <div className="form-group">
-              <label>Post Code</label>
-              <input
-                type="text"
-                name="postCode"
-                value={formData.postCode}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="form-group">
-              <label>Country</label>
-              <input
-                type="text"
-                name="country"
-                value={formData.country}
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-        </div>
 
-        {/* Bill To Section */}
-        <div className="billTo">
-          <h3>Bill To</h3>
-          <div className="form-group">
-            <label>Client's Name</label>
-            <input
-              type="text"
-              name="clientName"
-              value={formData.clientName}
-              onChange={handleChange}
-            />
-          </div>
-
-          <div className="form-group">
-            <label>Client's Email</label>
-            <input
-              type="email"
-              name="clientEmail"
-              value={formData.clientEmail}
-              onChange={handleChange}
-            />
-          </div>
-
-          <div className="form-group">
-            <label>Street Address</label>
-            <input
-              type="text"
-              name="clientStreetAddress"
-              value={formData.clientStreetAddress}
-              onChange={handleChange}
-            />
-          </div>
-
-          <div className="form-row">
-            <div className="form-group">
-              <label>City</label>
-              <input
-                type="text"
-                name="clientCity"
-                value={formData.clientCity}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="form-group">
-              <label>Post Code</label>
-              <input
-                type="text"
-                name="clientPostCode"
-                value={formData.clientPostCode}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="form-group">
-              <label>Country</label>
-              <input
-                type="text"
-                name="clientCountry"
-                value={formData.clientCountry}
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-        </div>
-
-        {/* Invoice Date Section */}
-        <div className="invoiceDateSection">
-          <div className="form-row">
-            <div className="form-group">
-              <label>Invoice Date</label>
-              <input
-                type="date"
-                name="invoiceDate"
-                value={formData.invoiceDate}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="form-group">
-              <label>Payment Terms</label>
-              <div className="custom-select">
-                <div className="selected-option">
-                  {formData.paymentTerms}
-                  <span className="arrow">⌄</span>
-                </div>
-                <ul className="options">
-                  <li onClick={() => setFormData({ ...formData, paymentTerms: "Net 1 Day" })}>
-                    Net 1 Day
-                  </li>
-                  <li onClick={() => setFormData({ ...formData, paymentTerms: "Net 7 Days" })}>
-                    Net 7 Days
-                  </li>
-                  <li onClick={() => setFormData({ ...formData, paymentTerms: "Net 14 Days" })}>
-                    Net 14 Days
-                  </li>
-                  <li onClick={() => setFormData({ ...formData, paymentTerms: "Net 30 Days" })}>
-                    Net 30 Days
-                  </li>
-                </ul>
+            <div className="form-row">
+              <div className="form-group">
+                <label>City</label>
+                <input
+                  type="text"
+                  name="billFrom.city"
+                  value={formData.billFrom.city}
+                  onChange={handleChange}
+                  placeholder="London"
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label>Post Code</label>
+                <input
+                  type="text"
+                  name="billFrom.postCode"
+                  value={formData.billFrom.postCode}
+                  onChange={handleChange}
+                  placeholder="E1 3EZ"
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label>Country</label>
+                <input
+                  type="text"
+                  name="billFrom.country"
+                  value={formData.billFrom.country}
+                  onChange={handleChange}
+                  placeholder="United Kingdom"
+                  required
+                />
               </div>
             </div>
           </div>
-          <div className="form-group">
-            <label>Project Description</label>
-            <input
-              type="text"
-              name="projectDescription"
-              value={formData.projectDescription}
-              onChange={handleChange}
-            />
-          </div>
-        </div>
 
-        {/* Item List Section */}
-        <div className="itemListSection">
-          <h3>Item List</h3>
-          {formData.items.map((item, index) => (
-            <div key={index} className="item">
+          {/* Bill To Section */}
+          <div className="billTo">
+            <h3>Bill To</h3>
+            <div className="form-group">
+              <label>Client's Name</label>
               <input
                 type="text"
-                value={item.name}
-                placeholder="Item Name"
-                onChange={(e) => handleItemChange(index, 'name', e.target.value)}
+                name="billTo.name"
+                value={formData.billTo.name}
+                onChange={handleChange}
+                placeholder="Alex Grim"
+                required
               />
-              <input
-                type="number"
-                value={item.quantity}
-                placeholder="Quantity"
-                onChange={(e) => handleItemChange(index, 'quantity', parseInt(e.target.value))}
-              />
-              <input
-                type="number"
-                value={item.price}
-                placeholder="Price"
-                onChange={(e) => handleItemChange(index, 'price', parseFloat(e.target.value))}
-              />
-              <span>{(item.quantity * item.price).toFixed(2)}</span>
-              <button className="trash" type="button" onClick={() => handleItemDelete(item.id)}> <Trash /> </button>
-              <button className="trash"  type="button" onClick={() => handleDeleteItem(index)}> <Trash /> </button>
             </div>
-          ))}
-          {/* Yeni öğe ekleme formu */}
-          {showNewItemForm && (
-            <div className="item">
+
+            <div className="form-group">
+              <label>Client's Email</label>
+              <input
+                type="email"
+                name="billTo.email"
+                value={formData.billTo.email}
+                onChange={handleChange}
+                placeholder="alexgrim@mail.com"
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              <label>Street Address</label>
               <input
                 type="text"
-                name="itemName"
-                value={newItem.itemName}
-                onChange={(e) => setNewItem({ ...newItem, itemName: e.target.value })}
-                placeholder="Öğe Adı"
+                name="billTo.address"
+                value={formData.billTo.address}
+                onChange={handleChange}
+                placeholder="84 Church Way"
+                required
               />
+            </div>
+
+            <div className="form-row">
+              <div className="form-group">
+                <label>City</label>
+                <input
+                  type="text"
+                  name="billTo.city"
+                  value={formData.billTo.city}
+                  onChange={handleChange}
+                  placeholder="Bradford"
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label>Post Code</label>
+                <input
+                  type="text"
+                  name="billTo.postCode"
+                  value={formData.billTo.postCode}
+                  onChange={handleChange}
+                  placeholder="BD1 9PB"
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label>Country</label>
+                <input
+                  type="text"
+                  name="billTo.country"
+                  value={formData.billTo.country}
+                  onChange={handleChange}
+                  placeholder="United Kingdom"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Invoice Date Section */}
+          <div className="invoiceDateSection">
+            <div className="form-row">
+              <div className="form-group">
+                <label>Invoice Date</label>
+                <input
+                  type="date"
+                  name="invoiceDate"
+                  value={formData.invoiceDate}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label>Payment Terms</label>
+                <div className="custom-select" onClick={() => setShowPaymentOptions(!showPaymentOptions)}>
+                  <div className="selected-option">
+                    {getPaymentTermText(formData.paymentTerm)}
+                    <span className="arrow">⌄</span>
+                  </div>
+                  {showPaymentOptions && (
+                    <ul className="options">
+                      <li onClick={() => { setFormData({ ...formData, paymentTerm: 1 }); setShowPaymentOptions(false); }}>
+                        Net 1 Day
+                      </li>
+                      <li onClick={() => { setFormData({ ...formData, paymentTerm: 7 }); setShowPaymentOptions(false); }}>
+                        Net 7 Days
+                      </li>
+                      <li onClick={() => { setFormData({ ...formData, paymentTerm: 14 }); setShowPaymentOptions(false); }}>
+                        Net 14 Days
+                      </li>
+                      <li onClick={() => { setFormData({ ...formData, paymentTerm: 30 }); setShowPaymentOptions(false); }}>
+                        Net 30 Days
+                      </li>
+                    </ul>
+                  )}
+                </div>
+              </div>
+            </div>
+            <div className="form-group">
+              <label>Project Description</label>
               <input
-                type="number"
-                name="quantity"
-                value={newItem.quantity}
-                onChange={(e) => setNewItem({ ...newItem, quantity: parseInt(e.target.value) })}
-                placeholder="Adet"
+                type="text"
+                name="projectDescription"
+                value={formData.projectDescription}
+                onChange={handleChange}
+                placeholder="Graphic Design"
+                required
               />
-              <input
-                type="number"
-                name="price"
-                value={newItem.price}
-                onChange={(e) => setNewItem({ ...newItem, price: parseFloat(e.target.value) })}
-                placeholder="Fiyat"
-              />
-              <button className="addInput" type="button" onClick={handleAddNewItem}>
+            </div>
+          </div>
+
+          {/* Item List Section */}
+          <div className="itemListSection">
+            <h3>Item List</h3>
+            {formData.items.map((item, index) => (
+              <div key={index} className="item">
+                <input
+                  type="text"
+                  name={`items.${index}.name`}
+                  value={item.name}
+                  placeholder="Item Name"
+                  onChange={(e) => handleItemChangeInternal(index, 'name', e.target.value)}
+                  required
+                />
+                <input
+                  type="number"
+                  name={`items.${index}.quantity`}
+                  value={item.quantity}
+                  placeholder="Quantity"
+                  onChange={(e) => handleItemChangeInternal(index, 'quantity', parseInt(e.target.value))}
+                  min="1"
+                  required
+                />
+                <input
+                  type="number"
+                  name={`items.${index}.price`}
+                  value={item.price}
+                  placeholder="Price"
+                  onChange={(e) => handleItemChangeInternal(index, 'price', parseFloat(e.target.value))}
+                  min="0.01"
+                  step="0.01"
+                  required
+                />
+                <span>{(item.quantity * item.price).toFixed(2)}</span>
+                <button className="trash" type="button" onClick={() => handleDeleteItem(index)}>
+                  <Trash />
+                </button>
+              </div>
+            ))}
+            {/* Yeni öğe ekleme formu */}
+            {showNewItemForm && (
+              <div className="item">
+                <input
+                  type="text"
+                  name="itemName"
+                  value={newItem.name}
+                  onChange={(e) => setNewItem({ ...newItem, name: e.target.value })}
+                  placeholder="Öğe Adı"
+                  required
+                />
+                <input
+                  type="number"
+                  name="quantity"
+                  value={newItem.quantity}
+                  onChange={(e) => setNewItem({ ...newItem, quantity: parseInt(e.target.value) })}
+                  placeholder="Adet"
+                  min="1"
+                  required
+                />
+                <input
+                  type="number"
+                  name="price"
+                  value={newItem.price}
+                  onChange={(e) => setNewItem({ ...newItem, price: parseFloat(e.target.value) })}
+                  placeholder="Fiyat"
+                  min="0.01"
+                  step="0.01"
+                  required
+                />
+                <button className="addInput" type="button" onClick={onAddNewItem}>
+                  + Add New Item
+                </button>
+              </div>
+            )}
+            {/* Formu göstermek için düğme */}
+            {!showNewItemForm && (
+              <button className="addInput" type="button" onClick={() => setShowNewItemForm(true)}>
                 + Add New Item
               </button>
-            </div>
-          )}
+            )}
+          </div>
 
-          {/* Formu göstermek için düğme */}
-          {!showNewItemForm && (
-            <button className="addInput" type="button" onClick={() => setShowNewItemForm(true)}>
-              + Add New Item
+          {/* Modal Buttons */}
+          <div className="modal-buttons">
+            <button type="button" className="cancel-btn" onClick={closeModal}>
+              Cancel
             </button>
-          )}
-        </div>
-        {/* Modal Buttons */}
-        <div className="modal-buttons">
-          <button type="button" className="cancel-btn" onClick={closeModal}>
-            Cancel
-          </button>
-          <button type="button" className="save-btn" onClick={handleSaveChanges}>
-            Save Changes
-          </button>
-        </div>
+            <button type="submit" className="save-btn">
+              Save Changes
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   ) : null;

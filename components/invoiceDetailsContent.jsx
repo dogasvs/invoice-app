@@ -9,7 +9,6 @@ export default function InvoiceDetailsContent({ invoiceData }) {
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [updatedInvoiceData, setUpdatedInvoiceData] = useState(invoiceData);
-    const [paymentTerms, setPaymentTerms] = useState(updatedInvoiceData.paymentTerm || "Net 30 Days");
 
     const openModal = () => setIsEditModalOpen(true);
     const closeModal = () => setIsEditModalOpen(false);
@@ -30,11 +29,9 @@ export default function InvoiceDetailsContent({ invoiceData }) {
     };
 
     const handleSaveChanges = (newData) => {
-        setUpdatedInvoiceData(newData); 
+        setUpdatedInvoiceData(newData);
         closeModal();
     };
-
-    const handlePaymentChange = (newTerm) => setPaymentTerms(newTerm);
 
     return (
         <>
@@ -114,8 +111,6 @@ export default function InvoiceDetailsContent({ invoiceData }) {
             <EditModal
                 isOpen={isEditModalOpen}
                 closeModal={closeModal}
-                paymentTerms={paymentTerms}
-                handlePaymentChange={handlePaymentChange}
                 onSave={handleSaveChanges}
                 invoiceData={updatedInvoiceData}
                 invoiceId={updatedInvoiceData.id}

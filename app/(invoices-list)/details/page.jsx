@@ -9,9 +9,7 @@ export default async function InvoiceDetail({ params }) {
 
   const invoiceData = await getInvoiceData(invoiceId);
 
-  const parsedInvoiceData = JSON.parse(JSON.stringify(invoiceData));
-
-  if (!parsedInvoiceData) {
+  if (!invoiceData) {
     return <p>Fatura bulunamadı!</p>;
   }
 
@@ -22,7 +20,7 @@ export default async function InvoiceDetail({ params }) {
           <Link href="/" className="goBackButton">Geri git</Link>
         </div>
 
-        <InvoiceDetailsContent invoiceData={parsedInvoiceData} />
+        <InvoiceDetailsContent invoiceData={invoiceData} />
       </div>
     </div>
   );
