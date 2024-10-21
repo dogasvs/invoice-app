@@ -2,20 +2,14 @@ import DetayaGitSvg from "@/svgs/detaya-git";
 import "./invoicesList.css";
 import Link from "next/link";
 import Header from "@/components/header";
-import { getInvoiceData } from "../actions/serverActions";
+import { getInvoicesData } from "../actions/serverActions";
 
 export default async function InvoicesList() {
-  const invoices = [];
+  let invoices = [];
 
   try {
-    // İlk 7 faturayı çekiyoruz şimdilik
-    for (let i = 1; i <= 7; i++) {
-      const invoice = await getInvoiceData(i);
-      if (invoice) {
-        invoices.push(invoice);
-      }
-    }
-  } catch (error) {
+    invoices = await getInvoicesData(); 
+    } catch (error) {
     console.error("Fatura verisi alınırken bir hata oluştu:", error.message);
   }
 
