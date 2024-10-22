@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { handleAddNewItem, handleSaveInvoice } from "../modal-add/index.jsx";
 import { updateInvoiceData } from "@/app/actions/serverActions";
 import Trash from "@/svgs/trash";
+import "../modal.css"
 
 const EditModal = ({
   isOpen,
