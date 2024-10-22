@@ -8,14 +8,14 @@ export default async function InvoicesList() {
   let invoices = [];
 
   try {
-    invoices = await getInvoicesData(); 
-    } catch (error) {
+    invoices = await getInvoicesData();
+  } catch (error) {
     console.error("Fatura verisi alınırken bir hata oluştu:", error.message);
   }
 
   return (
     <>
-      <Header />
+      <Header invoices={invoices} />
       <div className="invoices-list-container">
         {invoices.length > 0 ? (
           invoices.map((invoice) => (
