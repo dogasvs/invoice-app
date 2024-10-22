@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Trash from "@/svgs/trash";
 import { addInvoiceData } from "@/app/actions/serverActions";
+import "../modal.css"
 
 export default function ModalAdd({ isModalOpen, closeModal }) {
   const [formData, setFormData] = useState({
