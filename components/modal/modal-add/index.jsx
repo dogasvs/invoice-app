@@ -327,43 +327,54 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
 
                 {/* Yeni öğe ekleme formu */}
                 <div className="item">
-                  <label htmlFor="itemName">Öğe İsmi</label>
-                  <input
-                    type="text"
-                    name="itemName"
-                    value={newItem.itemName}
-                    onChange={(e) =>
-                      setNewItem({ ...newItem, itemName: e.target.value })
-                    }
-                    placeholder="Öğe Adı"
-                  />
-                  <input
-                    type="number"
-                    name="quantity"
-                    value={newItem.quantity}
-                    onChange={(e) =>
-                      setNewItem({
-                        ...newItem,
-                        quantity: parseInt(e.target.value),
-                      })
-                    }
-                    placeholder="Adet"
-                  />
-                  <input
-                    type="number"
-                    name="price"
-                    value={newItem.price}
-                    onChange={(e) =>
-                      setNewItem({
-                        ...newItem,
-                        price: parseFloat(e.target.value),
-                      })
-                    }
-                    placeholder="Fiyat"
-                  />
-                  <button type="button" onClick={handleAddNewItem}>
-                    + Yeni Ekle
-                  </button>
+                <label htmlFor="itemName">
+                      <p>Öğe Adı</p>
+                      <input
+                        type="text"
+                        name="itemName"
+                        value={newItem.itemName}
+                        onChange={(e) =>
+                          setNewItem({ ...newItem, itemName: e.target.value })
+                        }
+                        placeholder="Öğe Adı"
+                      />
+                    </label>
+                    <label htmlFor="quantity">
+                      <p>Adet.</p>
+                      <input
+                        type="number"
+                        name="quantity"
+                        value={newItem.quantity}
+                        onChange={(e) =>
+                          setNewItem({
+                            ...newItem,
+                            quantity: parseInt(e.target.value),
+                          })
+                        }
+                        placeholder="Adet"
+                      />
+                    </label>
+                    <label htmlFor="price">
+                      <p>Fiyat</p>
+                      <input
+                        type="number"
+                        name="price"
+                        value={newItem.price}
+                        onChange={(e) =>
+                          setNewItem({
+                            ...newItem,
+                            price: parseFloat(e.target.value),
+                          })
+                        }
+                        placeholder="Fiyat"
+                      />
+                    </label>
+                    <div className="toplam">
+                      <p>Toplamı gelicek</p>
+                    </div>
+                    <button type="button" onClick={handleAddNewItem}>
+                      + Yeni Ekle
+                    </button>
                 </div>
               </div>
 
