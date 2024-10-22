@@ -28,3 +28,18 @@
   margin-block: 30px;
   border: 1px solid #494E6E;
 }
+
+@media (width <= 375px) {
+  .sidenav {
+    flex-direction: row;
+    height: 72px;
+  }
+
+  .sidenavItem hr {
+    height: 72px;
+  }
+
+  .darkmodesvg {
+    width: 20px;
+  }
+}

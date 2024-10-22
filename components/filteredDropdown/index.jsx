@@ -8,8 +8,9 @@ export default function FilteredDropdown() {
   return (
     <>
       <div className="dropdown">
-        <button className="dropbtn">Duruma göre filtrele</button>
-        <div class="dropdown-content">
+        <button className="invoicesFilterInfo">Duruma göre filtrele</button>
+        <button className="invoicesFilterRespo">Filtre</button>
+        <div className="dropdown-content">
           <label htmlFor="">
             <input className="cb3" type="checkbox" value="draft" />
             <p>Askıda</p>
