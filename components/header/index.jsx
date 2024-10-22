@@ -14,7 +14,6 @@ export default function Header({ invoices }) {
       </div>
       <div className="invoicesProcess">
         <div className="invoicesFilter">
-          <p className="invoicesFilterRespo">Filtre</p>
           <FilteredDropdown />
           <FilterIcon />
         </div>

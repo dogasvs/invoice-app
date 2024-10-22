@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import "../modal.css";
 import { handleAddNewItem, handleSaveInvoice } from "../modal-add/index.jsx";
 import { updateInvoiceData } from "@/app/actions/serverActions";
 import Trash from "@/svgs/trash";
