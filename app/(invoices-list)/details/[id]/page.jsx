@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getInvoiceData } from "../../../actions/serverActions";
 import InvoiceDetailsContent from "@/components/invoiceDetailsContent";
+import "../invoice-detail.css"
 
 export default async function InvoiceDetail({ params }) {
   const invoiceId = params.id || "1"; // URL'den gelen fatura ID
