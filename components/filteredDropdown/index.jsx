@@ -1,10 +1,6 @@
 "use clinet";
 
-import { useState } from "react";
-
 export default function FilteredDropdown() {
-  const [selectedStatus, setSelectedStatus] = useState(null);
-
   return (
     <>
       <div className="dropdown">
