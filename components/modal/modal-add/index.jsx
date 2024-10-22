@@ -27,7 +27,6 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
     items: [],
   });
 
-
   const [newItem, setNewItem] = useState({
     itemName: "",
     quantity: 1,
@@ -109,7 +108,6 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
       });
     }
   };
-
 
   return (
     <div>
@@ -237,7 +235,6 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
                 </div>
               </div>
 
-
               {/* Fatura Tarihi ve Ödeme Koşulları */}
               <div className="invoiceDateSection">
                 <div className="form-row">
@@ -326,43 +323,57 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
                 ))}
 
                 {/* Yeni öğe ekleme formu */}
-                <div className="item">
-                  <input
-                    type="text"
-                    name="itemName"
-                    value={newItem.itemName}
-                    onChange={(e) =>
-                      setNewItem({ ...newItem, itemName: e.target.value })
-                    }
-                    placeholder="Öğe Adı"
-                  />
-                  <input
-                    type="number"
-                    name="quantity"
-                    value={newItem.quantity}
-                    onChange={(e) =>
-                      setNewItem({
-                        ...newItem,
-                        quantity: parseInt(e.target.value),
-                      })
-                    }
-                    placeholder="Adet"
-                  />
-                  <input
-                    type="number"
-                    name="price"
-                    value={newItem.price}
-                    onChange={(e) =>
-                      setNewItem({
-                        ...newItem,
-                        price: parseFloat(e.target.value),
-                      })
-                    }
-                    placeholder="Fiyat"
-                  />
-                  <button type="button" onClick={handleAddNewItem}>
-                    + Yeni Ekle
-                  </button>
+                <div className="itemlist">
+                  <div className="item">
+                    <label htmlFor="itemName">
+                      <p>Öğe Adı</p>
+                      <input
+                        type="text"
+                        name="itemName"
+                        value={newItem.itemName}
+                        onChange={(e) =>
+                          setNewItem({ ...newItem, itemName: e.target.value })
+                        }
+                        placeholder="Öğe Adı"
+                      />
+                    </label>
+                    <label htmlFor="quantity">
+                      <p>Adet.</p>
+                      <input
+                        type="number"
+                        name="quantity"
+                        value={newItem.quantity}
+                        onChange={(e) =>
+                          setNewItem({
+                            ...newItem,
+                            quantity: parseInt(e.target.value),
+                          })
+                        }
+                        placeholder="Adet"
+                      />
+                    </label>
+                    <label htmlFor="price">
+                      <p>Fiyat</p>
+                      <input
+                        type="number"
+                        name="price"
+                        value={newItem.price}
+                        onChange={(e) =>
+                          setNewItem({
+                            ...newItem,
+                            price: parseFloat(e.target.value),
+                          })
+                        }
+                        placeholder="Fiyat"
+                      />
+                    </label>
+                    <div className="toplam">
+                      <p>Toplamı gelicek</p>
+                    </div>
+                    <button type="button" onClick={handleAddNewItem}>
+                      + Yeni Ekle
+                    </button>
+                  </div>
                 </div>
               </div>
 
