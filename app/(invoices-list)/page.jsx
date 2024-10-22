@@ -1,8 +1,8 @@
 import DetayaGitSvg from "@/svgs/detaya-git";
-import "./invoicesList.css";
 import Link from "next/link";
 import Header from "@/components/header";
 import { getInvoicesData } from "../actions/serverActions";
+import { redirect } from "next/navigation";
 
 export default async function InvoicesList() {
   let invoices = [];
@@ -60,7 +60,7 @@ export default async function InvoicesList() {
             </div>
           ))
         ) : (
-          <p>Faturalar bulunamadı veya bir hata oluştu.</p>
+         redirect("/empty")
         )}
       </div>
     </>
