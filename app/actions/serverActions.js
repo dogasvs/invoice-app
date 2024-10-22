@@ -1,13 +1,37 @@
 /*import { advancedFetch } from "@/utils/fetch";
 
-const API_BASE_URL = '';
+const API_BASE_URL = 'https://invoice.mkadirgulgun.com.tr'; 
 
 // Fatura verilerini çekmek için 
 export async function getInvoiceData(invoiceId) {
-    const url = `${API_BASE_URL}/invoices/${invoiceId}`;
-    return await advancedFetch(url, 'GET');
+    const url = `${API_BASE_URL}/Invoices/${invoiceId}`; // Belirli faturayı çekmek için URL
+    try {
+        const response = await advancedFetch(url, 'GET'); // API'den GET isteği
+        if (response) {
+            return response; // Fatura verisi varsa döndür
+        } else {
+            throw new Error(`Fatura ID ${invoiceId} ile bulunamadı`);
+        }
+    } catch (error) {
+        throw new Error(`Fatura verisi alınamadı: ${error.message}`);
+    }
+}
+export async function getInvoicesData() {
+    const url = `${API_BASE_URL}/Invoices`; // Tüm faturaları çekmek için doğru URL
+    try {
+        const response = await advancedFetch(url, 'GET'); // API'den GET isteği
+        if (response && response.length > 0) {
+            return response; // Eğer fatura verisi varsa döndür
+        } else {
+            throw new Error("Faturalar bulunamadı");
+        }
+    } catch (error) {
+        throw new Error(`Fatura verileri alınamadı: ${error.message}`);
+    }
 }
 
+*/
+/*
 // Fatura verilerini güncellemek için 
 export async function updateInvoiceData(invoiceId, updatedData) {
     const url = `${API_BASE_URL}/invoices/${invoiceId}`;
