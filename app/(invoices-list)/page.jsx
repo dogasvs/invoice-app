@@ -44,8 +44,12 @@ export default async function InvoicesList() {
               </div>
               <div className="invoices-status">
                 <h3>
-                  <span className="doc"></span>{" "}
-                  {invoice.status === 1 ? "ödendi" : "Ödenmemiş"}
+                  <span className="doc"></span>
+                  {invoice.status === 0
+                    ? "Askıda"
+                    : invoice.status === 1
+                    ? "Ödendi"
+                    : "Ödenmemiş"}
                 </h3>
               </div>
               <div className="invoices-detail">
