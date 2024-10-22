@@ -8,14 +8,14 @@ export default async function InvoicesList() {
   let invoices = [];
 
   try {
-    invoices = await getInvoicesData(); 
-    } catch (error) {
+    invoices = await getInvoicesData();
+  } catch (error) {
     console.error("Fatura verisi alınırken bir hata oluştu:", error.message);
   }
 
   return (
     <>
-      <Header />
+      <Header invoices={invoices} />
       <div className="invoices-list-container">
         {invoices.length > 0 ? (
           invoices.map((invoice) => (
@@ -44,8 +44,12 @@ export default async function InvoicesList() {
               </div>
               <div className="invoices-status">
                 <h3>
-                  <span className="doc"></span>{" "}
-                  {invoice.status === 1 ? "ödendi" : "Ödenmemiş"}
+                  <span className="doc"></span>
+                  {invoice.status === 0
+                    ? "Askıda"
+                    : invoice.status === 1
+                    ? "Ödendi"
+                    : "Ödenmemiş"}
                 </h3>
               </div>
               <div className="invoices-detail">
