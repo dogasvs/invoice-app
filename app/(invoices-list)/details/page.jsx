@@ -1,4 +1,3 @@
-import "./invoice-detail.css";
 import Link from "next/link";
 import { getInvoiceData } from "../../actions/serverActions";
 import InvoiceDetailsContent from "@/components/invoiceDetailsContent";

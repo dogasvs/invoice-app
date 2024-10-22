@@ -29,7 +29,10 @@
   border: 1px solid #494E6E;
 }
 
-@media (width <= 375px) {
+@media (width <= 425px) {
+  .sidenav {
+    border-radius: inherit;
+  }
   .sidenav {
     flex-direction: row;
     height: 72px;
@@ -43,3 +46,18 @@
     width: 20px;
   }
 }
+
+/* @media (width <= 375px) {
+  .sidenav {
+    flex-direction: row;
+    height: 72px;
+  }
+
+  .sidenavItem hr {
+    height: 72px;
+  }
+
+  .darkmodesvg {
+    width: 20px;
+  }
+} */

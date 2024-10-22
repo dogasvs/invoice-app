@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import "../modal.css";
 import Trash from "@/svgs/trash";
 import { addInvoiceData } from "@/app/actions/serverActions";
 
@@ -26,6 +25,7 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
     paymentTerm: "Net 30 Days",
     items: [],
   });
+
 
   const [newItem, setNewItem] = useState({
     itemName: "",
@@ -108,6 +108,7 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
       });
     }
   };
+
 
   return (
     <div>
@@ -235,6 +236,7 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
                 </div>
               </div>
 
+
               {/* Fatura Tarihi ve Ödeme Koşulları */}
               <div className="invoiceDateSection">
                 <div className="form-row">
@@ -323,57 +325,44 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
                 ))}
 
                 {/* Yeni öğe ekleme formu */}
-                <div className="itemlist">
-                  <div className="item">
-                    <label htmlFor="itemName">
-                      <p>Öğe Adı</p>
-                      <input
-                        type="text"
-                        name="itemName"
-                        value={newItem.itemName}
-                        onChange={(e) =>
-                          setNewItem({ ...newItem, itemName: e.target.value })
-                        }
-                        placeholder="Öğe Adı"
-                      />
-                    </label>
-                    <label htmlFor="quantity">
-                      <p>Adet.</p>
-                      <input
-                        type="number"
-                        name="quantity"
-                        value={newItem.quantity}
-                        onChange={(e) =>
-                          setNewItem({
-                            ...newItem,
-                            quantity: parseInt(e.target.value),
-                          })
-                        }
-                        placeholder="Adet"
-                      />
-                    </label>
-                    <label htmlFor="price">
-                      <p>Fiyat</p>
-                      <input
-                        type="number"
-                        name="price"
-                        value={newItem.price}
-                        onChange={(e) =>
-                          setNewItem({
-                            ...newItem,
-                            price: parseFloat(e.target.value),
-                          })
-                        }
-                        placeholder="Fiyat"
-                      />
-                    </label>
-                    <div className="toplam">
-                      <p>Toplamı gelicek</p>
-                    </div>
-                    <button type="button" onClick={handleAddNewItem}>
-                      + Yeni Ekle
-                    </button>
-                  </div>
+                <div className="item">
+                  <label htmlFor="itemName">Öğe İsmi</label>
+                  <input
+                    type="text"
+                    name="itemName"
+                    value={newItem.itemName}
+                    onChange={(e) =>
+                      setNewItem({ ...newItem, itemName: e.target.value })
+                    }
+                    placeholder="Öğe Adı"
+                  />
+                  <input
+                    type="number"
+                    name="quantity"
+                    value={newItem.quantity}
+                    onChange={(e) =>
+                      setNewItem({
+                        ...newItem,
+                        quantity: parseInt(e.target.value),
+                      })
+                    }
+                    placeholder="Adet"
+                  />
+                  <input
+                    type="number"
+                    name="price"
+                    value={newItem.price}
+                    onChange={(e) =>
+                      setNewItem({
+                        ...newItem,
+                        price: parseFloat(e.target.value),
+                      })
+                    }
+                    placeholder="Fiyat"
+                  />
+                  <button type="button" onClick={handleAddNewItem}>
+                    + Yeni Ekle
+                  </button>
                 </div>
               </div>
 
@@ -386,7 +375,7 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
                   İptal
                 </button>
                 <button type="submit" className="save-btn">
-                  Faturayı Kaydet
+                  Kaydet & Gönder
                 </button>
               </div>
             </form>

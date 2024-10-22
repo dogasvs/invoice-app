@@ -1,5 +1,3 @@
-import "./delete-modal.css";
-
 const DeleteModal = ({ isOpen, closeModal, onDelete }) => {
   if (!isOpen) return null;
 
