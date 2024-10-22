@@ -12,7 +12,6 @@ export default function Header() {
       </div>
       <div className="invoicesProcess">
         <div className="invoicesFilter">
-          <p className="invoicesFilterInfo">Duruma göre filtrele</p>
           <p className="invoicesFilterRespo">Filtre</p>
           <FilteredDropdown />
           <FilterIcon />
