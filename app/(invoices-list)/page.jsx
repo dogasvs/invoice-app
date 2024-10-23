@@ -19,6 +19,7 @@ export default async function InvoicesList() {
       <div className="invoices-list-container">
         {invoices.length > 0 ? (
           invoices.map((invoice) => (
+              <Link href={`/details/${invoice.id}`}>
             <div key={invoice.id} className="invoices-list">
               <div className="invoices-id">
                 <h3>
@@ -53,14 +54,13 @@ export default async function InvoicesList() {
                 </h3>
               </div>
               <div className="invoices-detail">
-                <Link href={`/details/${invoice.id}`}>
                   <DetayaGitSvg />
-                </Link>
               </div>
             </div>
+        </Link>
           ))
         ) : (
-         redirect("/empty")
+          redirect("/empty")
         )}
       </div>
     </>

@@ -50,22 +50,26 @@ export default function InvoiceDetailsContent({ invoiceData }) {
             </div>
 
             <div className="invoiceInfo">
+
+
+                <div className="infoDetails">
                 <div className="infoHeader">
                     <span style={{ color: "#7E88C3" }}>#</span>
                     <span>{updatedInvoiceData.invoiceNumber}</span>
                 </div>
-
                 <span className="infoDetails">
                     <p>{updatedInvoiceData.projectDescription}</p>
                 </span>
 
-                <div className="infoDetails">
-                    <div className="infoLeft">
-                        <p>Fatura Tarihi</p>
-                        <h4>{new Date(updatedInvoiceData.invoiceDate).toLocaleDateString()}</h4>
-                        <p>Ödeme Tarihi</p>
-                        <h4>{new Date(updatedInvoiceData.invoiceDate).toLocaleDateString()}</h4>
-                    </div>
+                        <div className="invoiceDate">
+                            <p>Fatura Tarihi</p>
+                            <h4>{new Date(updatedInvoiceData.invoiceDate).toLocaleDateString()}</h4>
+                        </div>
+                        <div className="invoicePayment">
+                            <p>Ödeme Tarihi</p>
+                            <h4>{new Date(updatedInvoiceData.invoiceDate).toLocaleDateString()}</h4>
+                        </div>
+                    
                     <div className="infoRight">
                         <p>Fatura Edilecek</p>
                         <h4>{updatedInvoiceData.billTo.name}</h4>

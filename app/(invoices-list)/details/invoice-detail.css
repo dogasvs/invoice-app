@@ -7,6 +7,10 @@
   background-color: #f8f8fb;
 }
 
+a {
+  text-decoration: none;
+}
+
 .wrapper {
   width: 100%;
   max-width: 730px;
@@ -119,25 +123,31 @@
 /* Invoice Bilgileri */
 .invoiceInfo {
   margin-top: 20px;
+  background-color: #fff;
+  padding: 50px;
+  border-radius: 8px;
 }
 
 .infoHeader {
   font-size: 20px;
   font-weight: bold;
-  margin-bottom: 20px;
-  display: flex;
-  align-items: center;
-  gap: 5px;
 }
 
 .infoDetails {
-  background-color: #ffffff;
-  border-radius: 8px;
-  padding: 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  }
+  
+  .infoHeader { grid-area: 1 / 1 / 3 / 4; }
+  .invoiceDate { grid-area: 1 / 4 / 2 / 5; }
+  .invoicePayment { grid-area: 3 / 1 / 4 / 2; }
+  .invoiceDate { grid-area: 4 / 1 / 5 / 2; }
+  .infoRight { grid-area: 3 / 2 / 5 / 3; }
+  .infoSent { grid-area: 3 / 3 / 5 / 4; }
+
 
 .infoLeft,
 .infoRight,
@@ -188,14 +198,35 @@ p {
   font-weight: bold;
 }
 
+.itemAdd {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 20px;
+  font-weight: bold;
+  flex-direction: column;
+}
+
 .itemHeader {
   background-color: #F9FAFE;
   color: #7E88C3;
 }
 
 .item {
-  background-color: #ffffff;
   color: rgb(0, 0, 0);
+}
+
+.itemHeader span,
+.item span {
+  flex: 1;
+  text-align: left; /* Metin hizalamasını solda tutuyoruz */
+}
+
+/* Fiyat ve Toplam sütunlarını sağa hizalayalım */
+.itemHeader span:nth-child(3),
+.itemHeader span:nth-child(4),
+.item span:nth-child(3),
+.item span:nth-child(4) {
+  text-align: left;
 }
 
 .totalAmount {
@@ -297,3 +328,4 @@ p {
       gap: 10px;
   }
 }
+
