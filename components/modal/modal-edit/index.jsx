@@ -153,9 +153,9 @@ const EditModal = ({
         <form onSubmit={onSaveChanges}>
           {/* Bill From Section */}
           <div className="billFrom">
-            <h3>Bill From</h3>
+            <h3>Gelen Fatura</h3>
             <div className="form-group">
-              <label>Street Address</label>
+              <label>Adres</label>
               <input
                 type="text"
                 name="billFrom.streetAddress"
@@ -168,7 +168,7 @@ const EditModal = ({
 
             <div className="form-row">
               <div className="form-group">
-                <label>City</label>
+                <label>Şehir</label>
                 <input
                   type="text"
                   name="billFrom.city"
@@ -179,7 +179,7 @@ const EditModal = ({
                 />
               </div>
               <div className="form-group">
-                <label>Post Code</label>
+                <label>Posta Kodu</label>
                 <input
                   type="text"
                   name="billFrom.postCode"
@@ -190,7 +190,7 @@ const EditModal = ({
                 />
               </div>
               <div className="form-group">
-                <label>Country</label>
+                <label>Ülke</label>
                 <input
                   type="text"
                   name="billFrom.country"
@@ -207,7 +207,7 @@ const EditModal = ({
           <div className="billTo">
             <h3>Bill To</h3>
             <div className="form-group">
-              <label>Client's Name</label>
+              <label>Müşterinin Adı</label>
               <input
                 type="text"
                 name="billTo.name"
@@ -219,7 +219,7 @@ const EditModal = ({
             </div>
 
             <div className="form-group">
-              <label>Client's Email</label>
+              <label>Müşterinin E-postası</label>
               <input
                 type="email"
                 name="billTo.email"
@@ -231,7 +231,7 @@ const EditModal = ({
             </div>
 
             <div className="form-group">
-              <label>Street Address</label>
+              <label>Açık Adres</label>
               <input
                 type="text"
                 name="billTo.address"
@@ -244,7 +244,7 @@ const EditModal = ({
 
             <div className="form-row">
               <div className="form-group">
-                <label>City</label>
+                <label>Şehir</label>
                 <input
                   type="text"
                   name="billTo.city"
@@ -255,7 +255,7 @@ const EditModal = ({
                 />
               </div>
               <div className="form-group">
-                <label>Post Code</label>
+                <label>Posta Kodu</label>
                 <input
                   type="text"
                   name="billTo.postCode"
@@ -266,7 +266,7 @@ const EditModal = ({
                 />
               </div>
               <div className="form-group">
-                <label>Country</label>
+                <label>Ülke</label>
                 <input
                   type="text"
                   name="billTo.country"
@@ -283,7 +283,7 @@ const EditModal = ({
           <div className="invoiceDateSection">
             <div className="form-row">
               <div className="form-group">
-                <label>Invoice Date</label>
+                <label>Fatura Tarihi</label>
                 <input
                   type="date"
                   name="invoiceDate"
@@ -293,7 +293,7 @@ const EditModal = ({
                 />
               </div>
               <div className="form-group">
-                <label>Payment Terms</label>
+                <label>Ödeme Koşulları</label>
                 <div className="custom-select" onClick={() => setShowPaymentOptions(!showPaymentOptions)}>
                   <div className="selected-option">
                     {getPaymentTermText(formData.paymentTerm)}
@@ -302,16 +302,16 @@ const EditModal = ({
                   {showPaymentOptions && (
                     <ul className="options">
                       <li onClick={() => { setFormData({ ...formData, paymentTerm: 1 }); setShowPaymentOptions(false); }}>
-                        Net 1 Day
+                        Net 1 Gün
                       </li>
                       <li onClick={() => { setFormData({ ...formData, paymentTerm: 7 }); setShowPaymentOptions(false); }}>
-                        Net 7 Days
+                        Net 7 Gün
                       </li>
                       <li onClick={() => { setFormData({ ...formData, paymentTerm: 14 }); setShowPaymentOptions(false); }}>
-                        Net 14 Days
+                        Net 14 Gün
                       </li>
                       <li onClick={() => { setFormData({ ...formData, paymentTerm: 30 }); setShowPaymentOptions(false); }}>
-                        Net 30 Days
+                        Net 30 Gün
                       </li>
                     </ul>
                   )}
@@ -319,7 +319,7 @@ const EditModal = ({
               </div>
             </div>
             <div className="form-group">
-              <label>Project Description</label>
+              <label>Proje Tanımı</label>
               <input
                 type="text"
                 name="projectDescription"
@@ -333,7 +333,7 @@ const EditModal = ({
 
           {/* Item List Section */}
           <div className="itemListSection">
-            <h3>Item List</h3>
+            <h3>Ürün Listesi</h3>
             {formData.items.map((item, index) => (
               <div key={index} className="item">
                 <input
@@ -368,10 +368,14 @@ const EditModal = ({
                   <Trash />
                 </button>
               </div>
+              
             ))}
+            
             {/* Yeni öğe ekleme formu */}
             {showNewItemForm && (
-              <div className="item">
+              <div className="itemEditOge">
+                <div className="item">
+
                 <input
                   type="text"
                   name="itemName"
@@ -379,7 +383,7 @@ const EditModal = ({
                   onChange={(e) => setNewItem({ ...newItem, name: e.target.value })}
                   placeholder="Öğe Adı"
                   required
-                />
+                  />
                 <input
                   type="number"
                   name="quantity"
@@ -388,7 +392,7 @@ const EditModal = ({
                   placeholder="Adet"
                   min="1"
                   required
-                />
+                  />
                 <input
                   type="number"
                   name="price"
@@ -398,10 +402,13 @@ const EditModal = ({
                   min="0.01"
                   step="0.01"
                   required
-                />
-                <button className="addInput" type="button" onClick={onAddNewItem}>
-                  + Add New Item
+                  />
+                  </div>
+                <div className="itemBtn">
+                 <button className="addInput" type="button" onClick={onAddNewItem}>
+                   + Add New Item
                 </button>
+                </div>
               </div>
             )}
             {/* Formu göstermek için düğme */}
@@ -415,10 +422,10 @@ const EditModal = ({
           {/* Modal Buttons */}
           <div className="modal-buttons">
             <button type="button" className="cancel-btn" onClick={closeModal}>
-              Cancel
+              İptal
             </button>
             <button type="submit" className="save-btn">
-              Save Changes
+              Kaydet
             </button>
           </div>
         </form>

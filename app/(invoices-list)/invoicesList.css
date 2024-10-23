@@ -4,6 +4,10 @@
   gap: 200px;
 }
 
+a {
+  text-decoration: none;
+}
+
 .content {
   width: 1000px;
   margin-right: 100px;

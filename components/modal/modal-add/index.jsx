@@ -326,9 +326,11 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
                 ))}
 
                 {/* Yeni öğe ekleme formu */}
-                <div className="item">
-                <label htmlFor="itemName">
-                      <p>Öğe Adı</p>
+                <div className="itemAdd">
+                    <div className="itemAddOge">
+                  <label htmlFor="itemName">
+                    <p>Öğe Adı</p>
+
                       <input
                         type="text"
                         name="itemName"
@@ -337,63 +339,67 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
                           setNewItem({ ...newItem, itemName: e.target.value })
                         }
                         placeholder="Öğe Adı"
-                      />
-                    </label>
-                    <label htmlFor="quantity">
-                      <p>Adet.</p>
-                      <input
-                        type="number"
-                        name="quantity"
-                        value={newItem.quantity}
-                        onChange={(e) =>
-                          setNewItem({
-                            ...newItem,
-                            quantity: parseInt(e.target.value),
-                          })
-                        }
-                        placeholder="Adet"
-                      />
-                    </label>
-                    <label htmlFor="price">
-                      <p>Fiyat</p>
-                      <input
-                        type="number"
-                        name="price"
-                        value={newItem.price}
-                        onChange={(e) =>
-                          setNewItem({
-                            ...newItem,
-                            price: parseFloat(e.target.value),
-                          })
-                        }
-                        placeholder="Fiyat"
-                      />
-                    </label>
-                    <div className="toplam">
-                      <p>Toplamı gelicek</p>
-                    </div>
-                    <button type="button" onClick={handleAddNewItem}>
-                      + Yeni Ekle
-                    </button>
+                        />
+                        </label>
+                  <label htmlFor="quantity">
+                    <p>Adet.</p>
+                    <input
+                      type="number"
+                      name="quantity"
+                      value={newItem.quantity}
+                      onChange={(e) =>
+                        setNewItem({
+                          ...newItem,
+                          quantity: parseInt(e.target.value),
+                        })
+                      }
+                      placeholder="Adet"
+                    />
+                  </label>
+                  <label htmlFor="price">
+                    <p>Fiyat</p>
+                    <input
+                      type="number"
+                      name="price"
+                      value={newItem.price}
+                      onChange={(e) =>
+                        setNewItem({
+                          ...newItem,
+                          price: parseFloat(e.target.value),
+                        })
+                      }
+                      placeholder="Fiyat"
+                    />
+                  </label>
+                  <div className="toplam">
+                    <p>Toplamı gelicek</p>
+                  </div>
+                </div>
+                <div className="itemBtn">
+                  <button type="button" onClick={handleAddNewItem}>
+                    + Yeni Ekle
+                  </button>
+
                 </div>
               </div>
+               </div>
 
-              <div className="modal-buttons">
-                <button
-                  onClick={closeModal}
-                  type="button"
-                  className="cancel-btn"
-                >
-                  İptal
-                </button>
-                <button type="submit" className="save-btn">
-                  Kaydet & Gönder
-                </button>
-              </div>
-            </form>
+               <div className="modal-buttons">
+            <button
+              onClick={closeModal}
+              type="button"
+              className="cancel-btn"
+            >
+              İptal
+            </button>
+            <button type="submit" className="save-btn">
+              Kaydet & Gönder
+            </button>
+             </div>
+        </form>
           </div>
-        </div>
+        </div >
       )}
-    </div>
+    </div >
   );
 }

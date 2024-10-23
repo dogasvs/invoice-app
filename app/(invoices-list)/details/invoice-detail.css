@@ -7,6 +7,10 @@
   background-color: #f8f8fb;
 }
 
+a {
+  text-decoration: none;
+}
+
 .wrapper {
   width: 100%;
   max-width: 730px;
@@ -131,7 +135,7 @@
 
 .infoDetails {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(2, 1fr);
   grid-column-gap: 0px;
   grid-row-gap: 0px;
@@ -194,6 +198,14 @@ p {
   font-weight: bold;
 }
 
+.itemAdd {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 20px;
+  font-weight: bold;
+  flex-direction: column;
+}
+
 .itemHeader {
   background-color: #F9FAFE;
   color: #7E88C3;
@@ -201,6 +213,20 @@ p {
 
 .item {
   color: rgb(0, 0, 0);
+}
+
+.itemHeader span,
+.item span {
+  flex: 1;
+  text-align: left; /* Metin hizalamasını solda tutuyoruz */
+}
+
+/* Fiyat ve Toplam sütunlarını sağa hizalayalım */
+.itemHeader span:nth-child(3),
+.itemHeader span:nth-child(4),
+.item span:nth-child(3),
+.item span:nth-child(4) {
+  text-align: left;
 }
 
 .totalAmount {

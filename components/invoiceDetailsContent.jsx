@@ -56,10 +56,10 @@ export default function InvoiceDetailsContent({ invoiceData }) {
                 <div className="infoHeader">
                     <span style={{ color: "#7E88C3" }}>#</span>
                     <span>{updatedInvoiceData.invoiceNumber}</span>
+                </div>
                 <span className="infoDetails">
                     <p>{updatedInvoiceData.projectDescription}</p>
                 </span>
-                </div>
 
                         <div className="invoiceDate">
                             <p>Fatura Tarihi</p>
