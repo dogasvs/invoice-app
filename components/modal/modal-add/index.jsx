@@ -3,9 +3,9 @@
 import { useState } from "react";
 import Trash from "@/svgs/trash";
 import { addInvoiceData } from "@/app/actions/serverActions";
-import "../modal.css"
+import "../modal.css";
 
-export default function ModalAdd({ isModalOpen, closeModal }) {
+export default function ModalAdd({ isModalOpen, closeModal, invoiceData }) {
   const [formData, setFormData] = useState({
     billFrom: {
       streetAddress: "",
@@ -26,7 +26,6 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
     paymentTerm: "Net 30 Days",
     items: [],
   });
-
 
   const [newItem, setNewItem] = useState({
     itemName: "",
@@ -110,6 +109,29 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
     }
   };
 
+  //---------- datalist
+
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [searchedUsers, setSearchedUsers] = useState([]);
+  const [query, setQuery] = useState(""); // arama sorgusu icin
+
+  const handleInput = async (e) => {
+    const searchQuery = e.target.value;
+    setQuery(searchQuery);
+    if (searchQuery.length > 3) {
+      const response = await searchedUsers(searchQuery);
+      if (Array.isArray(response)) {
+        console.log("test");
+
+        setSearchedUsers(response);
+      }
+    }
+  };
+
+  const handleFocusOut = (e) => {
+    const user = searchedUsers.find((user) => user.name === e.target.value);
+    setSelectedUser(user);
+  };
 
   return (
     <div>
@@ -173,12 +195,20 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
                 <div className="form-group">
                   <label>Müşterinin Adı</label>
                   <input
-                    type="text"
-                    name="billTo.name"
-                    value={formData.billTo.name}
-                    onChange={handleChange}
-                    placeholder="Alex Grim"
+                    onKeyDown={handleInput}
+                    onBlur={handleFocusOut}
+                    defaultValue={invoiceData.name}
+                    list="clients"
+                    name="clients"
+                    id="clients"
                   />
+                  <datalist id="users">
+                    {searchedUsers.map((user, index) => (
+                      <option key={index} value={user.id}>
+                        {user.name}
+                      </option>
+                    ))}
+                  </datalist>
                 </div>
 
                 <div className="form-group">
@@ -188,6 +218,7 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
                     name="billTo.email"
                     value={formData.billTo.email}
                     onChange={handleChange}
+                    defaultValue={selectedUser?.email}
                     placeholder="alexgrim@mail.com"
                   />
                 </div>
@@ -236,7 +267,6 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
                   </div>
                 </div>
               </div>
-
 
               {/* Fatura Tarihi ve Ödeme Koşulları */}
               <div className="invoiceDateSection">
@@ -327,9 +357,9 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
 
                 {/* Yeni öğe ekleme formu */}
                 <div className="itemAdd">
-                    <div className="itemAddOge">
-                  <label htmlFor="itemName">
-                    <p>Öğe Adı</p>
+                  <div className="itemAddOge">
+                    <label htmlFor="itemName">
+                      <p>Öğe Adı</p>
 
                       <input
                         type="text"
@@ -339,67 +369,66 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
                           setNewItem({ ...newItem, itemName: e.target.value })
                         }
                         placeholder="Öğe Adı"
-                        />
-                        </label>
-                  <label htmlFor="quantity">
-                    <p>Adet.</p>
-                    <input
-                      type="number"
-                      name="quantity"
-                      value={newItem.quantity}
-                      onChange={(e) =>
-                        setNewItem({
-                          ...newItem,
-                          quantity: parseInt(e.target.value),
-                        })
-                      }
-                      placeholder="Adet"
-                    />
-                  </label>
-                  <label htmlFor="price">
-                    <p>Fiyat</p>
-                    <input
-                      type="number"
-                      name="price"
-                      value={newItem.price}
-                      onChange={(e) =>
-                        setNewItem({
-                          ...newItem,
-                          price: parseFloat(e.target.value),
-                        })
-                      }
-                      placeholder="Fiyat"
-                    />
-                  </label>
-                  <div className="toplam">
-                    <p>Toplamı gelicek</p>
+                      />
+                    </label>
+                    <label htmlFor="quantity">
+                      <p>Adet.</p>
+                      <input
+                        type="number"
+                        name="quantity"
+                        value={newItem.quantity}
+                        onChange={(e) =>
+                          setNewItem({
+                            ...newItem,
+                            quantity: parseInt(e.target.value),
+                          })
+                        }
+                        placeholder="Adet"
+                      />
+                    </label>
+                    <label htmlFor="price">
+                      <p>Fiyat</p>
+                      <input
+                        type="number"
+                        name="price"
+                        value={newItem.price}
+                        onChange={(e) =>
+                          setNewItem({
+                            ...newItem,
+                            price: parseFloat(e.target.value),
+                          })
+                        }
+                        placeholder="Fiyat"
+                      />
+                    </label>
+                    <div className="toplam">
+                      <p>Toplamı gelicek</p>
+                    </div>
+                  </div>
+                  <div className="itemBtn">
+                    <button type="button" onClick={handleAddNewItem}>
+                      + Yeni Ekle
+                    </button>
                   </div>
                 </div>
-                <div className="itemBtn">
-                  <button type="button" onClick={handleAddNewItem}>
-                    + Yeni Ekle
-                  </button>
-
-                </div>
               </div>
-               </div>
 
-               <div className="modal-buttons">
-            <button
-              onClick={closeModal}
-              type="button"
-              className="cancel-btn"
-            >
-              İptal
-            </button>
-            <button type="submit" className="save-btn">
-              Kaydet & Gönder
-            </button>
-             </div>
-        </form>
+              <div className="modal-buttons">
+                <button
+                  onClick={closeModal}
+                  type="button"
+                  className="cancel-btn"
+                >
+                  İptal
+                </button>
+                <button type="submit" className="save-btn">
+                  Kaydet & Gönder
+                </button>
+              </div>
+            </form>
           </div>
-        </div >
+        </div>
       )}
-    </div >
+    </div>
   );
 }
