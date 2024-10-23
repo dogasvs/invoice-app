@@ -3,10 +3,15 @@
 import { useState } from "react";
 import { addInvoiceData } from "@/app/actions/serverActions";
 import "../modal.css";
+<<<<<<< HEAD
 import Trash from "@/svgs/trash";
 
 export default function ModalAdd({ isModalOpen, closeModal }) {
   // Kullanıcının dolduracağı client bilgileri
+=======
+
+export default function ModalAdd({ isModalOpen, closeModal, invoiceData }) {
+>>>>>>> sema
   const [formData, setFormData] = useState({
     projectDescription: "",
     paymentTerm: 30, // Örnek olarak Net 30 gün
@@ -14,6 +19,7 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
     items: [],
   });
 
+<<<<<<< HEAD
   // Sabit billFrom bilgileri, backend'e gönderilmeyecek
   const billFrom = {
     streetAddress: "19 Union Terrace",
@@ -22,6 +28,8 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
     country: "United Kingdom",
   };
 
+=======
+>>>>>>> sema
   const [newItem, setNewItem] = useState({
     name: "",
     quantity: 1,
@@ -95,6 +103,33 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
     });
   };
 
+<<<<<<< HEAD
+=======
+  //---------- datalist
+
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [searchedUsers, setSearchedUsers] = useState([]);
+  const [query, setQuery] = useState(""); // arama sorgusu icin
+
+  const handleInput = async (e) => {
+    const searchQuery = e.target.value;
+    setQuery(searchQuery);
+    if (searchQuery.length > 3) {
+      const response = await searchedUsers(searchQuery);
+      if (Array.isArray(response)) {
+        console.log("test");
+
+        setSearchedUsers(response);
+      }
+    }
+  };
+
+  const handleFocusOut = (e) => {
+    const user = searchedUsers.find((user) => user.name === e.target.value);
+    setSelectedUser(user);
+  };
+
+>>>>>>> sema
   return (
     <div>
       {isModalOpen && (
@@ -157,12 +192,28 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
                 <div className="form-group">
                   <label>Müşterinin Adı</label>
                   <input
+<<<<<<< HEAD
                     type="text"
                     name="billTo.name"
                     value={formData.billTo?.name}
                     onChange={handleChange}
                     placeholder="Alex Grim"
+=======
+                    onKeyDown={handleInput}
+                    onBlur={handleFocusOut}
+                    defaultValue={invoiceData.name}
+                    list="clients"
+                    name="clients"
+                    id="clients"
+>>>>>>> sema
                   />
+                  <datalist id="users">
+                    {searchedUsers.map((user, index) => (
+                      <option key={index} value={user.id}>
+                        {user.name}
+                      </option>
+                    ))}
+                  </datalist>
                 </div>
 
                 <div className="form-group">
@@ -172,6 +223,7 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
                     name="billTo.email"
                     value={formData.billTo?.email}
                     onChange={handleChange}
+                    defaultValue={selectedUser?.email}
                     placeholder="alexgrim@mail.com"
                   />
                 </div>
@@ -220,7 +272,6 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
                   </div>
                 </div>
               </div>
-
 
               {/* Fatura Tarihi ve Ödeme Koşulları */}
               <div className="invoiceDateSection">
@@ -363,7 +414,10 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
                     <button type="button" onClick={handleAddNewItem}>
                       + Yeni Ekle
                     </button>
+<<<<<<< HEAD
 
+=======
+>>>>>>> sema
                   </div>
                 </div>
               </div>
@@ -382,8 +436,8 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
               </div>
             </form>
           </div>
-        </div >
+        </div>
       )}
-    </div >
+    </div>
   );
 }
