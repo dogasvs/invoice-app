@@ -19,48 +19,48 @@ export default async function InvoicesList() {
       <div className="invoices-list-container">
         {invoices.length > 0 ? (
           invoices.map((invoice) => (
-              <Link href={`/details/${invoice.id}`}>
-            <div key={invoice.id} className="invoices-list">
-              <div className="invoices-id">
-                <h3>
-                  <span>#</span>
-                  {invoice.invoiceNumber}
-                </h3>
-              </div>
-              <div className="invoices-date">
-                <h3>
-                  Due {new Date(invoice.invoiceDate).toLocaleDateString()}
-                </h3>
-              </div>
-              <div className="invoices-customname">
-                <h3>{invoice.billTo.name}</h3>
-              </div>
-              <div className="invoices-price">
-                <h3>
-                  £{" "}
-                  {invoice.items
-                    .reduce((total, item) => total + item.totalPrice, 0)
-                    .toFixed(2)}
-                </h3>
-              </div>
-              <div className="invoices-status">
-                <h3>
-                  <span className="doc"></span>
-                  {invoice.status === 0
-                    ? "Askıda"
-                    : invoice.status === 1
-                    ? "Ödendi"
-                    : "Ödenmemiş"}
-                </h3>
-              </div>
-              <div className="invoices-detail">
+            <Link href={`/details/${invoice.id}`} key={invoice.id}>
+              <div className="invoices-list">
+                <div className="invoices-id">
+                  <h3>
+                    <span>#</span>
+                    {invoice.invoiceNumber}
+                  </h3>
+                </div>
+                <div className="invoices-date">
+                  <h3>
+                    Due {new Date(invoice.invoiceDate).toLocaleDateString()}
+                  </h3>
+                </div>
+                <div className="invoices-customname">
+                  <h3>{invoice.client.name}</h3>
+                </div>
+                <div className="invoices-price">
+                  <h3>
+                    £{" "}
+                    {invoice.items
+                      .reduce((total, item) => total + item.totalPrice, 0)
+                      .toFixed(2)}
+                  </h3>
+                </div>
+                <div className="invoices-status">
+                  <h3>
+                    <span className="doc"></span>
+                    {invoice.status === 0
+                      ? "Askıda"
+                      : invoice.status === 1
+                      ? "Ödendi"
+                      : "Ödenmemiş"}
+                  </h3>
+                </div>
+                <div className="invoices-detail">
                   <DetayaGitSvg />
+                </div>
               </div>
-            </div>
-        </Link>
+            </Link>
           ))
         ) : (
-          redirect("/empty")
+          redirect("/")
         )}
       </div>
     </>
