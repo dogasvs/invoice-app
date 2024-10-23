@@ -1,4 +1,4 @@
-/*import { advancedFetch } from "@/utils/fetch";
+import { advancedFetch } from "@/utils/fetch";
 
 const API_BASE_URL = 'https://invoice.mkadirgulgun.com.tr'; 
 
@@ -17,7 +17,7 @@ export async function getInvoiceData(invoiceId) {
     }
 }
 export async function getInvoicesData() {
-    const url = `${API_BASE_URL}/Invoices`; // Tüm faturaları çekmek için doğru URL
+    const url = `${API_BASE_URL}/Invoices/1`; // 1. sayfadaki Tüm faturaları çekmek için doğru URL
     try {
         const response = await advancedFetch(url, 'GET'); // API'den GET isteği
         if (response && response.length > 0) {
@@ -30,7 +30,7 @@ export async function getInvoicesData() {
     }
 }
 
-*/
+
 /*
 // Fatura verilerini güncellemek için 
 export async function updateInvoiceData(invoiceId, updatedData) {
@@ -50,7 +50,7 @@ export async function addInvoiceData(newItem) {
     return await advancedFetch(url, 'POST', newItem);
 }
 */
-
+/*
 import mockData from "../../mockData.json";
 
 // Tüm faturaları getiren fonksiyon
@@ -80,7 +80,7 @@ export async function getInvoiceData(invoiceId) {
         }
     });
 }
-
+*/
 // Fatura verilerini güncellemek için mock fonksiyon
 export async function updateInvoiceData(invoiceId, updatedData) {
     const invoiceIndex = mockData.findIndex((item) => item.id === invoiceId);
