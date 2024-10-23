@@ -8,7 +8,7 @@ import { deleteInvoiceData } from "@/app/actions/serverActions";
 export default function InvoiceDetailsContent({ invoiceData }) {
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-    const [updatedInvoiceData, setUpdatedInvoiceData] = useState(invoiceData);
+    const [updatedInvoiceData, setUpdatedInvoiceData] = useState(JSON.parse(JSON.stringify(invoiceData)));
 
     const openModal = () => setIsEditModalOpen(true);
     const closeModal = () => setIsEditModalOpen(false);
@@ -22,7 +22,6 @@ export default function InvoiceDetailsContent({ invoiceData }) {
             const response = await deleteInvoiceData(updatedInvoiceData.id);
             console.log("API Yanıtı:", response);
             closeDeleteModal();
-            console.log("Fatura başarıyla silindi.");
         } catch (error) {
             console.error("Fatura silinirken bir hata oluştu:", error);
         }
@@ -122,6 +121,7 @@ export default function InvoiceDetailsContent({ invoiceData }) {
                 isOpen={isDeleteModalOpen}
                 closeModal={closeDeleteModal}
                 onDelete={handleDelete}
+                invoiceNumber={updatedInvoiceData.invoiceName}
             />
         </>
     );
