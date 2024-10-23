@@ -1,63 +1,76 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-export default function BiilTo() {
-  const { filteredUSer, setFilteredUser } = useState([]);
-  const [query, setQuery] = useState("");
+export default function BiilToForm() {
+  const { searchedUsers, setSearchedUsers } = useState([]);
+  const [query, setQuery] = useState(""); // arama sorgusu icin
 
-  const handleChange = (e) => {
+  const handleInput = async (e) => {
     const searchQuery = e.target.value;
     setQuery(searchQuery);
+    if (searchQuery.length > 3) {
+      const response = await searchedUsers(searchQuery);
+      if (Array.isArray(response)) {
+        console.log("test");
 
-    setTimeout(() => {
-      fetchFilteredUsers(searchQuery);
-    }, 500);
+        setSearchedUsers(response);
+      }
+    }
+    // setTimeout(() => {
+    //   fetchFilteredUsers(searchQuery);
+    // }, 500);
   };
 
-  const fetchFilteredUsers = async (searchQuery) => {
-    // mock datadan gelen kullanıcı verilerini filtreler
-    if (!searchQuery) {
-      setFilteredUser([]); // Arama kutusu bossa listeyi temizle
-      return;
-    }
+  // const fetchFilteredUsers = async (searchQuery) => {
+  //   // mock datadan gelen kullanıcı verilerini filtreler
+  //   if (!searchQuery) {
+  //     setFilteredUser([]); // Arama kutusu bossa listeyi temizle
+  //     return;
+  //   }
 
-    try {
-      // api cekilcek
-      const response = await fetch("/api/users"); // api / client (id)
-      const users = await response.json();
+  //   try {
+  //     // api cekilcek
+  //     const response = await fetch(`/api/client${id}`); // api / client (id)
+  //     const users = await response.json();
 
-      // Kull. adlarına göre filtreleme
-      const filtered = users.filter((user) =>
-        user.name.toLowerCase().includes(searchQuery.toLowerCase())
-      );
+  //     // Kull. adlarına göre filtreleme
+  //     const filtered = users.filter((user) =>
+  //       user.name.toLowerCase().includes(searchQuery.toLowerCase())
+  //     );
 
-      setFilteredUser(filtered);
-    } catch (error) {
-      console.error("Kullanıcı verisi alınırken hata oluştu:", error);
-    }
+  //     setFilteredUser(filtered);
+  //   } catch (error) {
+  //     console.error("Kullanıcı verisi alınırken hata oluştu:", error);
+  //   }
+  // };
+
+  const handleFocusOut = (e) => {
+    const user = searchedUsers.find((user) => user.email === e.target.value);
+    console.log(user);
   };
+
+  useEffect(() => {});
 
   return (
     <>
-      <label for="browser">Listeden tarayıcınızı seçin:</label>
-      <input
-        list="browsers"
-        onKeyUp={handleChange}
-        name="browser"
-        id="browser"
-      />
-      <datalist id="users">
-        {filteredUSer ? (
-          filteredUSer.map((user) => (
-            <option key={user.id} value={user.id}>
+      <form action="">
+        <input
+          onInput={handleInput}
+          defaultValue={currentUser.name}
+          onChange={handleFocusOut}
+          list="clients"
+          name="clients"
+          id="clients"
+        />
+        <datalist id="users">
+          {searchedUsers.map((user, index) => (
+            <option key={index} value={user.id}>
               {user.name}
             </option>
-          ))
-        ) : (
-          <option value="">Kullanıcı bulunamadı</option>
-        )}
-      </datalist>
+          ))}
+        </datalist>
+      </form>
     </>
   );
 }
