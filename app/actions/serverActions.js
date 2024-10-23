@@ -37,6 +37,36 @@ export async function deleteInvoiceData(invoiceId) {
     return await advancedFetch(url, 'DELETE');
 }
 
+// Fatura verilerini API'ye eklemek için
+export async function addInvoiceData(invoiceData) {
+    const url = `${API_BASE_URL}/api/Invoice/SaveInvoice`;
+    try {
+      const response = await advancedFetch(url, 'POST', invoiceData);
+      if (!response.ok) {
+        throw new Error("Fatura kaydedilirken hata oluştu.");
+      }
+      return response.json();
+    } catch (error) {
+      console.error("Fatura ekleme hatası:", error);
+      throw error;
+    }
+  }
+  
+  // Öğeleri eklemek için
+  export async function addItemData(itemData) {
+    const url = `${API_BASE_URL}/api/Invoice/SaveItems`;
+    try {
+      const response = await advancedFetch(url, 'POST', itemData);
+      if (!response.ok) {
+        throw new Error("Öğe kaydedilirken hata oluştu.");
+      }
+      return response.json();
+    } catch (error) {
+      console.error("Öğe ekleme hatası:", error);
+      throw error;
+    }
+  }
+  
 /*
 // Fatura verilerini güncellemek için 
 export async function updateInvoiceData(invoiceId, updatedData) {
@@ -46,27 +76,10 @@ export async function updateInvoiceData(invoiceId, updatedData) {
 
 
 
-// Fatura öğesi eklemek için API çağrısı
-export async function addInvoiceData(newItem) {
-    const url = `${API_BASE_URL}/invoices/add-item`;
-    return await advancedFetch(url, 'POST', newItem);
-}
+
 
 */
-/*// Fatura verilerini silmek için mock fonksiyon
-export async function deleteInvoiceData(invoiceId) {
-    const invoiceIndex = mockData.findIndex((item) => item.id === invoiceId);
 
-    return new Promise((resolve, reject) => {
-        if (invoiceIndex !== -1) {
-            // Mock veriyi sil
-            mockData.splice(invoiceIndex, 1);
-            resolve(`Invoice with ID ${invoiceId} deleted`);
-        } else {
-            reject(`Invoice with ID ${invoiceId} not found`);
-        }
-    });
-} */
 
 // Fatura verilerini güncellemek için mock fonksiyon
 export async function updateInvoiceData(invoiceId, updatedData) {
@@ -84,7 +97,7 @@ export async function updateInvoiceData(invoiceId, updatedData) {
 }
 
 
-
+/*
 // Yeni fatura öğesi eklemek için mock fonksiyon
 export async function addInvoiceData(newInvoice) {
     return new Promise((resolve, reject) => {
@@ -104,3 +117,4 @@ export async function addInvoiceData(newInvoice) {
     });
 }
 
+*/
