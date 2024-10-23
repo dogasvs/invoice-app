@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { handleAddNewItem, handleSaveInvoice } from "../modal-add/index.jsx";
+import { handleSaveInvoice } from "../modal-add/index.jsx";
 import { updateInvoiceData } from "@/app/actions/serverActions";
 import Trash from "@/svgs/trash";
 import "../modal.css"
@@ -75,10 +75,34 @@ const EditModal = ({
     handleSaveInvoice(e, invoiceId, formData, updateInvoiceData, closeModal, setErrorMessage, onSaveChanges);
   };
 
-  const onAddNewItem = () => {
-    handleAddNewItem(newItem, formData, setFormData, setNewItem, setErrorMessage, setShowNewItemForm);
+  const handleAddNewItem = () => {
+    if (!newItem.itemName || newItem.quantity <= 0 || newItem.price <= 0) {
+      setErrorMessage("Geçerli bir öğe ekleyin.");
+      return;
+    }
+
+    // Yeni öğeyi öğe listesine ekle
+    const total = newItem.quantity * newItem.price;
+    setFormData({
+      ...formData,
+      items: [
+        ...formData.items,
+        {
+          name: newItem.itemName,
+          quantity: newItem.quantity,
+          price: newItem.price,
+          total,
+        },
+      ],
+    });
+
+    // Yeni öğeyi sıfırla
+    setNewItem({ itemName: "", quantity: 1, price: 0 });
+    setErrorMessage(null);
   };
 
+  
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -405,7 +429,7 @@ const EditModal = ({
                   />
                   </div>
                 <div className="itemBtn">
-                 <button className="addInput" type="button" onClick={onAddNewItem}>
+                 <button className="addInput" type="button" onClick={handleAddNewItem}>
                    + Add New Item
                 </button>
                 </div>
