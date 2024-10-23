@@ -1,6 +1,6 @@
 import "./delete-modal.css"
 
-const DeleteModal = ({ isOpen, closeModal, onDelete }) => {
+const DeleteModal = ({ isOpen, closeModal, onDelete, invoiceNumber }) => {
   if (!isOpen) return null;
 
   return (
@@ -8,7 +8,7 @@ const DeleteModal = ({ isOpen, closeModal, onDelete }) => {
       <div className="delete-modal-container">
         <h2>Silmeyi Onayla</h2>
         <p>
-          Faturayı silmek istediğinizden emin misiniz?<strong>#XM9141</strong>?
+          Faturayı silmek istediğinizden emin misiniz?<strong>{invoiceNumber}</strong>?
           Bu işlem geri alınamaz.
         </p>
         <div className="delete-modal-buttons">

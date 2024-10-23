@@ -23,7 +23,7 @@ export default async function InvoicesList() {
               <div className="invoices-list">
                 <div className="invoices-id">
                   <h3>
-                    <span>#</span>
+                    <span></span>
                     {invoice.invoiceNumber}
                   </h3>
                 </div>

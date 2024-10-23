@@ -1,3 +1,4 @@
+'use server';
 import { advancedFetch } from "@/utils/fetch";
 
 const API_BASE_URL = 'https://invoice.mkadirgulgun.com.tr'; 
@@ -30,6 +31,11 @@ export async function getInvoicesData() {
     }
 }
 
+// Fatura verilerini silmek için
+export async function deleteInvoiceData(invoiceId) {
+    const url = `${API_BASE_URL}/api/Invoice/DeleteInvoice/${invoiceId}`;
+    return await advancedFetch(url, 'DELETE');
+}
 
 /*
 // Fatura verilerini güncellemek için 
@@ -38,49 +44,30 @@ export async function updateInvoiceData(invoiceId, updatedData) {
     return await advancedFetch(url, 'PUT', updatedData);
 }
 
-// Fatura verilerini silmek için
-export async function deleteInvoiceData(invoiceId) {
-    const url = `${API_BASE_URL}/invoices/${invoiceId}`;
-    return await advancedFetch(url, 'DELETE');
-}
+
 
 // Fatura öğesi eklemek için API çağrısı
 export async function addInvoiceData(newItem) {
     const url = `${API_BASE_URL}/invoices/add-item`;
     return await advancedFetch(url, 'POST', newItem);
 }
+
 */
-/*
-import mockData from "../../mockData.json";
+/*// Fatura verilerini silmek için mock fonksiyon
+export async function deleteInvoiceData(invoiceId) {
+    const invoiceIndex = mockData.findIndex((item) => item.id === invoiceId);
 
-// Tüm faturaları getiren fonksiyon
-export async function getInvoicesData() {
     return new Promise((resolve, reject) => {
-        if (mockData.length > 0) {
-            resolve(mockData);
-        } else {
-            reject("Faturalar bulunamadı");
-        }
-    });
-}
-
-export async function getInvoiceData(invoiceId) {
-    // invoiceId'yi sayıya çeviriyoruz, çünkü item.id number türünde
-    const id = Number(invoiceId);
-
-    // JSON dosyasından gelen mock veriden ilgili faturayı bul
-    const invoice = mockData.find((item) => item.id === id);
-
-    // Promise ile fatura verisini döndür
-    return new Promise((resolve, reject) => {
-        if (invoice) {
-            resolve(invoice);
+        if (invoiceIndex !== -1) {
+            // Mock veriyi sil
+            mockData.splice(invoiceIndex, 1);
+            resolve(`Invoice with ID ${invoiceId} deleted`);
         } else {
             reject(`Invoice with ID ${invoiceId} not found`);
         }
     });
-}
-*/
+} */
+
 // Fatura verilerini güncellemek için mock fonksiyon
 export async function updateInvoiceData(invoiceId, updatedData) {
     const invoiceIndex = mockData.findIndex((item) => item.id === invoiceId);
@@ -96,20 +83,7 @@ export async function updateInvoiceData(invoiceId, updatedData) {
     });
 }
 
-// Fatura verilerini silmek için mock fonksiyon
-export async function deleteInvoiceData(invoiceId) {
-    const invoiceIndex = mockData.findIndex((item) => item.id === invoiceId);
 
-    return new Promise((resolve, reject) => {
-        if (invoiceIndex !== -1) {
-            // Mock veriyi sil
-            mockData.splice(invoiceIndex, 1);
-            resolve(`Invoice with ID ${invoiceId} deleted`);
-        } else {
-            reject(`Invoice with ID ${invoiceId} not found`);
-        }
-    });
-}
 
 // Yeni fatura öğesi eklemek için mock fonksiyon
 export async function addInvoiceData(newInvoice) {
