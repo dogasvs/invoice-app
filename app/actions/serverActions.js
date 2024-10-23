@@ -4,9 +4,9 @@ const API_BASE_URL = 'https://invoice.mkadirgulgun.com.tr';
 
 // Fatura verilerini çekmek için 
 export async function getInvoiceData(invoiceId) {
-    const url = `${API_BASE_URL}/Invoices/${invoiceId}`; // Belirli faturayı çekmek için URL
+    const url = `${API_BASE_URL}/InvoiceDetail/${invoiceId}`; // Belirli faturayı çekmek için URL
     try {
-        const response = await advancedFetch(url, 'GET'); // API'den GET isteği
+        const response = await advancedFetch(url, 'POST'); // API'den GET isteği
         if (response) {
             return response; // Fatura verisi varsa döndür
         } else {

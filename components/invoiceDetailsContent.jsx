@@ -38,8 +38,8 @@ export default function InvoiceDetailsContent({ invoiceData }) {
             <div className="invoiceDetails">
                 <div className="status">
                     <span>Durum</span>
-                    <span className={`statusPending ${updatedInvoiceData.status === 1 ? 'paid' : 'pending'}`}>
-                        {updatedInvoiceData.status === 1 ? "Ödenmiş" : updatedInvoiceData.status === 2 ? "Kısmi Ödenmiş" : updatedInvoiceData.status === 3 ? "Tamamlandı" : "Askıda"}
+                    <span className={`statusPending ${updatedInvoiceData.paymentStatus === 1 ? 'paid' : 'pending'}`}>
+                        {updatedInvoiceData.paymentStatus === 1 ? "Ödenmiş" : updatedInvoiceData.paymentStatus === 2 ? "Kısmi Ödenmiş" : "Askıda"}
                     </span>
                 </div>
                 <div className="actionButtons">
@@ -51,36 +51,35 @@ export default function InvoiceDetailsContent({ invoiceData }) {
 
             <div className="invoiceInfo">
 
-
                 <div className="infoDetails">
-                <div className="infoHeader">
-                    <span style={{ color: "#7E88C3" }}>#</span>
-                    <span>{updatedInvoiceData.invoiceNumber}</span>
-                </div>
-                <span className="infoDetails">
-                    <p>{updatedInvoiceData.projectDescription}</p>
-                </span>
+                    <div className="infoHeader">
+                        <span style={{ color: "#7E88C3" }}></span>
+                        <span>{updatedInvoiceData.invoiceName}</span>
+                    </div>
+                    <span className="infoDetails">
+                        <p>{updatedInvoiceData.projectDescription || "Proje açıklaması yok"}</p>
+                    </span>
 
-                        <div className="invoiceDate">
-                            <p>Fatura Tarihi</p>
-                            <h4>{new Date(updatedInvoiceData.invoiceDate).toLocaleDateString()}</h4>
-                        </div>
-                        <div className="invoicePayment">
-                            <p>Ödeme Tarihi</p>
-                            <h4>{new Date(updatedInvoiceData.invoiceDate).toLocaleDateString()}</h4>
-                        </div>
+                    <div className="invoiceDate">
+                        <p>Fatura Tarihi</p>
+                        <h4>{new Date(updatedInvoiceData.invoiceDate).toLocaleDateString()}</h4>
+                    </div>
+                    <div className="invoicePayment">
+                        <p>Ödeme Tarihi</p>
+                        <h4>{new Date(updatedInvoiceData.paymentDue).toLocaleDateString()}</h4>
+                    </div>
                     
                     <div className="infoRight">
                         <p>Fatura Edilecek</p>
-                        <h4>{updatedInvoiceData.billTo.name}</h4>
-                        <p>{updatedInvoiceData.billTo.address}</p>
-                        <p>{updatedInvoiceData.billTo.city}</p>
-                        <p>{updatedInvoiceData.billTo.postCode}</p>
-                        <p>{updatedInvoiceData.billTo.country}</p>
+                        <h4>{updatedInvoiceData.client.name}</h4>
+                        <p>{updatedInvoiceData.client.address}</p>
+                        <p>{updatedInvoiceData.client.city}</p>
+                        <p>{updatedInvoiceData.client.postCode}</p>
+                        <p>{updatedInvoiceData.client.country}</p>
                     </div>
                     <div className="infoSent">
                         <p>Gönderildi</p>
-                        <h4>{updatedInvoiceData.billTo.email}</h4>
+                        <h4>{updatedInvoiceData.client.email}</h4>
                     </div>
                 </div>
 
@@ -98,7 +97,7 @@ export default function InvoiceDetailsContent({ invoiceData }) {
                                     <span>{item.name}</span>
                                     <span style={{ color: "#7E88C3" }}>{item.quantity}</span>
                                     <span style={{ color: "#7E88C3" }}>£ {item.price.toFixed(2)}</span>
-                                    <span>£ {(item.quantity * item.price).toFixed(2)}</span>
+                                    <span>£ {item.totalPrice.toFixed(2)}</span>
                                 </div>
                             ))
                         ) : (
@@ -107,7 +106,7 @@ export default function InvoiceDetailsContent({ invoiceData }) {
                     </div>
                     <div className="totalAmount">
                         <span>Ödenecek Tutar</span>
-                        <span>£ {updatedInvoiceData.items ? updatedInvoiceData.items.reduce((total, item) => total + item.quantity * item.price, 0).toFixed(2) : '0.00'}</span>
+                        <span>£ {updatedInvoiceData.totalAmount.toFixed(2)}</span>
                     </div>
                 </div>
             </div>
