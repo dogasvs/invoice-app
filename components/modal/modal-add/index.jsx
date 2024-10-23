@@ -1,46 +1,43 @@
 "use client";
 
 import { useState } from "react";
-import Trash from "@/svgs/trash";
 import { addInvoiceData } from "@/app/actions/serverActions";
-import "../modal.css"
+import "../modal.css";
+import Trash from "@/svgs/trash";
 
 export default function ModalAdd({ isModalOpen, closeModal }) {
+  // Kullanıcının dolduracağı client bilgileri
   const [formData, setFormData] = useState({
-    billFrom: {
-      streetAddress: "",
-      city: "",
-      postCode: "",
-      country: "",
-    },
-    billTo: {
-      name: "",
-      email: "",
-      address: "",
-      city: "",
-      postCode: "",
-      country: "",
-    },
     projectDescription: "",
-    invoiceDate: "",
-    paymentTerm: "Net 30 Days",
+    paymentTerm: 30, // Örnek olarak Net 30 gün
+    clientId: 0, // Müşteri ID, kullanıcı tarafından girilecek
     items: [],
   });
 
+  // Sabit billFrom bilgileri, backend'e gönderilmeyecek
+  const billFrom = {
+    streetAddress: "19 Union Terrace",
+    city: "London",
+    postCode: "E1 3EZ",
+    country: "United Kingdom",
+  };
 
   const [newItem, setNewItem] = useState({
-    itemName: "",
+    name: "",
     quantity: 1,
     price: 0,
   });
 
+
   const [errorMessage, setErrorMessage] = useState(null);
+
 
   const handleAddNewItem = () => {
     if (!newItem.itemName || newItem.quantity <= 0 || newItem.price <= 0) {
       setErrorMessage("Geçerli bir öğe ekleyin.");
       return;
     }
+
 
     // Yeni öğeyi öğe listesine ekle
     const total = newItem.quantity * newItem.price;
@@ -52,7 +49,7 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
           name: newItem.itemName,
           quantity: newItem.quantity,
           price: newItem.price,
-          total,
+          totalPrice: total,
         },
       ],
     });
@@ -70,46 +67,33 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
 
   const handleSaveInvoice = async (e) => {
     e.preventDefault();
-
+  
     try {
+      // Sabit bilgiler, örneğin paymentStatus ve createdTime ekleniyor
+      const invoiceData = {
+        ...formData,
+        id: 0,  // Yeni bir fatura olduğundan id 0
+        createdTime: new Date().toISOString(),  // Sabit tarih
+        paymentStatus: 0,  // Sabit ödeme durumu
+      };
+  
       // API'ye form verilerini gönder
-      await addInvoiceData(formData);
+      await addInvoiceData(invoiceData);
       closeModal();
     } catch (error) {
       setErrorMessage("Fatura kaydedilirken hata oluştu.");
       console.error("API Hatası:", error);
     }
   };
+  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-
-    if (name.startsWith("billFrom.")) {
-      const field = name.split(".")[1];
-      setFormData({
-        ...formData,
-        billFrom: {
-          ...formData.billFrom,
-          [field]: value,
-        },
-      });
-    } else if (name.startsWith("billTo.")) {
-      const field = name.split(".")[1];
-      setFormData({
-        ...formData,
-        billTo: {
-          ...formData.billTo,
-          [field]: value,
-        },
-      });
-    } else {
-      setFormData({
-        ...formData,
-        [name]: value,
-      });
-    }
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
   };
-
 
   return (
     <div>
@@ -119,7 +103,7 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
             <h2>Yeni Fatura</h2>
             {errorMessage && <p className="error-message">{errorMessage}</p>}
             <form onSubmit={handleSaveInvoice}>
-              {/* Fatura Kaynağı */}
+              {/*SABİT Fatura Kaynağı */}
               <div className="billFrom">
                 <h3>Fatura Kaynağı</h3>
                 <div className="form-group">
@@ -127,7 +111,7 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
                   <input
                     type="text"
                     name="billFrom.streetAddress"
-                    value={formData.billFrom.streetAddress}
+                    value={billFrom.streetAddress}
                     onChange={handleChange}
                     placeholder="19 Union Terrace"
                   />
@@ -139,7 +123,7 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
                     <input
                       type="text"
                       name="billFrom.city"
-                      value={formData.billFrom.city}
+                      value={billFrom.city}
                       onChange={handleChange}
                       placeholder="London"
                     />
@@ -149,7 +133,7 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
                     <input
                       type="text"
                       name="billFrom.postCode"
-                      value={formData.billFrom.postCode}
+                      value={billFrom.postCode}
                       onChange={handleChange}
                       placeholder="E1 3EZ"
                     />
@@ -159,7 +143,7 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
                     <input
                       type="text"
                       name="billFrom.country"
-                      value={formData.billFrom.country}
+                      value={billFrom.country}
                       onChange={handleChange}
                       placeholder="United Kingdom"
                     />
@@ -175,7 +159,7 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
                   <input
                     type="text"
                     name="billTo.name"
-                    value={formData.billTo.name}
+                    value={formData.billTo?.name}
                     onChange={handleChange}
                     placeholder="Alex Grim"
                   />
@@ -186,7 +170,7 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
                   <input
                     type="email"
                     name="billTo.email"
-                    value={formData.billTo.email}
+                    value={formData.billTo?.email}
                     onChange={handleChange}
                     placeholder="alexgrim@mail.com"
                   />
@@ -197,7 +181,7 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
                   <input
                     type="text"
                     name="billTo.address"
-                    value={formData.billTo.address}
+                    value={formData.billTo?.address}
                     onChange={handleChange}
                     placeholder="84 Church Way"
                   />
@@ -209,7 +193,7 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
                     <input
                       type="text"
                       name="billTo.city"
-                      value={formData.billTo.city}
+                      value={formData.billTo?.city}
                       onChange={handleChange}
                       placeholder="Bradford"
                     />
@@ -219,7 +203,7 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
                     <input
                       type="text"
                       name="billTo.postCode"
-                      value={formData.billTo.postCode}
+                      value={formData.billTo?.postCode}
                       onChange={handleChange}
                       placeholder="BD1 9PB"
                     />
@@ -229,7 +213,7 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
                     <input
                       type="text"
                       name="billTo.country"
-                      value={formData.billTo.country}
+                      value={formData.billTo?.country}
                       onChange={handleChange}
                       placeholder="United Kingdom"
                     />
@@ -246,7 +230,7 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
                     <input
                       type="date"
                       name="invoiceDate"
-                      value={formData.invoiceDate}
+                      value={formData.createdTime?.split("T")[0] || ""}
                       onChange={handleChange}
                     />
                   </div>
@@ -327,9 +311,9 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
 
                 {/* Yeni öğe ekleme formu */}
                 <div className="itemAdd">
-                    <div className="itemAddOge">
-                  <label htmlFor="itemName">
-                    <p>Öğe Adı</p>
+                  <div className="itemAddOge">
+                    <label htmlFor="itemName">
+                      <p>Öğe Adı</p>
 
                       <input
                         type="text"
@@ -339,64 +323,64 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
                           setNewItem({ ...newItem, itemName: e.target.value })
                         }
                         placeholder="Öğe Adı"
-                        />
-                        </label>
-                  <label htmlFor="quantity">
-                    <p>Adet.</p>
-                    <input
-                      type="number"
-                      name="quantity"
-                      value={newItem.quantity}
-                      onChange={(e) =>
-                        setNewItem({
-                          ...newItem,
-                          quantity: parseInt(e.target.value),
-                        })
-                      }
-                      placeholder="Adet"
-                    />
-                  </label>
-                  <label htmlFor="price">
-                    <p>Fiyat</p>
-                    <input
-                      type="number"
-                      name="price"
-                      value={newItem.price}
-                      onChange={(e) =>
-                        setNewItem({
-                          ...newItem,
-                          price: parseFloat(e.target.value),
-                        })
-                      }
-                      placeholder="Fiyat"
-                    />
-                  </label>
-                  <div className="toplam">
-                    <p>Toplamı gelicek</p>
+                      />
+                    </label>
+                    <label htmlFor="quantity">
+                      <p>Adet.</p>
+                      <input
+                        type="number"
+                        name="quantity"
+                        value={newItem.quantity}
+                        onChange={(e) =>
+                          setNewItem({
+                            ...newItem,
+                            quantity: parseInt(e.target.value),
+                          })
+                        }
+                        placeholder="Adet"
+                      />
+                    </label>
+                    <label htmlFor="price">
+                      <p>Fiyat</p>
+                      <input
+                        type="number"
+                        name="price"
+                        value={newItem.price}
+                        onChange={(e) =>
+                          setNewItem({
+                            ...newItem,
+                            price: parseFloat(e.target.value),
+                          })
+                        }
+                        placeholder="Fiyat"
+                      />
+                    </label>
+                    <div className="toplam">
+                      <p>Toplamı gelicek</p>
+                    </div>
+                  </div>
+                  <div className="itemBtn">
+                    <button type="button" onClick={handleAddNewItem}>
+                      + Yeni Ekle
+                    </button>
+
                   </div>
                 </div>
-                <div className="itemBtn">
-                  <button type="button" onClick={handleAddNewItem}>
-                    + Yeni Ekle
-                  </button>
-
-                </div>
               </div>
-               </div>
 
-               <div className="modal-buttons">
-            <button
-              onClick={closeModal}
-              type="button"
-              className="cancel-btn"
-            >
-              İptal
-            </button>
-            <button type="submit" className="save-btn">
-              Kaydet & Gönder
-            </button>
-             </div>
-        </form>
+              <div className="modal-buttons">
+                <button
+                  onClick={closeModal}
+                  type="button"
+                  className="cancel-btn"
+                >
+                  İptal
+                </button>
+                <button type="submit" className="save-btn">
+                  Kaydet & Gönder
+                </button>
+              </div>
+            </form>
           </div>
         </div >
       )}

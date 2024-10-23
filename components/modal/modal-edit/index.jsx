@@ -1,10 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { handleSaveInvoice } from "../modal-add/index.jsx";
 import { updateInvoiceData } from "@/app/actions/serverActions";
 import Trash from "@/svgs/trash";
-import "../modal.css"
+import "../modal.css";
 
 const EditModal = ({
   isOpen,
@@ -13,12 +12,11 @@ const EditModal = ({
   invoiceData,
 }) => {
   const [formData, setFormData] = useState({
-    billFrom: {
-      streetAddress: "",
-      city: "",
-      postCode: "",
-      country: "",
-    },
+    projectDescription: "",
+    createdTime: "", // Oluşturma zamanı, invoiceData ile dolacak
+    paymentStatus: 0,
+    paymentTerm: 30,
+    clientId: 0,
     billTo: {
       name: "",
       email: "",
@@ -27,10 +25,6 @@ const EditModal = ({
       postCode: "",
       country: "",
     },
-    invoiceDate: "",
-    projectDescription: "",
-    paymentTerm: 30,
-    status: 0,
     items: [],
   });
 
@@ -40,80 +34,98 @@ const EditModal = ({
     price: 0,
   });
 
-  const [showPaymentOptions, setShowPaymentOptions] = useState(false);
-
-  const [showNewItemForm, setShowNewItemForm] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
-
+  const [showNewItemForm, setShowNewItemForm] = useState(false);
+  const [showPaymentOptions, setShowPaymentOptions] = useState(false);
+  
+  // Sabit billFrom bilgileri
+  const billFrom = {
+    streetAddress: "19 Union Terrace",
+    city: "London",
+    postCode: "E1 3EZ",
+    country: "United Kingdom",
+  };
+  
+  // Backend'den gelen verileri formData'ya yerleştiriyoruz
   useEffect(() => {
     if (invoiceData) {
       setFormData({
-        billFrom: invoiceData.billFrom || {
-          streetAddress: "",
-          city: "",
-          postCode: "",
-          country: "",
-        },
-        billTo: invoiceData.billTo || {
-          name: "",
-          email: "",
-          address: "",
-          city: "",
-          postCode: "",
-          country: "",
-        },
-        invoiceDate: invoiceData.invoiceDate ? invoiceData.invoiceDate.split('T')[0] : "",
         projectDescription: invoiceData.projectDescription || "",
+        createdTime: invoiceData.createdTime || new Date().toISOString(),
+        paymentStatus: invoiceData.paymentStatus || 0,
         paymentTerm: invoiceData.paymentTerm || 30,
-        status: invoiceData.status || 0,
+        clientId: invoiceData.clientId || 0,
+        billTo: {
+          name: invoiceData.client?.name || "",
+          email: invoiceData.client?.email || "",
+          address: invoiceData.client?.address || "",
+          city: invoiceData.client?.city || "",
+          postCode: invoiceData.client?.postCode || "",
+          country: invoiceData.client?.country || "",
+        },
         items: invoiceData.items || [],
       });
     }
   }, [invoiceData]);
 
-  const onSaveChanges = (e) => {
-    handleSaveInvoice(e, invoiceId, formData, updateInvoiceData, closeModal, setErrorMessage, onSaveChanges);
+  const handleSaveChanges = async (e) => {
+    e.preventDefault();
+
+    try {
+      await updateInvoiceData(invoiceId, formData);
+      closeModal();
+    } catch (error) {
+      setErrorMessage("Fatura güncellenirken hata oluştu.");
+      console.error("API Hatası:", error);
+    }
+  };
+
+  const getPaymentTermText = (term) => {
+    switch (term) {
+      case 1:
+        return "Net 1 Day";
+      case 7:
+        return "Net 7 Days";
+      case 14:
+        return "Net 14 Days";
+      case 30:
+        return "Net 30 Days";
+      default:
+        return "";
+    }
   };
 
   const handleAddNewItem = () => {
-    if (!newItem.itemName || newItem.quantity <= 0 || newItem.price <= 0) {
+    if (!newItem.name || newItem.quantity <= 0 || newItem.price <= 0) {
       setErrorMessage("Geçerli bir öğe ekleyin.");
       return;
     }
 
-    // Yeni öğeyi öğe listesine ekle
     const total = newItem.quantity * newItem.price;
     setFormData({
       ...formData,
       items: [
         ...formData.items,
         {
-          name: newItem.itemName,
+          name: newItem.name,
           quantity: newItem.quantity,
           price: newItem.price,
-          total,
+          totalPrice: total,
         },
       ],
     });
 
-    // Yeni öğeyi sıfırla
-    setNewItem({ itemName: "", quantity: 1, price: 0 });
+    setNewItem({ name: "", quantity: 1, price: 0 });
     setErrorMessage(null);
   };
 
-  
-  
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    if (name.startsWith("billFrom.")) {
-      const field = name.split(".")[1];
+    if (name === "paymentTerm") {
       setFormData({
         ...formData,
-        billFrom: {
-          ...formData.billFrom,
-          [field]: value,
-        },
+        paymentTerm: Number(value),
       });
     } else if (name.startsWith("billTo.")) {
       const field = name.split(".")[1];
@@ -123,11 +135,6 @@ const EditModal = ({
           ...formData.billTo,
           [field]: value,
         },
-      });
-    } else if (name === "paymentTerm") {
-      setFormData({
-        ...formData,
-        paymentTerm: Number(value),
       });
     } else {
       setFormData({
@@ -153,28 +160,13 @@ const EditModal = ({
     setFormData({ ...formData, items: updatedItems });
   };
 
-  const getPaymentTermText = (term) => {
-    switch (term) {
-      case 1:
-        return "Net 1 Day";
-      case 7:
-        return "Net 7 Days";
-      case 14:
-        return "Net 14 Days";
-      case 30:
-        return "Net 30 Days";
-      default:
-        return "";
-    }
-  };
-
   return isOpen ? (
     <div className="modal-overlay">
       <div className="modal-container">
         <h2>#{invoiceId}</h2>
         {errorMessage && <p className="error-message">{errorMessage}</p>}
 
-        <form onSubmit={onSaveChanges}>
+        <form onSubmit={handleSaveChanges}>
           {/* Bill From Section */}
           <div className="billFrom">
             <h3>Gelen Fatura</h3>
@@ -183,7 +175,7 @@ const EditModal = ({
               <input
                 type="text"
                 name="billFrom.streetAddress"
-                value={formData.billFrom.streetAddress}
+                value={billFrom.streetAddress}
                 onChange={handleChange}
                 placeholder="19 Union Terrace"
                 required
@@ -196,7 +188,7 @@ const EditModal = ({
                 <input
                   type="text"
                   name="billFrom.city"
-                  value={formData.billFrom.city}
+                  value={billFrom.city}
                   onChange={handleChange}
                   placeholder="London"
                   required
@@ -207,7 +199,7 @@ const EditModal = ({
                 <input
                   type="text"
                   name="billFrom.postCode"
-                  value={formData.billFrom.postCode}
+                  value={billFrom.postCode}
                   onChange={handleChange}
                   placeholder="E1 3EZ"
                   required
@@ -218,7 +210,7 @@ const EditModal = ({
                 <input
                   type="text"
                   name="billFrom.country"
-                  value={formData.billFrom.country}
+                  value={billFrom.country}
                   onChange={handleChange}
                   placeholder="United Kingdom"
                   required
@@ -235,7 +227,7 @@ const EditModal = ({
               <input
                 type="text"
                 name="billTo.name"
-                value={formData.billTo.name}
+                value={formData.billTo?.name}
                 onChange={handleChange}
                 placeholder="Alex Grim"
                 required
@@ -247,7 +239,7 @@ const EditModal = ({
               <input
                 type="email"
                 name="billTo.email"
-                value={formData.billTo.email}
+                value={formData.billTo?.email}
                 onChange={handleChange}
                 placeholder="alexgrim@mail.com"
                 required
@@ -259,7 +251,7 @@ const EditModal = ({
               <input
                 type="text"
                 name="billTo.address"
-                value={formData.billTo.address}
+                value={formData.billTo?.address}
                 onChange={handleChange}
                 placeholder="84 Church Way"
                 required
@@ -272,7 +264,7 @@ const EditModal = ({
                 <input
                   type="text"
                   name="billTo.city"
-                  value={formData.billTo.city}
+                  value={formData.billTo?.city}
                   onChange={handleChange}
                   placeholder="Bradford"
                   required
@@ -283,7 +275,7 @@ const EditModal = ({
                 <input
                   type="text"
                   name="billTo.postCode"
-                  value={formData.billTo.postCode}
+                  value={formData.billTo?.postCode}
                   onChange={handleChange}
                   placeholder="BD1 9PB"
                   required
@@ -294,7 +286,7 @@ const EditModal = ({
                 <input
                   type="text"
                   name="billTo.country"
-                  value={formData.billTo.country}
+                  value={formData.billTo?.country}
                   onChange={handleChange}
                   placeholder="United Kingdom"
                   required
@@ -311,8 +303,7 @@ const EditModal = ({
                 <input
                   type="date"
                   name="invoiceDate"
-                  value={formData.invoiceDate}
-                  onChange={handleChange}
+                  value={formData.createdTime?.split("T")[0] || ""}                  onChange={handleChange}
                   required
                 />
               </div>
