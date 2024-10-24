@@ -1,5 +1,5 @@
 "use server";
-import { advancedFetch } from "@/utils/fetch";
+import { advancedFetch } from "../../utils/fetch.js";
 
 const API_BASE_URL = "https://invoice.mkadirgulgun.com.tr";
 
@@ -17,6 +17,8 @@ export async function getInvoiceData(invoiceId) {
     throw new Error(`Fatura verisi alınamadı: ${error.message}`);
   }
 }
+
+
 export async function getInvoicesData(status) {
   console.log(status);
 
@@ -33,6 +35,24 @@ export async function getInvoicesData(status) {
     throw new Error(`Fatura verileri alınamadı: ${error.message}`);
   }
 }
+
+
+// Kullanıcı aramak için
+export async function searchUser(name) {
+  const url = `${API_BASE_URL}/Client/${encodeURIComponent(name)}`;
+  try {
+    const response = await advancedFetch(url, "GET");
+    if (response && Array.isArray(response)) {
+      return response; // Kullanıcı verisi varsa döndür
+    } else {
+      throw new Error(`Kullanıcı adı "${name}" ile bulunamadı.`);
+    }
+  } catch (error) {
+    throw new Error(`Kullanıcı verisi alınamadı: ${error.message}`);
+  }
+}
+
+
 
 // Fatura verilerini silmek için
 export async function deleteInvoiceData(invoiceId) {
@@ -71,12 +91,20 @@ export async function addItemData(itemData) {
 }
 
 /*
-// Fatura verilerini güncellemek için 
-export async function updateInvoiceData(invoiceId, updatedData) {
-    const url = `${API_BASE_URL}/invoices/${invoiceId}`;
-    return await advancedFetch(url, 'PUT', updatedData);
+// Fatura verilerini güncellemek için
+export async function updateInvoiceData(invoiceId, updateData) {
+  const url = `${API_BASE_URL}/api/Invoice/UpdateInvoice/${invoiceId}`; // Güncelleme için doğru URL
+  try {
+    const response = await advancedFetch(url, "PUT", updateData);
+    if (response && response.success) { // API'nizin başarılı yanıtını kontrol edin
+      return response;
+    } else {
+      throw new Error("Fatura güncellenirken bir hata oluştu.");
+    }
+  } catch (error) {
+    throw new Error(`Fatura güncellenemedi: ${error.message}`);
+  }
 }
-
 
 
 
@@ -98,22 +126,7 @@ export async function updateInvoiceData(invoiceId, updatedData) {
   });
 }
 
-// Yeni fatura öğesi eklemek için mock fonksiyon
-// export async function addInvoiceData(newInvoice) {
-//   return new Promise((resolve, reject) => {
-//     if (newInvoice) {
-//       const newInvoiceId =
-//         mockData.length > 0 ? mockData[mockData.length - 1].id + 1 : 1;
-//       const invoice = {
-//         id: newInvoiceId,
-//         invoiceNumber: `INV-2024-${String(newInvoiceId).padStart(3, "0")}`, // Otomatik fatura numarası
-//         status: 0,
-//         ...newInvoice,
-//       };
-//       mockData.push(invoice);
-//       resolve(invoice);
-//     } else {
-//       reject("Yeni fatura verisi eksik");
-//     }
-//   });
-// }
+module.exports = {
+  searchUser,
+  // Diğer fonksiyonları burada export edebilirsiniz
+};
