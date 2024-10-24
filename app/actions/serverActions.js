@@ -76,7 +76,7 @@ export async function addInvoiceData(invoiceData) {
 }
 
 // Öğeleri eklemek için
-export async function addItemData(itemData) {
+export async function addItemsData(itemData) {
   const url = `${API_BASE_URL}/api/Invoice/SaveItems`;
   try {
     const response = await advancedFetch(url, "POST", itemData);
@@ -89,6 +89,41 @@ export async function addItemData(itemData) {
     throw error;
   }
 }
+
+
+// Fatura verilerini API'ye güncellemek için
+export async function updateInvoiceData(invoiceData) {
+  const url = `${API_BASE_URL}/api/Invoice/SaveInvoice`;
+  try {
+    const response = await advancedFetch(url, "POST", invoiceData);
+    if (!response.ok) {
+      throw new Error("Fatura güncellenirken hata oluştu.");
+    
+    }
+    return response.json();
+  } catch (error) {
+    console.error("Fatura güncelleme hatası:", error);
+    throw error;
+  }
+}
+
+
+// Öğeleri API'ye güncellemek için
+export async function updateItemData(itemData) {
+  const url = `${API_BASE_URL}/api/Invoice/SaveItems`;
+  try {
+    const response = await advancedFetch(url, "POST", itemData);
+    if (!response.ok) {
+      throw new Error("Öğe güncellenirken hata oluştu.");
+    }
+    return response.json();
+  } catch (error) {
+    console.error("Öğe güncelleme hatası:", error);
+    throw error;
+  }
+}
+
+
 
 /*
 // Fatura verilerini güncellemek için
@@ -106,11 +141,6 @@ export async function updateInvoiceData(invoiceId, updateData) {
   }
 }
 
-
-
-
-*/
-
 // Fatura verilerini güncellemek için mock fonksiyon
 export async function updateInvoiceData(invoiceId, updatedData) {
   const invoiceIndex = mockData.findIndex((item) => item.id === invoiceId);
@@ -125,3 +155,8 @@ export async function updateInvoiceData(invoiceId, updatedData) {
     }
   });
 }
+
+
+
+*/
+

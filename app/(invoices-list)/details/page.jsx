@@ -4,14 +4,33 @@ import InvoiceDetailsContent from "@/components/invoiceDetailsContent";
 import { redirect } from "next/navigation";
 
 // Sunucu tarafında çalışan fatura detay sayfası
-export default async function InvoiceDetail({ params }) {
-  const invoiceId = params.id || "1";
+export default async function InvoiceDetail({ params, initialInvoiceId }) {
+  const initialInvoiceId = params.id || "1";
 
-  const invoiceData = await getInvoiceData(invoiceId);
+  const [invoiceData, setInvoiceData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [fetchError, setFetchError] = useState(null);
 
-  if (!invoiceData) {
-    return redirect("/empty");
-  }
+ useEffect(() => {
+        const getInvoiceData = async () => {
+            setLoading(true);
+            try {
+                const data = await fetchInvoiceData(initialInvoiceId);
+                setInvoiceData(data);
+            } catch (error) {
+                setFetchError("Fatura verileri alınırken hata oluştu.");
+                console.error("Fatura çekme hatası:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        getInvoiceData();
+    }, [initialInvoiceId]);
+
+    if (loading) return <p>Yükleniyor...</p>;
+    if (fetchError) return <p className="error-message">{fetchError}</p>;
+    if (!invoiceData) return <p>Fatura bulunamadı.</p>;
 
   return (
     <div className="container">
