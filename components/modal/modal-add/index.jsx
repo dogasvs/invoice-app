@@ -65,23 +65,6 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
   const handleSaveInvoice = async (e) => {
     e.preventDefault();
   };
-    try {
-      // Sabit bilgiler, örneğin paymentStatus ve createdTime ekleniyor
-      const invoiceData = {
-        ...formData,
-    try {
-      // Sabit bilgiler, örneğin paymentStatus ve createdTime ekleniyor
-      const invoiceData = {
-      };
-        id: 0, // Yeni bir fatura olduğundan id 0
-      // API'ye form verilerini gönder
-      await addInvoiceData(invoiceData);
-      closeModal();
-    } catch (error) {
-      setErrorMessage("Fatura kaydedilirken hata oluştu.");
-      console.error("API Hatası:", error);
-    }
-  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
