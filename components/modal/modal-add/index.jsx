@@ -28,16 +28,13 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
     price: 0,
   });
 
-
   const [errorMessage, setErrorMessage] = useState(null);
-
 
   const handleAddNewItem = () => {
     if (!newItem.itemName || newItem.quantity <= 0 || newItem.price <= 0) {
       setErrorMessage("Geçerli bir öğe ekleyin.");
       return;
     }
-
 
     // Yeni öğeyi öğe listesine ekle
     const total = newItem.quantity * newItem.price;
@@ -67,25 +64,7 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
 
   const handleSaveInvoice = async (e) => {
     e.preventDefault();
-  
-    try {
-      // Sabit bilgiler, örneğin paymentStatus ve createdTime ekleniyor
-      const invoiceData = {
-        ...formData,
-        id: 0,  // Yeni bir fatura olduğundan id 0
-        createdTime: new Date().toISOString(),  // Sabit tarih
-        paymentStatus: 0,  // Sabit ödeme durumu
-      };
-  
-      // API'ye form verilerini gönder
-      await addInvoiceData(invoiceData);
-      closeModal();
-    } catch (error) {
-      setErrorMessage("Fatura kaydedilirken hata oluştu.");
-      console.error("API Hatası:", error);
-    }
   };
-  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -163,6 +142,13 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
                     onChange={handleChange}
                     placeholder="Alex Grim"
                   />
+                  <datalist id="users">
+                    {searchedUsers.map((user, index) => (
+                      <option key={index} value={user.id}>
+                        {user.name}
+                      </option>
+                    ))}
+                  </datalist>
                 </div>
 
                 <div className="form-group">
@@ -172,6 +158,7 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
                     name="billTo.email"
                     value={formData.billTo?.email}
                     onChange={handleChange}
+                    defaultValue={selectedUser?.email}
                     placeholder="alexgrim@mail.com"
                   />
                 </div>
@@ -220,7 +207,6 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
                   </div>
                 </div>
               </div>
-
 
               {/* Fatura Tarihi ve Ödeme Koşulları */}
               <div className="invoiceDateSection">
@@ -363,7 +349,6 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
                     <button type="button" onClick={handleAddNewItem}>
                       + Yeni Ekle
                     </button>
-
                   </div>
                 </div>
               </div>
@@ -382,8 +367,8 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
               </div>
             </form>
           </div>
-        </div >
+        </div>
       )}
-    </div >
+    </div>
   );
 }
