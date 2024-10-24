@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { updateInvoiceData } from "@/app/actions/serverActions";
+import { updateInvoiceData , updateItemsData} from "@/app/actions/serverActions";
 import Trash from "@/svgs/trash";
 import "../modal.css";
 
@@ -12,6 +12,7 @@ const EditModal = ({
   invoiceData,
 }) => {
   const [formData, setFormData] = useState({
+    id:0,
     projectDescription: "",
     createdTime: "", // Oluşturma zamanı, invoiceData ile dolacak
     paymentStatus: 0,
@@ -50,6 +51,7 @@ const EditModal = ({
   useEffect(() => {
     if (invoiceData) {
       setFormData({
+        id: invoiceData.id || 0,
         projectDescription: invoiceData.projectDescription || "",
         createdTime: invoiceData.createdTime || new Date().toISOString(),
         paymentStatus: invoiceData.paymentStatus || 0,
@@ -70,15 +72,32 @@ const EditModal = ({
 
   const handleSaveChanges = async (e) => {
     e.preventDefault();
-
+    setErrorMessage(null); // Önceki hataları temizle
+  
     try {
-      await updateInvoiceData(invoiceId, formData);
-      closeModal();
+      // Fatura verilerini güncelle
+      await updateInvoiceData(formData);
+      console.log("Fatura güncellendi:", formData);
     } catch (error) {
       setErrorMessage("Fatura güncellenirken hata oluştu.");
-      console.error("API Hatası:", error);
+      console.error("Fatura güncelleme hatası:", error);
+      return;
     }
+  
+    try {
+      // Öğeleri güncelle
+      await updateItemsData(formData.items);
+      console.log("Öğeler güncellendi:", formData.items);
+    } catch (error) {
+      setErrorMessage("Öğeler güncellenirken hata oluştu.");
+      console.error("Öğeler güncelleme hatası:", error);
+      return;
+    }
+  
+    // Başarı durumunda modali kapat
+    closeModal();
   };
+  
 
   const getPaymentTermText = (term) => {
     switch (term) {
@@ -95,6 +114,13 @@ const EditModal = ({
     }
   };
 
+    // Öğeyi silme fonksiyonu
+    const handleDeleteItem = (index) => {
+      const updatedItems = [...formData.items];
+      updatedItems.splice(index, 1);
+      setFormData({ ...formData, items: updatedItems });
+    };
+
   const handleAddNewItem = () => {
     if (!newItem.name || newItem.quantity <= 0 || newItem.price <= 0) {
       setErrorMessage("Geçerli bir öğe ekleyin.");
@@ -107,6 +133,7 @@ const EditModal = ({
       items: [
         ...formData.items,
         {
+          id: 0,
           name: newItem.name,
           quantity: newItem.quantity,
           price: newItem.price,
