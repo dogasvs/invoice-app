@@ -125,8 +125,3 @@ export async function updateInvoiceData(invoiceId, updatedData) {
     }
   });
 }
-
-module.exports = {
-  searchUser,
-  // Diğer fonksiyonları burada export edebilirsiniz
-};
