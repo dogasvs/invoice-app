@@ -224,6 +224,10 @@
     top: 100px;
     margin-left: inherit;
   }
+
+  .modal-buttons {
+    width: 600px;
+}
 }
 
 @media (width <= 430px) {
