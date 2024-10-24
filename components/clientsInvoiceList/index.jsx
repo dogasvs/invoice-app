@@ -3,6 +3,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import DetayaGitSvg from "@/svgs/detaya-git";
 import { useEffect, useState } from "react";
+import Pagination from "../pagination/Pagination";
 
 export default function InvoicesListComponent({
   dataInvoices,
@@ -10,6 +11,13 @@ export default function InvoicesListComponent({
   value,
   invoices,
 }) {
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10); // Varsayılan sayfa boyutu
+  const [paginatedInvoices, setPaginatedInvoices] = useState([]);
+
+
+
   useEffect(() => {
     if (value.length > 0) {
       const status = invoices.filter((x) => value.includes(x.status));
@@ -17,13 +25,24 @@ export default function InvoicesListComponent({
     } else {
       setDataInvoices(invoices);
     }
-  }, [value]);
+    setCurrentPage(1); // Filtreleme yapıldığında sayfayı 1'e ayarladm
+  }, [value, invoices, setDataInvoices]);
+
+  useEffect(() => {
+    const startIndex = (currentPage - 1) * pageSize;
+    const endIndex = startIndex + pageSize;
+    const slicedInvoices = dataInvoices.slice(startIndex, endIndex);
+    setPaginatedInvoices(slicedInvoices);
+  }, [currentPage, pageSize, dataInvoices]);
+
+  const totalPages = Math.ceil(dataInvoices.length / pageSize);
+
 
   return (
     <>
       <div className="invoices-list-container">
-        {dataInvoices.length > 0
-          ? dataInvoices.map((invoice) => (
+        {paginatedInvoices.length > 0
+          ? paginatedInvoices.map((invoice) => (
               <Link href={`/details/${invoice.id}`} key={invoice.id}>
                 <div className="invoices-list">
                   <div className="invoices-id">
@@ -51,9 +70,9 @@ export default function InvoicesListComponent({
                   <div className="invoices-status">
                     <h3>
                       <span className="doc"></span>
-                      {invoice.status == 1 && <span>ödendi</span>}
-                      {invoice.status == 2 && <span>ödenmedi</span>}
-                      {invoice.status == 0 && <span>askıda</span>}
+                      {invoice.status === 1 && <span>ödendi</span>}
+                      {invoice.status === 2 && <span>ödenmedi</span>}
+                      {invoice.status === 0 && <span>askıda</span>}
                     </h3>
                   </div>
                   <div className="invoices-detail">
@@ -62,8 +81,16 @@ export default function InvoicesListComponent({
                 </div>
               </Link>
             ))
-          : "bulunamadı"}
+          : "Bulunamadı"}
       </div>
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={setCurrentPage}
+        pageSize={pageSize}
+        onPageSizeChange={setPageSize}
+      />
+      
     </>
   );
 }
