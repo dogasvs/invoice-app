@@ -3,15 +3,10 @@
 import { useState } from "react";
 import { addInvoiceData } from "@/app/actions/serverActions";
 import "../modal.css";
-<<<<<<< HEAD
 import Trash from "@/svgs/trash";
 
 export default function ModalAdd({ isModalOpen, closeModal }) {
   // Kullanıcının dolduracağı client bilgileri
-=======
-
-export default function ModalAdd({ isModalOpen, closeModal, invoiceData }) {
->>>>>>> sema
   const [formData, setFormData] = useState({
     projectDescription: "",
     paymentTerm: 30, // Örnek olarak Net 30 gün
@@ -19,7 +14,6 @@ export default function ModalAdd({ isModalOpen, closeModal, invoiceData }) {
     items: [],
   });
 
-<<<<<<< HEAD
   // Sabit billFrom bilgileri, backend'e gönderilmeyecek
   const billFrom = {
     streetAddress: "19 Union Terrace",
@@ -28,24 +22,19 @@ export default function ModalAdd({ isModalOpen, closeModal, invoiceData }) {
     country: "United Kingdom",
   };
 
-=======
->>>>>>> sema
   const [newItem, setNewItem] = useState({
     name: "",
     quantity: 1,
     price: 0,
   });
 
-
   const [errorMessage, setErrorMessage] = useState(null);
-
 
   const handleAddNewItem = () => {
     if (!newItem.itemName || newItem.quantity <= 0 || newItem.price <= 0) {
       setErrorMessage("Geçerli bir öğe ekleyin.");
       return;
     }
-
 
     // Yeni öğeyi öğe listesine ekle
     const total = newItem.quantity * newItem.price;
@@ -75,16 +64,16 @@ export default function ModalAdd({ isModalOpen, closeModal, invoiceData }) {
 
   const handleSaveInvoice = async (e) => {
     e.preventDefault();
-  
+  };
     try {
       // Sabit bilgiler, örneğin paymentStatus ve createdTime ekleniyor
       const invoiceData = {
         ...formData,
-        id: 0,  // Yeni bir fatura olduğundan id 0
-        createdTime: new Date().toISOString(),  // Sabit tarih
-        paymentStatus: 0,  // Sabit ödeme durumu
+    try {
+      // Sabit bilgiler, örneğin paymentStatus ve createdTime ekleniyor
+      const invoiceData = {
       };
-  
+        id: 0, // Yeni bir fatura olduğundan id 0
       // API'ye form verilerini gönder
       await addInvoiceData(invoiceData);
       closeModal();
@@ -93,7 +82,6 @@ export default function ModalAdd({ isModalOpen, closeModal, invoiceData }) {
       console.error("API Hatası:", error);
     }
   };
-  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -103,33 +91,6 @@ export default function ModalAdd({ isModalOpen, closeModal, invoiceData }) {
     });
   };
 
-<<<<<<< HEAD
-=======
-  //---------- datalist
-
-  const [selectedUser, setSelectedUser] = useState(null);
-  const [searchedUsers, setSearchedUsers] = useState([]);
-  const [query, setQuery] = useState(""); // arama sorgusu icin
-
-  const handleInput = async (e) => {
-    const searchQuery = e.target.value;
-    setQuery(searchQuery);
-    if (searchQuery.length > 3) {
-      const response = await searchedUsers(searchQuery);
-      if (Array.isArray(response)) {
-        console.log("test");
-
-        setSearchedUsers(response);
-      }
-    }
-  };
-
-  const handleFocusOut = (e) => {
-    const user = searchedUsers.find((user) => user.name === e.target.value);
-    setSelectedUser(user);
-  };
-
->>>>>>> sema
   return (
     <div>
       {isModalOpen && (
@@ -192,20 +153,11 @@ export default function ModalAdd({ isModalOpen, closeModal, invoiceData }) {
                 <div className="form-group">
                   <label>Müşterinin Adı</label>
                   <input
-<<<<<<< HEAD
                     type="text"
                     name="billTo.name"
                     value={formData.billTo?.name}
                     onChange={handleChange}
                     placeholder="Alex Grim"
-=======
-                    onKeyDown={handleInput}
-                    onBlur={handleFocusOut}
-                    defaultValue={invoiceData.name}
-                    list="clients"
-                    name="clients"
-                    id="clients"
->>>>>>> sema
                   />
                   <datalist id="users">
                     {searchedUsers.map((user, index) => (
@@ -414,10 +366,6 @@ export default function ModalAdd({ isModalOpen, closeModal, invoiceData }) {
                     <button type="button" onClick={handleAddNewItem}>
                       + Yeni Ekle
                     </button>
-<<<<<<< HEAD
-
-=======
->>>>>>> sema
                   </div>
                 </div>
               </div>
