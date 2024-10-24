@@ -61,11 +61,11 @@ export default function InvoiceDetailsContent({ invoiceData }) {
 
                     <div className="invoiceDate">
                         <p>Fatura Tarihi</p>
-                        <h4>{new Date(updatedInvoiceData.invoiceDate).toLocaleDateString()}</h4>
+                        <h4>{new Date(updatedInvoiceData.invoiceDate).toLocaleDateString('tr-TR')}</h4>
                     </div>
                     <div className="invoicePayment">
                         <p>Ödeme Tarihi</p>
-                        <h4>{new Date(updatedInvoiceData.paymentDue).toLocaleDateString()}</h4>
+                        <h4>{new Date(updatedInvoiceData.paymentDue).toLocaleDateString('tr-TR')}</h4>
                     </div>
                     
                     <div className="infoRight">
