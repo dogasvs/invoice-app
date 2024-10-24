@@ -18,7 +18,7 @@ export async function getInvoiceData(invoiceId) {
   }
 }
 
-
+/*
 export async function getInvoicesData(status) {
   console.log(status);
 
@@ -32,6 +32,48 @@ export async function getInvoicesData(status) {
       throw new Error("Faturalar bulunamadı");
     }
   } catch (error) {
+    throw new Error(`Fatura verileri alınamadı: ${error.message}`);
+  }
+}*/
+
+
+export async function getInvoicesData(status) {
+  console.log("Fatura durumu:", status);
+
+  let currentPage = 1;
+  let totalPages = 1; // Başlangıçta en az bir sayfa olduğunu varsayalım.
+  let allInvoices = [];
+
+  try {
+    while (currentPage <= totalPages) {
+      // URL'yi tek bir satırda doğru şekilde oluşturduğunuzdan emin olun
+      let url = `${API_BASE_URL}/Invoices/${currentPage}`;
+
+      // Eğer durum filtresi kullanıyorsanız, URL'ye query parametresi ekleyin
+      if (status !== undefined && status !== null) {
+        url += `?status=${status}`;
+      }
+
+      console.log(`Fetching URL: ${url}`);
+
+      const data = await advancedFetch(url, "GET"); // data zaten JSON olarak dönüyor
+
+      if (!data || !Array.isArray(data.invoices) || typeof data.totalPages !== "number") {
+        throw new Error("Faturalar bulunamadı veya yanıt formatı geçersiz.");
+      }
+
+      // Mevcut sayfadaki faturaları ekle
+      allInvoices = [...allInvoices, ...data.invoices];
+      totalPages = data.totalPages; // Toplam sayfa sayısını güncelle
+
+      console.log(`Sayfa ${currentPage} tamamlandı. Toplam Sayfa: ${totalPages}`);
+      currentPage++;
+    }
+
+    console.log(`Toplam Fatura Sayısı: ${allInvoices.length}`);
+    return allInvoices;
+  } catch (error) {
+    console.error("Fatura verileri alınamadı:", error);
     throw new Error(`Fatura verileri alınamadı: ${error.message}`);
   }
 }
