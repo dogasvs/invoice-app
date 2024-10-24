@@ -104,6 +104,7 @@ a {
   .sidenav {
     flex-direction: row;
     height: 103px;
+    border-radius: inherit;
   }
 
   .sidenavItem {
