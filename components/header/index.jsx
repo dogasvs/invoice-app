@@ -3,7 +3,7 @@ import FilterIcon from "@/svgs/filter-icon";
 import NewInvoicesBtn from "../newInvoicesBtn";
 import FilteredDropdown from "../filteredDropdown";
 
-export default function Header({ dataInvoices, value, setValue }) {
+export default function Header({ dataInvoices= [], value, setValue }) {
   return (
     <div className="header">
       <div className="headerTitle">
