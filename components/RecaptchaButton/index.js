@@ -1,6 +1,6 @@
 'use client';
-import { useEffect } from "react";
 import { handleRecaptcha as serverHandleRecaptcha } from "@/app/actions/serverActions";
+import { useEffect } from "react";
 
 export default function RecaptchaButton({ formId }) {
 
@@ -22,7 +22,7 @@ export default function RecaptchaButton({ formId }) {
         });
       });
     }
-  }, []);
+  }, [formId]);
 
   return (
     <button

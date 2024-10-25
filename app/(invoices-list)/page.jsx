@@ -1,4 +1,3 @@
-'use client';
 import MainComponent from "@/components/main";
 import { getInvoicesData } from "../actions/serverActions";
 
