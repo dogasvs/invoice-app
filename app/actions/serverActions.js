@@ -18,7 +18,7 @@ export async function getInvoiceData(invoiceId) {
   }
 }
 
-export async function getInvoicesData(status) {
+export async function getInvoicesData(status = null) {
   console.log("Fatura durumu:", status);
 
   let currentPage = 1;
@@ -37,13 +37,15 @@ export async function getInvoicesData(status) {
       console.log("Fetched Data:", data);
 
       // Veri yapısını doğrulama
-      if (!data || !Array.isArray(data.invoices) || typeof data.totalPages !== "number") {
-        throw new Error("Faturalar bulunamadı veya yanıt formatı geçersiz.");
-      }
+      // if (!data || !Array.isArray(data.invoices) || typeof data.totalPages !== "number") {
+      //   throw new Error("Faturalar bulunamadı veya yanıt formatı geçersiz.");
+      // }
 
-      allInvoices = [...allInvoices, ...data.invoices];
+      allInvoices = [...allInvoices, ...data];
       totalPages = data.totalPages;
-      console.log(`Sayfa ${currentPage} tamamlandı. Toplam Sayfa: ${totalPages}`);
+      console.log(
+        `Sayfa ${currentPage} tamamlandı. Toplam Sayfa: ${totalPages}`
+      );
       currentPage++;
     }
 
@@ -54,8 +56,6 @@ export async function getInvoicesData(status) {
     throw new Error(`Fatura verileri alınamadı: ${error.message}`);
   }
 }
-
-
 
 // Kullanıcı aramak için
 export async function searchUser(name) {
@@ -71,8 +71,6 @@ export async function searchUser(name) {
     throw new Error(`Kullanıcı verisi alınamadı: ${error.message}`);
   }
 }
-
-
 
 // Fatura verilerini silmek için
 export async function deleteInvoiceData(invoiceId) {
@@ -110,7 +108,6 @@ export async function addItemsData(itemData) {
   }
 }
 
-
 // Fatura verilerini API'ye güncellemek için
 export async function updateInvoiceData(invoiceData) {
   const url = `${API_BASE_URL}/api/Invoice/SaveInvoice`;
@@ -118,7 +115,6 @@ export async function updateInvoiceData(invoiceData) {
     const response = await advancedFetch(url, "POST", invoiceData);
     if (!response.ok) {
       throw new Error("Fatura güncellenirken hata oluştu.");
-    
     }
     return response.json();
   } catch (error) {
@@ -126,7 +122,6 @@ export async function updateInvoiceData(invoiceData) {
     throw error;
   }
 }
-
 
 // Öğeleri API'ye güncellemek için
 export async function updateItemsData(itemData) {
@@ -147,7 +142,9 @@ export async function updateItemsData(itemData) {
 export const handleRecaptcha = async (token, formId) => {
   try {
     console.log("Backend'e gönderilen token:", token); // Kontrol
-    const data = await advancedFetch("/api/verify-recaptcha", "POST", { token });
+    const data = await advancedFetch("/api/verify-recaptcha", "POST", {
+      token,
+    });
 
     if (data.success) {
       document.getElementById(formId).submit();
@@ -160,4 +157,3 @@ export const handleRecaptcha = async (token, formId) => {
     console.error("reCAPTCHA doğrulama hatası:", error);
   }
 };
-
