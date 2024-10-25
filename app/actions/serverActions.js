@@ -151,7 +151,7 @@ export async function updateInvoiceData(invoiceData) {
 
 
 // Öğeleri API'ye güncellemek için
-export async function updateItemData(itemData) {
+export async function updateItemsData(itemData) {
   const url = `${API_BASE_URL}/api/Invoice/SaveItems`;
   try {
     const response = await advancedFetch(url, "POST", itemData);
