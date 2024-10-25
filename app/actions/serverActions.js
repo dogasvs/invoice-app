@@ -168,14 +168,15 @@ export async function updateItemData(itemData) {
 // reCAPTCHA doğrulaması için
 export const handleRecaptcha = async (token, formId) => {
   try {
-    //burası backend apiye göre düzenlenecek url
+    console.log("Backend'e gönderilen token:", token); // Kontrol
     const data = await advancedFetch("/api/verify-recaptcha", "POST", { token });
 
     if (data.success) {
-      // Formu backend doğruladıysa gönder
       document.getElementById(formId).submit();
+      console.log("Başarılı doğrulama:", data);
     } else {
       alert("reCAPTCHA doğrulaması başarısız!");
+      console.log("Başarısız doğrulama:", data);
     }
   } catch (error) {
     console.error("reCAPTCHA doğrulama hatası:", error);

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { addInvoiceData } from "@/app/actions/serverActions";
 import "../modal.css";
 import Trash from "@/svgs/trash";
+import RecaptchaButton from "@/components/RecaptchaButton";
 
 export default function ModalAdd({ isModalOpen, closeModal }) {
   // Kullanıcının dolduracağı client bilgileri
@@ -12,7 +13,17 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
     paymentTerm: 30, // Örnek olarak Net 30 gün
     clientId: 0, // Müşteri ID, kullanıcı tarafından girilecek
     items: [],
+    billTo: { // Fatura edilecek bilgiler
+      name: "",
+      email: "",
+      address: "",
+      city: "",
+      postCode: "",
+      country: ""
+    },
+    createdTime: new Date().toISOString()
   });
+ 
 
   // Sabit billFrom bilgileri, backend'e gönderilmeyecek
   const billFrom = {
@@ -64,14 +75,65 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
 
   const handleSaveInvoice = async (e) => {
     e.preventDefault();
+    try {
+      const response = await addInvoiceData({
+        ...formData,
+        billFrom,
+      });
+
+      if (response.success) {
+        closeModal();
+        setFormData({
+          projectDescription: "",
+          paymentTerm: 30,
+          clientId: 0,
+          items: [],
+          billTo: {
+            name: "",
+            email: "",
+            address: "",
+            city: "",
+            postCode: "",
+            country: ""
+          },
+          createdTime: new Date().toISOString()
+        });
+      } else {
+        setErrorMessage("Fatura kaydedilemedi. Hata: " + response.message);
+      }
+    } catch (error) {
+      console.error("Error saving invoice:", error);
+      setErrorMessage("Fatura kaydedilemedi. Lütfen tekrar deneyin.");
+    }
   };
 
-  const handleChange = (e) => {
+
+const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+
+    if (name.startsWith("billTo.")) {
+      // `billTo` alt nesnesindeki değerleri güncelle
+      const key = name.split(".")[1];
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        billTo: {
+          ...prevFormData.billTo,
+          [key]: value,
+        },
+      }));
+    } else {
+      // `formData` nın diğer anahtarlarını güncelle
+      setFormData({
+        ...formData,
+        [name]: value,
+      });
+    }
+  };
+
+
+  // reCAPTCHA işlemini tetikleyen fonksiyon
+  const handleRecaptchaSuccess = () => {
+    handleSaveInvoice(); // reCAPTCHA başarılı olursa faturayı kaydet
   };
 
   return (
@@ -81,7 +143,7 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
           <div className="modal-container">
             <h2>Yeni Fatura</h2>
             {errorMessage && <p className="error-message">{errorMessage}</p>}
-            <form onSubmit={handleSaveInvoice}>
+            <form id="invoiceForm">
               {/*SABİT Fatura Kaynağı */}
               <div className="billFrom">
                 <h3>Fatura Kaynağı</h3>
@@ -142,13 +204,13 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
                     onChange={handleChange}
                     placeholder="Alex Grim"
                   />
-                  <datalist id="users">
+                {/*  <datalist id="users">
                     {searchedUsers.map((user, index) => (
                       <option key={index} value={user.id}>
                         {user.name}
                       </option>
                     ))}
-                  </datalist>
+                  </datalist>*/}
                 </div>
 
                 <div className="form-group">
@@ -158,7 +220,7 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
                     name="billTo.email"
                     value={formData.billTo?.email}
                     onChange={handleChange}
-                    defaultValue={selectedUser?.email}
+                    defaultValue={formData.billTo?.email}
                     placeholder="alexgrim@mail.com"
                   />
                 </div>
@@ -364,6 +426,8 @@ export default function ModalAdd({ isModalOpen, closeModal }) {
                 <button type="submit" className="save-btn">
                   Kaydet & Gönder
                 </button>
+                <RecaptchaButton formId="invoiceForm" onSuccess={handleRecaptchaSuccess} />
+
               </div>
             </form>
           </div>
