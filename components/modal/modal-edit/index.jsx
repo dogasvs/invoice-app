@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { updateInvoiceData , updateItemsData} from "@/app/actions/serverActions";
+import { updateInvoiceData , updateItemsData} from "../../../app/actions/serverActions";
 import Trash from "@/svgs/trash";
 import "../modal.css";
 
