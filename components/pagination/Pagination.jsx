@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import "./pagination.css";
 
 export default function Pagination({
   currentPage,
@@ -80,40 +81,7 @@ export default function Pagination({
           </button>
         </div>
       )}
-      <style jsx>{`
-        .pagination-container {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          margin-top: 20px;
-        }
-        .page-size-selector {
-          display: flex;
-          align-items: center;
-        }
-        .page-size-selector label {
-          margin-right: 10px;
-        }
-        .page-numbers {
-          display: flex;
-          align-items: center;
-        }
-        .pagination-button {
-          margin: 0 5px;
-          padding: 5px 10px;
-          border: none;
-          background-color: #f0f0f0;
-          cursor: pointer;
-        }
-        .pagination-button.active {
-          background-color: #0070f3;
-          color: white;
-        }
-        .pagination-button:disabled {
-          background-color: #e0e0e0;
-          cursor: not-allowed;
-        }
-      `}</style>
+     
     </div>
   );
 }
