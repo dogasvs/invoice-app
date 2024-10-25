@@ -1,4 +1,3 @@
-// components/InvoicesListComponent.js
 "use client";
 import Link from "next/link";
 import DetayaGitSvg from "@/svgs/detaya-git";
