@@ -423,10 +423,8 @@ const handleChange = (e) => {
                 >
                   İptal
                 </button>
-                <button type="submit" className="save-btn">
-                  Kaydet & Gönder
-                </button>
-                <RecaptchaButton formId="invoiceForm" onSuccess={handleRecaptchaSuccess} />
+          
+                <RecaptchaButton type= "submit" formId="invoiceForm" onSuccess={handleRecaptchaSuccess} />
 
               </div>
             </form>

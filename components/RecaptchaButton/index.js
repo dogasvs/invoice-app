@@ -1,6 +1,7 @@
 'use client';
 import { handleRecaptcha as serverHandleRecaptcha } from "@/app/actions/serverActions";
 import { useEffect } from "react";
+import "../modal/modal.css";
 
 export default function RecaptchaButton({ formId }) {
 
@@ -26,12 +27,12 @@ export default function RecaptchaButton({ formId }) {
 
   return (
     <button
-      className="g-recaptcha"
+      className="save-btn"
       data-sitekey="6LchTGsqAAAAAGTDL6N-Zu4zS09LTLqhy36EPHxk" 
       data-callback="handleRecaptcha"
       data-action="submit"
     >
-      Gönder
+      Kaydet & Gönder
     </button>
   );
 }
