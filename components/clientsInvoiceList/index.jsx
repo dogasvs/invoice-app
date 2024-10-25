@@ -1,6 +1,6 @@
+// components/InvoicesListComponent.js
 "use client";
 import Link from "next/link";
-import { redirect } from "next/navigation";
 import DetayaGitSvg from "@/svgs/detaya-git";
 import { useEffect, useState } from "react";
 import Pagination from "../pagination/Pagination";
@@ -11,21 +11,20 @@ export default function InvoicesListComponent({
   value,
   invoices,
 }) {
-
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10); // Varsayılan sayfa boyutu
+  const [pageSize, setPageSize] = useState(10);
   const [paginatedInvoices, setPaginatedInvoices] = useState([]);
-
-
 
   useEffect(() => {
     if (value.length > 0) {
       const status = invoices.filter((x) => value.includes(x.status));
       setDataInvoices(status);
+      localStorage.setItem("invoices", JSON.stringify(status));
     } else {
       setDataInvoices(invoices);
+      localStorage.setItem("invoices", JSON.stringify(invoices));
     }
-    setCurrentPage(1); // Filtreleme yapıldığında sayfayı 1'e ayarladm
+    setCurrentPage(1);
   }, [value, invoices, setDataInvoices]);
 
   useEffect(() => {
@@ -36,7 +35,6 @@ export default function InvoicesListComponent({
   }, [currentPage, pageSize, dataInvoices]);
 
   const totalPages = Math.ceil(dataInvoices.length / pageSize);
-
 
   return (
     <>
@@ -90,7 +88,6 @@ export default function InvoicesListComponent({
         pageSize={pageSize}
         onPageSizeChange={setPageSize}
       />
-      
     </>
   );
 }
