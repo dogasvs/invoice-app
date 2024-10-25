@@ -96,8 +96,8 @@ export default function InvoiceDetailsContent({ invoiceData }) {
                                     <span>{item.name}</span>
                                     <span style={{ color: "#7E88C3" }}>{item.quantity}</span>
                                     <span style={{ color: "#7E88C3" }}>£ {item.price.toFixed(2)}</span>
-                                    <span>£ {item.totalPrice.toFixed(2)}</span>
-                                </div>
+                                    <span>£ {(item.totalPrice ?? 0).toFixed(2)}</span>
+                                    </div>
                             ))
                         ) : (
                             <p>Hiç öğe bulunamadı.</p>
