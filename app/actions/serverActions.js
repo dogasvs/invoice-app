@@ -18,23 +18,7 @@ export async function getInvoiceData(invoiceId) {
   }
 }
 
-/*
-export async function getInvoicesData(status) {
-  console.log(status);
 
-  let url = `${API_BASE_URL}/Invoices/1`; // 1. sayfadaki Tüm faturaları çekmek için doğru URL
-
-  try {
-    const response = await advancedFetch(url, "GET"); // API'den GET isteği
-    if (response && response.length > 0) {
-      return response; // Eğer fatura verisi varsa döndür
-    } else {
-      throw new Error("Faturalar bulunamadı");
-    }
-  } catch (error) {
-    throw new Error(`Fatura verileri alınamadı: ${error.message}`);
-  }
-}*/
 
 
 export async function getInvoicesData(status) {
@@ -182,40 +166,4 @@ export const handleRecaptcha = async (token, formId) => {
     console.error("reCAPTCHA doğrulama hatası:", error);
   }
 };
-
-
-/*
-// Fatura verilerini güncellemek için
-export async function updateInvoiceData(invoiceId, updateData) {
-  const url = `${API_BASE_URL}/api/Invoice/UpdateInvoice/${invoiceId}`; // Güncelleme için doğru URL
-  try {
-    const response = await advancedFetch(url, "PUT", updateData);
-    if (response && response.success) { // API'nizin başarılı yanıtını kontrol edin
-      return response;
-    } else {
-      throw new Error("Fatura güncellenirken bir hata oluştu.");
-    }
-  } catch (error) {
-    throw new Error(`Fatura güncellenemedi: ${error.message}`);
-  }
-}
-
-// Fatura verilerini güncellemek için mock fonksiyon
-export async function updateInvoiceData(invoiceId, updatedData) {
-  const invoiceIndex = mockData.findIndex((item) => item.id === invoiceId);
-
-  return new Promise((resolve, reject) => {
-    if (invoiceIndex !== -1) {
-      // Mock veriyi güncelle
-      mockData[invoiceIndex] = { ...mockData[invoiceIndex], ...updatedData };
-      resolve(mockData[invoiceIndex]);
-    } else {
-      reject(`Invoice with ID ${invoiceId} not found`);
-    }
-  });
-}
-
-
-
-*/
 
