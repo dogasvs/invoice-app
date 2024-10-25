@@ -27,7 +27,7 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   overflow-y: scroll;
   border-end-end-radius: 32px;
-  padding-bottom: 100px;
+  padding-bottom: 120px;
 }
 
 /* Form layout and inputs */
@@ -35,6 +35,7 @@
 .billTo,
 .invoiceDateSection {
   margin-bottom: 20px;
+  color: #7C5DFA;
 }
 
 .form-group label {
@@ -51,6 +52,55 @@
   border: 1px solid #dfe3fa;
   border-radius: 4px;
   margin-bottom: 25px;
+}
+
+.itemListSection h3 {
+  margin-bottom: 20px;
+  color: #777F98;
+  line-height: 32px;
+  font-size: 18px;
+  letter-spacing: -0.38px;
+  font-weight: 700;
+}
+
+.itemAddOge  {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+
+  label p {
+    color: #7E88C3;
+    font-size: 13px;
+    line-height: 15px;
+    letter-spacing: -0.1px;
+    font-weight: 500;
+    margin-bottom: 10px;
+  }
+
+  input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #dfe3fa;
+    border-radius: 4px;
+    margin-bottom: 25px;
+  }
+}
+
+.itemAdd {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.itemBtn button {
+  color: #7E88C3;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 15px;  
+  background-color: #F9FAFE;
+  border: none;
+  padding: 18px 230px;
+  border-radius: 100px;
 }
 
 .form-row {
