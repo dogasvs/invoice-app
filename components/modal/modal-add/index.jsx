@@ -278,7 +278,6 @@ const handleChange = (e) => {
                     <input
                       type="date"
                       name="invoiceDate"
-                      value={formData.createdTime?.split("T")[0] || ""}
                       onChange={handleChange}
                     />
                   </div>
