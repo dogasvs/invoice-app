@@ -55,9 +55,9 @@ export default function InvoiceDetailsContent({ invoiceData }) {
                         <span style={{ color: "#7E88C3" }}></span>
                         <span>{updatedInvoiceData.invoiceName}</span>
                     </div>
-                    <span className="infoDetails">
+                    {/* <span className="infoDetails">
                         <p>{updatedInvoiceData.projectDescription || "Proje açıklaması yok"}</p>
-                    </span>
+                    </span> */}
 
                     <div className="invoiceDate">
                         <p>Fatura Tarihi</p>
