@@ -193,7 +193,7 @@ const EditModal = ({
         <h2>#{invoiceId}</h2>
         {errorMessage && <p className="error-message">{errorMessage}</p>}
 
-        <form onSubmit={handleSaveChanges}>
+        <form id="editForm" onSubmit={handleSaveChanges}>
           {/* Bill From Section */}
           <div className="billFrom">
             <h3>Gelen Fatura</h3>
