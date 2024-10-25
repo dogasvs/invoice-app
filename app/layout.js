@@ -7,8 +7,8 @@ const font = League_Spartan({
 })
 
 export const metadata = {
-  title: 'My Next.js App',
-  description: 'My awesome Next.js app with reCAPTCHA',
+  title: 'Invoice App',
+  description: 'Invoice App reCAPTCHA',
 };
 
 export default function RootLayout({ children }) {

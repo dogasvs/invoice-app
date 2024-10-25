@@ -165,6 +165,22 @@ export async function updateItemData(itemData) {
   }
 }
 
+// reCAPTCHA doğrulaması için
+export const handleRecaptcha = async (token, formId) => {
+  try {
+    //burası backend apiye göre düzenlenecek url
+    const data = await advancedFetch("/api/verify-recaptcha", "POST", { token });
+
+    if (data.success) {
+      // Formu backend doğruladıysa gönder
+      document.getElementById(formId).submit();
+    } else {
+      alert("reCAPTCHA doğrulaması başarısız!");
+    }
+  } catch (error) {
+    console.error("reCAPTCHA doğrulama hatası:", error);
+  }
+};
 
 
 /*
